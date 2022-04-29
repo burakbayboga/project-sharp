@@ -12,6 +12,8 @@
 Assets/AssetStoreTools*
 Logs/
 
+*.swp
+
 # User-specific files
 *.rsuser
 *.suo
