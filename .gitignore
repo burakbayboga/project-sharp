@@ -3,6 +3,15 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+Assets/AssetStoreTools*
+Logs/
+
 # User-specific files
 *.rsuser
 *.suo
@@ -34,6 +43,9 @@ bld/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
+
+*.csproj
+*.sln
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
