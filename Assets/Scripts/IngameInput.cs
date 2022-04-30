@@ -11,11 +11,13 @@ public class IngameInput : MonoBehaviour
 
     Camera MainCamera;
     int CreatureLayerMask;
+	int clickLayermask;
 
     void Awake()
     {
         instance = this;
         CreatureLayerMask = 1 << 8;
+		clickLayermask = 1 << 8 | 1 << 9;
         IsIngameInputActive = true;
     }
 
@@ -30,19 +32,22 @@ public class IngameInput : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit;
-                Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit, 100f, CreatureLayerMask))
+				RaycastHit2D[] hits = Physics2D.RaycastAll(MainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickLayermask);
+                if (hits.Length > 0)
                 {
-                    if (hit.collider.CompareTag("Player"))
+                    if (hits[0].collider.CompareTag("Player"))
                     {
                         GameController.instance.OnPlayerClicked();
                     }
-                    else if (hit.collider.CompareTag("Enemy"))
+                    else if (hits[0].collider.CompareTag("Enemy"))
                     {
-                        Enemy enemy = hit.collider.GetComponent<Enemy>();
+                        Enemy enemy = hits[0].collider.GetComponent<Enemy>();
                         GameController.instance.OnEnemyClicked(enemy);
                     }
+					else if (hits[0].collider.CompareTag("hex"))
+					{
+						hits[0].collider.GetComponent<Hex>().HighlightSelf();
+					}
                 }
                 else
                 {

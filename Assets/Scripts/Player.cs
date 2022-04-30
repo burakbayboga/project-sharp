@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     public Resource CurrentResource;
     public Resource MaxResource;
 
+	public Hex currentHex;
+
     SkillButton HeavyAttackButton;
     SkillButton SwiftAttackButton;
     SkillButton BlockButton;
@@ -76,6 +78,9 @@ public class Player : MonoBehaviour
         CurrentResource.Stability = Mathf.Clamp(CurrentResource.Stability + 3, 0, MaxResource.Stability);
         
         HandleResourceIcons();
+
+
+		currentHex.HighlightValidAdjacents();
     }
 
     public void GetInjury()
