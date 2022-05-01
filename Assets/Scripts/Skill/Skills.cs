@@ -18,6 +18,25 @@ public class Skill
     public static Counter Counter;
     public static Block Block;
     public static KillingBlow KillingBlow;
+	public static Skill GetSkillForType(SkillType type)
+	{
+		switch (type)
+		{
+			case SkillType.Block:
+				return Block;
+			case SkillType.Counter:
+				return Counter;
+			case SkillType.SwiftAttack:
+				return SwiftAttack;
+			case SkillType.HeavyAttack:
+				return HeavyAttack;
+			case SkillType.KillingBlow:
+				return KillingBlow;
+			default:
+				Debug.Log("something's wrong i can feel it");
+				return null;
+		}
+	}
 
     public static void InitSkills()
     {

@@ -16,11 +16,7 @@ public class Enemy : MonoBehaviour
     public Color ExposedWeaknessColor;
     public Color NotExposedWeaknessColor;
 
-    public Sprite SwiftAttackImage;
-    public Sprite HeavyAttackImage;
-    public Sprite BlockImage;
-    public Sprite CounterImage;
-    public Sprite KillingBlowImage;
+	public Sprite[] skillSprites;
 
     Skill CurrentAction;
 
@@ -87,28 +83,8 @@ public class Enemy : MonoBehaviour
     public void RegisterAction()
     {
         SkillType action = GetActionType();
-
-        switch (action)
-        {
-            case SkillType.HeavyAttack:
-                CurrentActionImage.sprite = HeavyAttackImage;
-                CurrentAction = Skill.HeavyAttack;
-                break;
-            case SkillType.SwiftAttack:
-                CurrentActionImage.sprite = SwiftAttackImage;
-                CurrentAction = Skill.SwiftAttack;
-                break;
-            case SkillType.Block:
-                CurrentActionImage.sprite = BlockImage;
-                CurrentAction = Skill.Block;
-                break;
-            case SkillType.Counter:
-                CurrentActionImage.sprite = CounterImage;
-                CurrentAction = Skill.Counter;
-                break;
-            default:
-                break;
-        }
+		CurrentAction = Skill.GetSkillForType(action);
+		CurrentActionImage.sprite = skillSprites[(int)action];
 
         Color color = CurrentActionImage.color;
         color.a = 1f;
@@ -194,26 +170,6 @@ public class Enemy : MonoBehaviour
 
     void SetReactionImage(SkillType reactionType)
     {
-        switch (reactionType)
-        {
-            case SkillType.HeavyAttack:
-                CurrentReactionImage.sprite = HeavyAttackImage;
-                break;
-            case SkillType.SwiftAttack:
-                CurrentReactionImage.sprite = SwiftAttackImage;
-                break;
-            case SkillType.Block:
-                CurrentReactionImage.sprite = BlockImage;
-                break;
-            case SkillType.Counter:
-                CurrentReactionImage.sprite = CounterImage;
-                break;
-            case SkillType.KillingBlow:
-                CurrentReactionImage.sprite = KillingBlowImage;
-                break;
-            default:
-                break;
-        }
 
         if (reactionType == SkillType.None)
         {
@@ -223,6 +179,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+			CurrentReactionImage.sprite = skillSprites[(int)reactionType];
             Color color = CurrentReactionImage.color;
             color.a = 1f;
             CurrentReactionImage.color = color;

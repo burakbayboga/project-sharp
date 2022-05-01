@@ -184,6 +184,12 @@ MonoBehaviour:
   Highlight: {fileID: 4327510624665762290}
   ExposedWeaknessColor: {r: 0.87058824, g: 0.15294118, b: 0.6509804, a: 1}
   NotExposedWeaknessColor: {r: 0.44313726, g: 0.44313726, b: 0.44313726, a: 1}
+  skillSprites:
+  - {fileID: 21300002, guid: 80cdba7771fbc504fb87bf6ac73e39ef, type: 3}
+  - {fileID: 21300000, guid: 8ce5a93d42ba06a418de71b9502dcaef, type: 3}
+  - {fileID: 21300000, guid: 80cdba7771fbc504fb87bf6ac73e39ef, type: 3}
+  - {fileID: 21300000, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
+  - {fileID: 21300002, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   SwiftAttackImage: {fileID: 21300000, guid: 8ce5a93d42ba06a418de71b9502dcaef, type: 3}
   HeavyAttackImage: {fileID: 21300002, guid: 80cdba7771fbc504fb87bf6ac73e39ef, type: 3}
   BlockImage: {fileID: 21300000, guid: 80cdba7771fbc504fb87bf6ac73e39ef, type: 3}
