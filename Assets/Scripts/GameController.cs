@@ -73,6 +73,24 @@ public class GameController : MonoBehaviour
     {
         switch (CurrentTurnState)
         {
+			case TurnState.NewTurn:
+
+				break;
+			case TurnState.EnemyMovement:
+
+				break;
+			case TurnState.PlayerMovement:
+				
+				break;
+			case TurnState.EnemyAction:
+
+				break;
+			case TurnState.PlayerAnswer:
+
+				break;
+			case TurnState.Clash:
+
+				break;
             case TurnState.TurnStart:
                 StartClashTurn();
                 break;
@@ -314,6 +332,12 @@ public class Clash
 
 public enum TurnState
 {
-    TurnStart,
-    ClashTurn
+	TurnStart,
+	ClashTurn,
+	NewTurn,		// turn start, player resolve
+	EnemyMovement,	// enemies move, auto resolve
+	PlayerMovement,	// player moves, player resolve
+	EnemyAction,	// enemy actions appear, auto resolve
+	PlayerAnswer,	// player answers, player resolve
+	Clash			// handle clash, auto resolve
 }
