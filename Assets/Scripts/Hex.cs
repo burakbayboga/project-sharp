@@ -15,6 +15,8 @@ public class Hex : MonoBehaviour
 	Collider2D selfCollider;
 	SpriteRenderer rend;
 
+	public bool isHighlighted;
+
 	void Awake()
 	{
 		selfCollider = GetComponent<Collider2D>();
@@ -38,6 +40,10 @@ public class Hex : MonoBehaviour
 			{
 				collider.GetComponent<Player>().currentHex = this;
 			}
+			else if (collider.CompareTag("Enemy"))
+			{
+				collider.GetComponent<Enemy>().currentHex = this;
+			}
 		}
 	}
 
@@ -57,6 +63,25 @@ public class Hex : MonoBehaviour
 		}
 	}
 
+	public void HandleInput()
+	{
+		if (isHighlighted)
+		{
+			GameController.instance.OnPlayerMove();
+			Player.instance.currentHex.RevertAdjacentHighlights();
+			Player.instance.transform.position = transform.position;
+			Player.instance.currentHex = this;
+		}
+	}
+
+	public void RevertAdjacentHighlights()
+	{
+		for (int i = 0; i < adjacents.Length; i++)
+		{
+			adjacents[i].RevertHighlight();
+		}
+	}
+
 	public void HighlightValidAdjacents()
 	{
 		for (int i = 0; i < adjacents.Length; i++)
@@ -68,9 +93,17 @@ public class Hex : MonoBehaviour
 		}
 	}
 
+	public void RevertHighlight()
+	{
+		rend.color = baseColor;
+		rend.sprite = baseSprite;
+		isHighlighted = false;
+	}
+
 	public void HighlightSelf()
 	{
 		rend.color = highlightColor;	
 		rend.sprite = highlightSprite;
+		isHighlighted = true;
 	}
 }

@@ -48,8 +48,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        CurrentTurnState = TurnState.TurnStart;
-        TurnStateText.text = "Turn Start";
+        CurrentTurnState = TurnState.NewTurn;
+        TurnStateText.text = CurrentTurnState.ToString();
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < enemies.Length; i++)
@@ -68,39 +68,63 @@ public class GameController : MonoBehaviour
         }
     }
 
+	void MakeEnemiesMove()
+	{
+		// TODO: should enemies even move?
+		CurrentTurnState = TurnState.EnemyMovement;
+        TurnStateText.text = CurrentTurnState.ToString();
+		ProgressTurn();
+	}
+
+	void EnterPlayerMoveTurn()
+	{
+		CurrentTurnState = TurnState.PlayerMovement;
+        TurnStateText.text = CurrentTurnState.ToString();
+		Player.instance.currentHex.HighlightValidAdjacents();
+	}
+
+	public void OnPlayerMove()
+	{
+		ProgressTurn();
+	}
 
     void ProgressTurn()
     {
         switch (CurrentTurnState)
         {
 			case TurnState.NewTurn:
-
+				MakeEnemiesMove();
 				break;
 			case TurnState.EnemyMovement:
-
+				EnterPlayerMoveTurn();
 				break;
 			case TurnState.PlayerMovement:
-				
+				Player.instance.currentHex.RevertAdjacentHighlights();
+				EnterEnemyActionTurn();
 				break;
 			case TurnState.EnemyAction:
-
+				EnterPlayerAnswerTurn();
 				break;
 			case TurnState.PlayerAnswer:
-
+				EndTurn();
 				break;
 			case TurnState.Clash:
-
+				CycleTurn();
 				break;
-            case TurnState.TurnStart:
-                StartClashTurn();
-                break;
-            case TurnState.ClashTurn:
-                EndTurn();
-                break;
-            default:
-                break;
         }
     }
+
+	void CycleTurn()
+	{
+		CurrentTurnState = TurnState.NewTurn;
+        TurnStateText.text = CurrentTurnState.ToString();
+	}
+
+	void EnterPlayerAnswerTurn()
+	{
+		CurrentTurnState = TurnState.PlayerAnswer;
+        TurnStateText.text = CurrentTurnState.ToString();
+	}
 
     void ProcessCombat()
     {
@@ -141,14 +165,16 @@ public class GameController : MonoBehaviour
 
     void EndTurn()
     {
+		CurrentTurnState = TurnState.Clash;
+        TurnStateText.text = CurrentTurnState.ToString();
         ProcessCombat();
 
         KillMarkedEnemies();
 
-        CurrentTurnState = TurnState.TurnStart;
-        TurnStateText.text = "Turn Start";
         Player.instance.RechargeResources();
         ResetClashes();
+
+        ProgressTurn();
     }
 
     void KillMarkedEnemies()
@@ -178,15 +204,17 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void StartClashTurn()
+    void EnterEnemyActionTurn()
     {
-        TurnStateText.text = "Clash Turn";
-        CurrentTurnState = TurnState.ClashTurn;
+        CurrentTurnState = TurnState.EnemyAction;
+        TurnStateText.text = CurrentTurnState.ToString();
 
         foreach (KeyValuePair<Enemy, Clash> clash in Clashes)
         {
             clash.Key.RegisterAction();
         }
+
+		ProgressTurn();
     }
 
     public bool IsCurrentEnemyVulnerable()
@@ -196,7 +224,7 @@ public class GameController : MonoBehaviour
 
     public void OnEnemyClicked(Enemy enemy)
     {
-        if (CurrentTurnState == TurnState.ClashTurn)
+        if (CurrentTurnState == TurnState.PlayerAnswer)
         {
             if (CurrentEnemy != null)
             {
@@ -210,7 +238,6 @@ public class GameController : MonoBehaviour
             SkillsParent.SetActive(true);
 
             HandleSkillCosts();
-            HandleSkillDamages();
 
             if (IsCurrentEnemyDefensive())
             {
@@ -223,11 +250,6 @@ public class GameController : MonoBehaviour
                 CounterButton.interactable = true;
             }
         }
-    }
-
-    void HandleSkillDamages()
-    {
-
     }
 
     bool IsCurrentEnemyDefensive()
@@ -332,8 +354,6 @@ public class Clash
 
 public enum TurnState
 {
-	TurnStart,
-	ClashTurn,
 	NewTurn,		// turn start, player resolve
 	EnemyMovement,	// enemies move, auto resolve
 	PlayerMovement,	// player moves, player resolve

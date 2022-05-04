@@ -78,9 +78,6 @@ public class Player : MonoBehaviour
         CurrentResource.Stability = Mathf.Clamp(CurrentResource.Stability + 3, 0, MaxResource.Stability);
         
         HandleResourceIcons();
-
-
-		currentHex.HighlightValidAdjacents();
     }
 
     public void GetInjury()

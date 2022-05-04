@@ -46,7 +46,7 @@ public class IngameInput : MonoBehaviour
                     }
 					else if (hits[0].collider.CompareTag("hex"))
 					{
-						hits[0].collider.GetComponent<Hex>().HighlightSelf();
+						hits[0].collider.GetComponent<Hex>().HandleInput();
 					}
                 }
                 else

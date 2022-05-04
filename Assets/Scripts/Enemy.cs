@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     Skill CurrentAction;
 
     public int TotalDurability;
+	public Hex currentHex;
 
     int CurrentWeaknessExposed;
 
@@ -40,6 +41,11 @@ public class Enemy : MonoBehaviour
     {
         InitWeaknessIcons();
     }
+
+	void GoTowardsPlayer()
+	{
+
+	}
 
     void InitWeaknessIcons()
     {
