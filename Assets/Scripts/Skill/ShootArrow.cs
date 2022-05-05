@@ -13,5 +13,7 @@ public class ShootArrow : Skill
 			Strength = 0,
 			Stability = 1
 		};
+
+		clip = Animator.StringToHash("shoot arrow");
 	}
 }

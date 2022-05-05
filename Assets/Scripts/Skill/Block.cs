@@ -13,6 +13,8 @@ public class Block : Skill
             Strength = 2,
             Stability = 2
         };
+
+		clip = Animator.StringToHash("block");
     }
 
 	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)

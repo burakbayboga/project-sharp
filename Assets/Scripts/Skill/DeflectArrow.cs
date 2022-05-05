@@ -13,6 +13,8 @@ public class DeflectArrow : Skill
 			Strength = 0,
 			Stability = 0
 		};
+
+		clip = Animator.StringToHash("deflect arrow");
 	}
 	
 	public override Resource GetTotalCost(SkillType enemyAction)

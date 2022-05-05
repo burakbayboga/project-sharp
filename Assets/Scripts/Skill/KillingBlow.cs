@@ -13,6 +13,8 @@ public class KillingBlow : Skill
             Strength = 1,
             Stability = 1
         };
+
+		clip = Animator.StringToHash("killing blow");
     }
 
     public override Resource GetTotalCost(SkillType enemyAction)

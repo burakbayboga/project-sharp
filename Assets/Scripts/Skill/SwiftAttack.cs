@@ -13,6 +13,8 @@ public class SwiftAttack : Skill
             Strength = 2,
             Stability = 1
         };
+
+		clip = Animator.StringToHash("swift attack");
     }
 
 	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)

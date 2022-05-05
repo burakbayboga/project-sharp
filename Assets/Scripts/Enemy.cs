@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+	public Animator animator;
 
     public Image CurrentActionImage;
     public Image CurrentReactionImage;

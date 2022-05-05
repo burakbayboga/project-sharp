@@ -6,6 +6,7 @@ public class Skill
 {
     public Resource BaseCost;
     public SkillType Type;
+	public int clip;
 
     //this is called for every enemy action. param:reaction refers to player action
     public virtual void HandleClash(Enemy enemy, Skill playerReaction)

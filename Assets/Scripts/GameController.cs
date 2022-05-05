@@ -135,32 +135,34 @@ public class GameController : MonoBehaviour
         TurnStateText.text = CurrentTurnState.ToString();
 	}
 
-    void ProcessCombat()
+    IEnumerator ProcessCombat()
     {
         foreach (KeyValuePair<Enemy, Clash> clash in Clashes)
         {
-            ProcessClash(clash.Key, clash.Value);
+			clash.Value.Action.HandleClash(clash.Key, clash.Value.Reaction);
+			HandleClashAnimations(clash.Key, clash.Value.Action, clash.Value.Reaction);
+
+			yield return new WaitForSeconds(1.5f);
         }
+
+        KillMarkedEnemies();
+        Player.instance.RechargeResources();
+        ResetClashes();
+        ProgressTurn();
     }
+
+	void HandleClashAnimations(Enemy enemy, Skill enemyAction, Skill playerReaction)
+	{
+		enemy.animator.Play(enemyAction.clip);
+		if (playerReaction != null)
+		{
+			Player.instance.animator.Play(playerReaction.clip);
+		}
+	}
 
     public void MarkEnemyForDeath(Enemy enemy)
     {
         EnemiesMarkedForDeath.Add(enemy);
-    }
-
-    void ProcessClash(Enemy enemy, Clash clash)
-    {
-        if (enemy.IsVulnerable && clash.Reaction == Skill.KillingBlow)
-        {
-            MarkEnemyForDeath(enemy);
-        }
-        else
-        {
-			if (clash.Action != null)
-			{
-				clash.Action.HandleClash(enemy, clash.Reaction);
-			}
-        }
     }
 
     public void OnPlayAgainClicked()
@@ -172,14 +174,7 @@ public class GameController : MonoBehaviour
     {
 		CurrentTurnState = TurnState.Clash;
         TurnStateText.text = CurrentTurnState.ToString();
-        ProcessCombat();
-
-        KillMarkedEnemies();
-
-        Player.instance.RechargeResources();
-        ResetClashes();
-
-        ProgressTurn();
+        StartCoroutine(ProcessCombat());
     }
 
     void KillMarkedEnemies()

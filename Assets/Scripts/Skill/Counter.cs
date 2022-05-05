@@ -13,6 +13,8 @@ public class Counter : Skill
             Strength = 1,
             Stability = 2
         };
+
+		clip = Animator.StringToHash("counter");
     }
     
 	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)

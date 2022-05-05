@@ -13,6 +13,8 @@ public class HeavyAttack : Skill
             Strength = 3,
             Stability = 2
         };
+
+		clip = Animator.StringToHash("heavy attack");
     }
 
 	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)

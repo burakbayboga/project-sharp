@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
 
+	public Animator animator;
+
     public Color InactiveResourceColor;
     public Color ActiveResourceColor;
 
