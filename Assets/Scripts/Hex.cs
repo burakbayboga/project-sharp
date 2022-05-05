@@ -6,11 +6,20 @@ public class Hex : MonoBehaviour
 {
 	
 	public Hex[] adjacents;
-	public bool isOccupied;
 	public Color highlightColor;
 	public Color baseColor;
 	public Sprite baseSprite;
 	public Sprite highlightSprite;
+	public bool isOccupiedByEnemy;
+	public bool isOccupiedByPlayer;
+
+	public bool isOccupied
+	{
+		get
+		{
+			return isOccupiedByEnemy || isOccupiedByPlayer;
+		}
+	}
 
 	Collider2D selfCollider;
 	SpriteRenderer rend;
@@ -34,15 +43,16 @@ public class Hex : MonoBehaviour
 		Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.2f, 1 << 8);
 		if (collider != null)
 		{
-			isOccupied = true;
 			collider.transform.position = transform.position;
 			if (collider.CompareTag("Player"))
 			{
 				collider.GetComponent<Player>().currentHex = this;
+				isOccupiedByPlayer = true;
 			}
 			else if (collider.CompareTag("Enemy"))
 			{
 				collider.GetComponent<Enemy>().currentHex = this;
+				isOccupiedByEnemy = true;
 			}
 		}
 	}
@@ -67,11 +77,26 @@ public class Hex : MonoBehaviour
 	{
 		if (isHighlighted)
 		{
-			GameController.instance.OnPlayerMove();
 			Player.instance.currentHex.RevertAdjacentHighlights();
+			Player.instance.currentHex.isOccupiedByPlayer = false;
 			Player.instance.transform.position = transform.position;
 			Player.instance.currentHex = this;
+			isOccupiedByPlayer = true;
+			GameController.instance.OnPlayerMove();
 		}
+	}
+
+	public bool IsAdjacentToPlayer()
+	{
+		for (int i = 0; i < adjacents.Length; i++)
+		{
+			if (adjacents[i].isOccupiedByPlayer)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void RevertAdjacentHighlights()

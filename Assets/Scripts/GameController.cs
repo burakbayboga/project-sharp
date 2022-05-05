@@ -147,14 +147,17 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            if (clash.Reaction != null)
-            {
-                clash.Action.HandleClash(enemy, clash.Reaction.Type);
-            }
-            else
-            {
-                clash.Action.HandleClash(enemy, SkillType.None);
-            }
+			if (clash.Action != null)
+			{
+				if (clash.Reaction != null)
+				{
+					clash.Action.HandleClash(enemy, clash.Reaction.Type);
+				}
+				else
+				{
+					clash.Action.HandleClash(enemy, SkillType.None);
+				}
+			}
         }
     }
 

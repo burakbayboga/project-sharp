@@ -42,7 +42,10 @@ public class IngameInput : MonoBehaviour
                     else if (hits[0].collider.CompareTag("Enemy"))
                     {
                         Enemy enemy = hits[0].collider.GetComponent<Enemy>();
-                        GameController.instance.OnEnemyClicked(enemy);
+						if (enemy.currentHex.IsAdjacentToPlayer())
+						{
+							GameController.instance.OnEnemyClicked(enemy);
+						}
                     }
 					else if (hits[0].collider.CompareTag("hex"))
 					{

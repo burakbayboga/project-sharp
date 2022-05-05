@@ -88,15 +88,18 @@ public class Enemy : MonoBehaviour
 
     public void RegisterAction()
     {
-        SkillType action = GetActionType();
-		CurrentAction = Skill.GetSkillForType(action);
-		CurrentActionImage.sprite = skillSprites[(int)action];
+		if (currentHex.IsAdjacentToPlayer())
+		{
+			SkillType action = GetActionType();
+			CurrentAction = Skill.GetSkillForType(action);
+			CurrentActionImage.sprite = skillSprites[(int)action];
 
-        Color color = CurrentActionImage.color;
-        color.a = 1f;
-        CurrentActionImage.color = color;
+			Color color = CurrentActionImage.color;
+			color.a = 1f;
+			CurrentActionImage.color = color;
 
-        GameController.instance.RegisterEnemyAction(this, CurrentAction);
+			GameController.instance.RegisterEnemyAction(this, CurrentAction);
+		}
     }
 
     public void ExposeWeakness(int exposeAmount)
