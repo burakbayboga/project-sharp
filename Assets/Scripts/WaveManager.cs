@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-
     public static WaveManager instance;
 
     public GameObject EnemyPrefab;
-    public Transform[] SpawnTransforms;
 
     void Awake()
     {
@@ -35,5 +33,4 @@ public class WaveManager : MonoBehaviour
 
         GameController.instance.RegisterEnemies(newEnemies);
     }
-
 }
