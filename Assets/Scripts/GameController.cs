@@ -181,6 +181,10 @@ public class GameController : MonoBehaviour
 
     void EndTurn()
     {
+		if (CurrentEnemy != null)
+		{
+			CurrentEnemy.currentHex.UnselectAsTarget();
+		}
 		CurrentTurnState = TurnState.Clash;
         TurnStateText.text = CurrentTurnState.ToString();
         StartCoroutine(ProcessCombat());
@@ -239,12 +243,12 @@ public class GameController : MonoBehaviour
         {
             if (CurrentEnemy != null)
             {
-                CurrentEnemy.Highlight.SetActive(false);
+                CurrentEnemy.currentHex.UnselectAsTarget();
             }
 
             CurrentEnemy = enemy;
 
-            CurrentEnemy.Highlight.SetActive(true);
+            CurrentEnemy.currentHex.SelectAsTarget();
             
             SkillsParent.SetActive(true);
 
@@ -328,7 +332,7 @@ public class GameController : MonoBehaviour
         SkillsParent.SetActive(false);
         if (CurrentEnemy != null)
         {
-            CurrentEnemy.Highlight.SetActive(false);
+            CurrentEnemy.currentHex.UnselectAsTarget();
         }
         CurrentEnemy = null;
     }

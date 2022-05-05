@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
     public Image[] ExposedWeaknessImages;
 
     public GameObject VulnerableIcon;
-    public GameObject Highlight;
 
     public Color ExposedWeaknessColor;
     public Color NotExposedWeaknessColor;

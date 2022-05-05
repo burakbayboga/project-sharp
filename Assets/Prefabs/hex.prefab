@@ -114,10 +114,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjacents: []
-  isOccupied: 0
   highlightColor: {r: 1, g: 0.9098039, b: 0, a: 1}
+  selectedColor: {r: 0.78431374, g: 0.21176471, b: 0.21176471, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   baseSprite: {fileID: -6082742533581839185, guid: aa3b47ea4fc84f9499c07108f9953826,
     type: 3}
   highlightSprite: {fileID: -309694720024094932, guid: 77e0c2cbdedf1a74dbdc0faaeffe7b47,
     type: 3}
+  isOccupiedByEnemy: 0
+  isOccupiedByPlayer: 0
+  isHighlighted: 0

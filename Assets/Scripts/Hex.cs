@@ -8,6 +8,7 @@ public class Hex : MonoBehaviour
 	
 	public Hex[] adjacents;
 	public Color highlightColor;
+	public Color selectedColor;
 	public Color baseColor;
 	public Sprite baseSprite;
 	public Sprite highlightSprite;
@@ -95,6 +96,10 @@ public class Hex : MonoBehaviour
 			isOccupiedByPlayer = true;
 			GameController.instance.OnPlayerMove();
 		}
+		else
+		{
+			GameController.instance.OnEmptyClick();
+		}
 	}
 
 	public bool IsAdjacentToPlayer()
@@ -134,6 +139,18 @@ public class Hex : MonoBehaviour
 		rend.color = baseColor;
 		rend.sprite = baseSprite;
 		isHighlighted = false;
+	}
+
+	public void SelectAsTarget()
+	{
+		rend.color = selectedColor;
+		rend.sprite = highlightSprite;
+	}
+
+	public void UnselectAsTarget()
+	{
+		rend.color = baseColor;
+		rend.sprite = baseSprite;
 	}
 
 	public void HighlightSelf()
