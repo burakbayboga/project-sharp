@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 980342083747243824}
+  rend: {fileID: 3617285728854271623}
   CurrentActionImage: {fileID: 4903276897544800844}
   CurrentReactionImage: {fileID: 7343565699030082986}
   ExposedWeaknessImages:

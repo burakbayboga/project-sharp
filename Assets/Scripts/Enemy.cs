@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
 	public Animator animator;
+	public SpriteRenderer rend;
 
     public Image CurrentActionImage;
     public Image CurrentReactionImage;
@@ -42,6 +43,11 @@ public class Enemy : MonoBehaviour
     {
         InitWeaknessIcons();
     }
+
+	public void SetRendererFlip(bool flip)
+	{
+		rend.flipX = flip;
+	}
 
 	void GoTowardsPlayer()
 	{

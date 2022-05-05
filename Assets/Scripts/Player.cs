@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public static Player instance;
 
 	public Animator animator;
+	public SpriteRenderer rend;
 
     public Color InactiveResourceColor;
     public Color ActiveResourceColor;
@@ -72,6 +73,11 @@ public class Player : MonoBehaviour
         KillingBlowButton = GameController.instance.KillingBlowSkillButton;
 		DeflectArrowButton = GameController.instance.DeflectArrowSkillButton;
     }
+
+	public void SetRendererFlip(bool flip)
+	{
+		rend.flipX = flip;
+	}
 
 	public void ResetInjuries()
 	{

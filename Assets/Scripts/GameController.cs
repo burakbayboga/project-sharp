@@ -140,6 +140,10 @@ public class GameController : MonoBehaviour
         foreach (KeyValuePair<Enemy, Clash> clash in Clashes)
         {
 			clash.Value.Action.HandleClash(clash.Key, clash.Value.Reaction);
+			if (clash.Value.Reaction == null && clash.Key.IsDefensive())
+			{
+				continue;
+			}
 			HandleClashAnimations(clash.Key, clash.Value.Action, clash.Value.Reaction);
 
 			yield return new WaitForSeconds(1.5f);
@@ -153,12 +157,16 @@ public class GameController : MonoBehaviour
 
 	void HandleClashAnimations(Enemy enemy, Skill enemyAction, Skill playerReaction)
 	{
-		// enemy always has action
+		bool playerShouldFaceLeft = enemy.transform.position.x < Player.instance.transform.position.x;
+		Player.instance.SetRendererFlip(playerShouldFaceLeft);
+		enemy.SetRendererFlip(!playerShouldFaceLeft);
+
 		if (playerReaction != null)
 		{
-			enemy.animator.Play(enemyAction.clip);
 			Player.instance.animator.Play(playerReaction.clip);
 		}
+
+		enemy.animator.Play(enemyAction.clip);
 	}
 
     public void MarkEnemyForDeath(Enemy enemy)
