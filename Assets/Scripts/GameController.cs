@@ -153,7 +153,11 @@ public class GameController : MonoBehaviour
 
 	void HandleClashAnimations(Enemy enemy, Skill enemyAction, Skill playerReaction)
 	{
-		enemy.animator.Play(enemyAction.clip);
+		if (!(playerReaction != null && playerReaction.Type == SkillType.KillingBlow))
+		{
+			enemy.animator.Play(enemyAction.clip);
+		}
+
 		if (playerReaction != null)
 		{
 			Player.instance.animator.Play(playerReaction.clip);
