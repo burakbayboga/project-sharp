@@ -196,6 +196,7 @@ public class GameController : MonoBehaviour
         if (Clashes.Count == 0)
         {
             WaveManager.instance.SendNewWave();
+			Player.instance.ResetInjuries();
         }
     }
 

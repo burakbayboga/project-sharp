@@ -73,13 +73,29 @@ public class Player : MonoBehaviour
 		DeflectArrowButton = GameController.instance.DeflectArrowSkillButton;
     }
 
+	public void ResetInjuries()
+	{
+		CurrentInjury = 0;
+		MaxResource = new Resource
+		{
+			Focus = FocusIcons.Length,
+			Strength = StrengthIcons.Length,
+			Stability = StabilityIcons.Length
+		};
+
+		for (int i = 0; i < InjuryIcons.Length; i++)
+		{
+			InjuryIcons[i].SetActive(false);
+		}
+	}
+
     public void RechargeResources()
     {
         // sad shit
         //CurrentResource += ResourceRecharge;
-        CurrentResource.Focus = Mathf.Clamp(CurrentResource.Focus + 3, 0, MaxResource.Focus);
-        CurrentResource.Strength = Mathf.Clamp(CurrentResource.Strength + 2, 0, MaxResource.Strength);
-        CurrentResource.Stability = Mathf.Clamp(CurrentResource.Stability + 3, 0, MaxResource.Stability);
+        CurrentResource.Focus = Mathf.Clamp(CurrentResource.Focus + ResourceRecharge.Focus, 0, MaxResource.Focus);
+        CurrentResource.Strength = Mathf.Clamp(CurrentResource.Strength + ResourceRecharge.Strength, 0, MaxResource.Strength);
+        CurrentResource.Stability = Mathf.Clamp(CurrentResource.Stability + ResourceRecharge.Stability, 0, MaxResource.Stability);
         
         HandleResourceIcons();
     }
@@ -94,7 +110,7 @@ public class Player : MonoBehaviour
         {
             InjuryIcons[CurrentInjury].SetActive(true);
             CurrentInjury++;
-            MaxResource /= 2;
+            MaxResource = (MaxResource / 2) + 1;
             CurrentResource += 0;   // blood for the blood god
             HandleResourceIcons();
         }
