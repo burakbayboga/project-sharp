@@ -188,6 +188,7 @@ public class GameController : MonoBehaviour
             Clashes.Remove(temp);
             EnemiesMarkedForDeath.Remove(temp);
             Instantiate(BloodEffectPrefab, temp.transform.position, Quaternion.identity);
+			temp.currentHex.isOccupiedByEnemy = false;
             Destroy(temp.gameObject);
         }
 

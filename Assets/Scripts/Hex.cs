@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Hex : MonoBehaviour
 {
@@ -71,6 +72,14 @@ public class Hex : MonoBehaviour
 				adjacentIndex++;
 			}
 		}
+	}
+
+	public List<Hex> GetAdjacentsWithRange(int range)
+	{
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range, 1 << 9);
+		List<Hex> hexes = colliders.Select(c => c.GetComponent<Hex>()).Where(h => !h.isOccupied).ToList();
+
+		return hexes;
 	}
 
 	public void HandleInput()
