@@ -23,7 +23,7 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < enemyCount; i++)
         {
 			Hex spawnHex = hexes[Random.Range(0, hexes.Count)];
-            Enemy enemy = Instantiate(EnemyPrefab, spawnHex.transform.position, Quaternion.identity).GetComponent<Enemy>();
+            Enemy enemy = Instantiate(EnemyPrefab, spawnHex.transform.position + Hex.posOffset, Quaternion.identity).GetComponent<Enemy>();
 			enemy.currentHex = spawnHex;
 			spawnHex.isOccupiedByEnemy = true;
             newEnemies[i] = enemy;

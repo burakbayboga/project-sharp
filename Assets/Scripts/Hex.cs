@@ -14,6 +14,8 @@ public class Hex : MonoBehaviour
 	public bool isOccupiedByEnemy;
 	public bool isOccupiedByPlayer;
 
+	public static Vector3 posOffset = new Vector3(0.04f, 0.09f, 0f);
+
 	public bool isOccupied
 	{
 		get
@@ -44,7 +46,7 @@ public class Hex : MonoBehaviour
 		Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.2f, 1 << 8);
 		if (collider != null)
 		{
-			collider.transform.position = transform.position;
+			collider.transform.position = transform.position + posOffset;
 			if (collider.CompareTag("Player"))
 			{
 				collider.GetComponent<Player>().currentHex = this;
@@ -88,7 +90,7 @@ public class Hex : MonoBehaviour
 		{
 			Player.instance.currentHex.RevertAdjacentHighlights();
 			Player.instance.currentHex.isOccupiedByPlayer = false;
-			Player.instance.transform.position = transform.position;
+			Player.instance.transform.position = transform.position + posOffset;
 			Player.instance.currentHex = this;
 			isOccupiedByPlayer = true;
 			GameController.instance.OnPlayerMove();
