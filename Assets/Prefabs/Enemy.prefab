@@ -190,12 +190,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 80cdba7771fbc504fb87bf6ac73e39ef, type: 3}
   - {fileID: 21300000, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: 21300002, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
-  SwiftAttackImage: {fileID: 21300000, guid: 8ce5a93d42ba06a418de71b9502dcaef, type: 3}
-  HeavyAttackImage: {fileID: 21300002, guid: 80cdba7771fbc504fb87bf6ac73e39ef, type: 3}
-  BlockImage: {fileID: 21300000, guid: 80cdba7771fbc504fb87bf6ac73e39ef, type: 3}
-  CounterImage: {fileID: 21300000, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
-  KillingBlowImage: {fileID: 21300002, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
+  - {fileID: 8355749346602332410, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
+  - {fileID: 4285185840188377049, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   TotalDurability: 5
+  currentHex: {fileID: 0}
 --- !u!61 &7216955294082667930
 BoxCollider2D:
   m_ObjectHideFlags: 0

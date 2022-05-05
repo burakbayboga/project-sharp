@@ -12,7 +12,10 @@ public class Skill
 	{
 		if (playerReaction == null)
 		{
-			Player.instance.GetInjury();
+			if (!enemy.IsDefensive())
+			{
+				Player.instance.GetInjury();
+			}
 		}
 		else if (playerReaction == Skill.KillingBlow)
 		{
@@ -34,6 +37,9 @@ public class Skill
     public static Counter Counter;
     public static Block Block;
     public static KillingBlow KillingBlow;
+	public static ShootArrow ShootArrow;
+	public static DeflectArrow DeflectArrow;
+
 	public static Skill GetSkillForType(SkillType type)
 	{
 		switch (type)
@@ -48,6 +54,10 @@ public class Skill
 				return HeavyAttack;
 			case SkillType.KillingBlow:
 				return KillingBlow;
+			case SkillType.ShootArrow:
+				return ShootArrow;
+			case SkillType.DeflectArrow:
+				return DeflectArrow;
 			default:
 				Debug.Log("something's wrong i can feel it");
 				return null;
@@ -61,6 +71,8 @@ public class Skill
         Counter = new Counter();
         Block = new Block();
         KillingBlow = new KillingBlow();
+		ShootArrow = new ShootArrow();
+		DeflectArrow = new DeflectArrow();
     }
 }
 

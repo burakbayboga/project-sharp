@@ -60,6 +60,10 @@ public class Enemy : MonoBehaviour
 
     SkillType GetActionType()
     {
+		if (!currentHex.IsAdjacentToPlayer())
+		{
+			return SkillType.ShootArrow;
+		}
         if (IsVulnerable)
         {
             int random = Random.Range(0, 6);
@@ -86,20 +90,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
+	public bool IsDefensive()
+	{
+		return CurrentAction == Skill.Block || CurrentAction == Skill.Counter;
+	}
+
     public void RegisterAction()
     {
-		if (currentHex.IsAdjacentToPlayer())
-		{
-			SkillType action = GetActionType();
-			CurrentAction = Skill.GetSkillForType(action);
-			CurrentActionImage.sprite = skillSprites[(int)action];
+		SkillType action = GetActionType();
+		CurrentAction = Skill.GetSkillForType(action);
+		CurrentActionImage.sprite = skillSprites[(int)action];
 
-			Color color = CurrentActionImage.color;
-			color.a = 1f;
-			CurrentActionImage.color = color;
+		Color color = CurrentActionImage.color;
+		color.a = 1f;
+		CurrentActionImage.color = color;
 
-			GameController.instance.RegisterEnemyAction(this, CurrentAction);
-		}
+		GameController.instance.RegisterEnemyAction(this, CurrentAction);
     }
 
     public void ExposeWeakness(int exposeAmount)

@@ -17,8 +17,11 @@ public class KillingBlow : Skill
 
     public override Resource GetTotalCost(SkillType enemyAction)
     {
-
-        if (GameController.instance.IsCurrentEnemyVulnerable())
+		if (enemyAction == SkillType.ShootArrow)
+		{
+			return new Resource();
+		}
+		else if (GameController.instance.IsCurrentEnemyVulnerable())
         {
             return BaseCost;
         }

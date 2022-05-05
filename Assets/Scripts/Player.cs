@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     SkillButton BlockButton;
     SkillButton CounterButton;
     SkillButton KillingBlowButton;
+	SkillButton DeflectArrowButton;
 
     int CurrentInjury;
     int MaxInjury;
@@ -67,6 +68,7 @@ public class Player : MonoBehaviour
         BlockButton = GameController.instance.BlockSkillButton;
         CounterButton = GameController.instance.CounterSkillButton;
         KillingBlowButton = GameController.instance.KillingBlowSkillButton;
+		DeflectArrowButton = GameController.instance.DeflectArrowSkillButton;
     }
 
     public void RechargeResources()
@@ -131,6 +133,11 @@ public class Player : MonoBehaviour
                 skill = Skill.KillingBlow;
                 damage = KillingBlowButton.Damage;
                 break;
+			case SkillType.DeflectArrow:
+				skillCost = DeflectArrowButton.Cost;
+				skill = Skill.DeflectArrow;
+				damage = DeflectArrowButton.Damage;
+				break;
             case SkillType.None:
             default:
                 skillCost = new Resource();

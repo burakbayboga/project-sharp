@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
     public SkillButton BlockSkillButton;
     public SkillButton CounterSkillButton;
     public SkillButton KillingBlowSkillButton;
+	public SkillButton DeflectArrowSkillButton;
 
     public Button TurnProgressButton;
 
@@ -27,6 +28,10 @@ public class GameController : MonoBehaviour
 
     Button BlockButton;
     Button CounterButton;
+	Button DeflectArrowButton;
+	Button SwiftAttackButton;
+	Button HeavyAttackButton;
+	Button KillingBlowButton;
 
     Dictionary<Enemy, Clash> Clashes = new Dictionary<Enemy, Clash>();
     List<Enemy> EnemiesMarkedForDeath = new List<Enemy>();
@@ -43,6 +48,10 @@ public class GameController : MonoBehaviour
 
         BlockButton = BlockSkillButton.GetComponent<Button>();
         CounterButton = CounterSkillButton.GetComponent<Button>();
+		DeflectArrowButton = DeflectArrowSkillButton.GetComponent<Button>();
+		KillingBlowButton = KillingBlowSkillButton.GetComponent<Button>();
+		SwiftAttackButton = SwiftAttackSkillButton.GetComponent<Button>();
+		HeavyAttackButton = HeavyAttackSkillButton.GetComponent<Button>();
         IsGameOver = false;
     }
 
@@ -235,24 +244,17 @@ public class GameController : MonoBehaviour
             SkillsParent.SetActive(true);
 
             HandleSkillButtonIcons();
+			
+			bool isEnemyShootingArrow = Clashes[CurrentEnemy].Action.Type == SkillType.ShootArrow;
+			bool isEnemyDefensive = CurrentEnemy.IsDefensive();
 
-            if (IsCurrentEnemyDefensive())
-            {
-                BlockButton.interactable = false;
-                CounterButton.interactable = false;
-            }
-            else
-            {
-                BlockButton.interactable = true;
-                CounterButton.interactable = true;
-            }
+			BlockButton.interactable = !isEnemyShootingArrow && !isEnemyDefensive;
+			CounterButton.interactable = !isEnemyShootingArrow && !isEnemyDefensive;
+			SwiftAttackButton.interactable = !isEnemyShootingArrow;
+			HeavyAttackButton.interactable = !isEnemyShootingArrow;
+			KillingBlowButton.interactable = !isEnemyShootingArrow;
+			DeflectArrowButton.interactable = isEnemyShootingArrow;
         }
-    }
-
-    bool IsCurrentEnemyDefensive()
-    {
-        SkillType actionType = Clashes[CurrentEnemy].Action.Type;
-        return actionType == SkillType.Block || actionType == SkillType.Counter;
     }
 
     public Resource GetResourceSpentOnCurrentEnemy()
@@ -275,17 +277,20 @@ public class GameController : MonoBehaviour
         HeavyAttackSkillButton.HandleCostAndDamage(Skill.HeavyAttack.GetTotalCost(enemyActionType),
 									Skill.HeavyAttack.GetDamageAgainstEnemyAction(enemyActionType));
 
-        SwiftAttackSkillButton.HandleCostAndDamage(Skill.SwiftAttack.GetTotalCost(Clashes[CurrentEnemy].Action.Type),
+        SwiftAttackSkillButton.HandleCostAndDamage(Skill.SwiftAttack.GetTotalCost(enemyActionType),
 									Skill.SwiftAttack.GetDamageAgainstEnemyAction(enemyActionType));
 
-        BlockSkillButton.HandleCostAndDamage(Skill.Block.GetTotalCost(Clashes[CurrentEnemy].Action.Type),
+        BlockSkillButton.HandleCostAndDamage(Skill.Block.GetTotalCost(enemyActionType),
 									Skill.Block.GetDamageAgainstEnemyAction(enemyActionType));
 
-        CounterSkillButton.HandleCostAndDamage(Skill.Counter.GetTotalCost(Clashes[CurrentEnemy].Action.Type),
+        CounterSkillButton.HandleCostAndDamage(Skill.Counter.GetTotalCost(enemyActionType),
 									Skill.Counter.GetDamageAgainstEnemyAction(enemyActionType));
 
-        KillingBlowSkillButton.HandleCostAndDamage(Skill.KillingBlow.GetTotalCost(Clashes[CurrentEnemy].Action.Type),
+        KillingBlowSkillButton.HandleCostAndDamage(Skill.KillingBlow.GetTotalCost(enemyActionType),
 									Skill.KillingBlow.GetDamageAgainstEnemyAction(enemyActionType));
+
+		DeflectArrowSkillButton.HandleCostAndDamage(Skill.DeflectArrow.GetTotalCost(enemyActionType),
+									Skill.DeflectArrow.GetDamageAgainstEnemyAction(enemyActionType));
     }
 
     public void OnPlayerClicked()
