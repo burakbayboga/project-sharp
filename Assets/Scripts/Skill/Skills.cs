@@ -8,10 +8,26 @@ public class Skill
     public SkillType Type;
 
     //this is called for every enemy action. param:reaction refers to player action
-    public virtual void HandleClash(Enemy enemy, SkillType playerReaction) { }
+    public virtual void HandleClash(Enemy enemy, Skill playerReaction)
+	{
+		if (playerReaction == null)
+		{
+			Player.instance.GetInjury();
+		}
+		else if (playerReaction == Skill.KillingBlow)
+		{
+			GameController.instance.MarkEnemyForDeath(enemy);
+		}
+		else
+		{
+			enemy.ExposeWeakness(playerReaction.GetDamageAgainstEnemyAction(Type));
+		}
+	}
 
     // player calls this for every skill. param:action refers to enemy action
-    public virtual Resource GetTotalCost(SkillType enemyAction, out int damage) { damage = 0; return new Resource(); }
+    public virtual Resource GetTotalCost(SkillType enemyAction) { return new Resource(); }
+
+	public virtual int GetDamageAgainstEnemyAction(SkillType enemyAction) { return 0; }
 
     public static HeavyAttack HeavyAttack;
     public static SwiftAttack SwiftAttack;
@@ -113,5 +129,7 @@ public enum SkillType
     Block = 2,
     Counter = 3,
     KillingBlow = 4,
+	ShootArrow = 5,
+	DeflectArrow = 6,
     None = -1
 }

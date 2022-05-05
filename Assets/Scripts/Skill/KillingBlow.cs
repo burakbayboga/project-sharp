@@ -15,14 +15,8 @@ public class KillingBlow : Skill
         };
     }
 
-    public override void HandleClash(Enemy enemy, SkillType playerReaction)
+    public override Resource GetTotalCost(SkillType enemyAction)
     {
-
-    }
-
-    public override Resource GetTotalCost(SkillType enemyAction, out int damage)
-    {
-        damage = 0;
 
         if (GameController.instance.IsCurrentEnemyVulnerable())
         {

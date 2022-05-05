@@ -14,29 +14,23 @@ public class Counter : Skill
             Stability = 2
         };
     }
+    
+	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)
+	{
+		switch (enemyAction)
+		{
+			case SkillType.HeavyAttack:
+				return 1;
+			case SkillType.SwiftAttack:
+				return 2;
+			case SkillType.Block:
+			case SkillType.Counter:
+			default:
+				return 0;
+		}
+	}
 
-    public override void HandleClash(Enemy enemy, SkillType playerReaction)
-    {
-        switch (playerReaction)
-        {
-            case SkillType.HeavyAttack:
-                enemy.ExposeWeakness(2);
-                break;
-            case SkillType.KillingBlow:
-                GameController.instance.MarkEnemyForDeath(enemy);
-                break;
-            case SkillType.SwiftAttack:
-                enemy.ExposeWeakness(1);
-                break;
-            case SkillType.Block:
-            case SkillType.Counter:
-            case SkillType.None:
-            default:
-                break;
-        }
-    }
-
-    public override Resource GetTotalCost(SkillType enemyAction, out int damage)
+    public override Resource GetTotalCost(SkillType enemyAction)
     {
         Resource modifier;
         Resource totalCost;
@@ -53,7 +47,6 @@ public class Counter : Skill
                 };
                 totalCost = BaseCost + modifier;
 
-                damage = 1;
                 break;
             case SkillType.SwiftAttack:
 
@@ -65,13 +58,11 @@ public class Counter : Skill
                 };
                 totalCost = BaseCost + modifier;
 
-                damage = 2;
                 break;
             case SkillType.Block:
             case SkillType.Counter:
             default:
                 totalCost = new Resource();
-                damage = 0;
                 break;
         }
 

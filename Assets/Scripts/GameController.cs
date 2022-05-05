@@ -149,14 +149,7 @@ public class GameController : MonoBehaviour
         {
 			if (clash.Action != null)
 			{
-				if (clash.Reaction != null)
-				{
-					clash.Action.HandleClash(enemy, clash.Reaction.Type);
-				}
-				else
-				{
-					clash.Action.HandleClash(enemy, SkillType.None);
-				}
+				clash.Action.HandleClash(enemy, clash.Reaction);
 			}
         }
     }
@@ -241,7 +234,7 @@ public class GameController : MonoBehaviour
             
             SkillsParent.SetActive(true);
 
-            HandleSkillCosts();
+            HandleSkillButtonIcons();
 
             if (IsCurrentEnemyDefensive())
             {
@@ -267,7 +260,7 @@ public class GameController : MonoBehaviour
         Clash currentClash = Clashes[CurrentEnemy];
         if (currentClash.Reaction != null)
         {
-            return currentClash.Reaction.GetTotalCost(currentClash.Action.Type, out int damage);
+            return currentClash.Reaction.GetTotalCost(currentClash.Action.Type);
         }
         else
         {
@@ -275,14 +268,24 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void HandleSkillCosts()
+    void HandleSkillButtonIcons()
     {
-        int damage;
-        HeavyAttackSkillButton.HandleCostAndDamage(Skill.HeavyAttack.GetTotalCost(Clashes[CurrentEnemy].Action.Type, out damage), damage);
-        SwiftAttackSkillButton.HandleCostAndDamage(Skill.SwiftAttack.GetTotalCost(Clashes[CurrentEnemy].Action.Type, out damage), damage);
-        BlockSkillButton.HandleCostAndDamage(Skill.Block.GetTotalCost(Clashes[CurrentEnemy].Action.Type, out damage), damage);
-        CounterSkillButton.HandleCostAndDamage(Skill.Counter.GetTotalCost(Clashes[CurrentEnemy].Action.Type, out damage), damage);
-        KillingBlowSkillButton.HandleCostAndDamage(Skill.KillingBlow.GetTotalCost(Clashes[CurrentEnemy].Action.Type, out damage), damage);
+		SkillType enemyActionType = Clashes[CurrentEnemy].Action.Type;
+
+        HeavyAttackSkillButton.HandleCostAndDamage(Skill.HeavyAttack.GetTotalCost(enemyActionType),
+									Skill.HeavyAttack.GetDamageAgainstEnemyAction(enemyActionType));
+
+        SwiftAttackSkillButton.HandleCostAndDamage(Skill.SwiftAttack.GetTotalCost(Clashes[CurrentEnemy].Action.Type),
+									Skill.SwiftAttack.GetDamageAgainstEnemyAction(enemyActionType));
+
+        BlockSkillButton.HandleCostAndDamage(Skill.Block.GetTotalCost(Clashes[CurrentEnemy].Action.Type),
+									Skill.Block.GetDamageAgainstEnemyAction(enemyActionType));
+
+        CounterSkillButton.HandleCostAndDamage(Skill.Counter.GetTotalCost(Clashes[CurrentEnemy].Action.Type),
+									Skill.Counter.GetDamageAgainstEnemyAction(enemyActionType));
+
+        KillingBlowSkillButton.HandleCostAndDamage(Skill.KillingBlow.GetTotalCost(Clashes[CurrentEnemy].Action.Type),
+									Skill.KillingBlow.GetDamageAgainstEnemyAction(enemyActionType));
     }
 
     public void OnPlayerClicked()

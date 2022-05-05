@@ -15,32 +15,21 @@ public class HeavyAttack : Skill
         };
     }
 
-    public override void HandleClash(Enemy enemy, SkillType playerReaction)
-    {
-        switch (playerReaction)
-        {
-            case SkillType.SwiftAttack:
-                enemy.ExposeWeakness(1);
-                break;
-            case SkillType.HeavyAttack:
-            case SkillType.Block:
-                enemy.ExposeWeakness(2);
-                break;
-            case SkillType.Counter:
-                enemy.ExposeWeakness(1);
-                break;
-            case SkillType.KillingBlow:
-                GameController.instance.MarkEnemyForDeath(enemy);
-                break;
-            case SkillType.None:
-                Player.instance.GetInjury();
-                break;
-            default:
-                break;
-        }
-    }
+	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)
+	{
+		switch (enemyAction)
+		{
+			case SkillType.HeavyAttack:
+			case SkillType.SwiftAttack:
+			case SkillType.Block:
+			case SkillType.Counter:
+				return 2;
+			default:
+				return 0;
+		}
+	}
 
-    public override Resource GetTotalCost(SkillType enemyAction, out int damage)
+    public override Resource GetTotalCost(SkillType enemyAction)
     {
         Resource modifier;
         Resource totalCost;
@@ -57,7 +46,6 @@ public class HeavyAttack : Skill
                 };
                 totalCost = BaseCost + modifier;
 
-                damage = 2;
                 break;
             case SkillType.SwiftAttack:
 
@@ -69,7 +57,6 @@ public class HeavyAttack : Skill
                 };
                 totalCost = BaseCost + modifier;
 
-                damage = 2;
                 break;
             case SkillType.Block:
 
@@ -81,7 +68,6 @@ public class HeavyAttack : Skill
                 };
                 totalCost = BaseCost + modifier;
 
-                damage = 2;
                 break;
             case SkillType.Counter:
 
@@ -93,11 +79,9 @@ public class HeavyAttack : Skill
                 };
                 totalCost = BaseCost + modifier;
 
-                damage = 2;
                 break;
             default:
                 totalCost = new Resource();
-                damage = 0;
                 break;
         }
 
