@@ -147,6 +147,9 @@ public class GameController : MonoBehaviour
 			HandleClashAnimations(clash.Key, clash.Value.Action, clash.Value.Reaction);
 
 			yield return new WaitForSeconds(1.5f);
+
+			clash.Key.transform.position = clash.Key.currentHex.transform.position + Hex.posOffset;
+			Player.instance.transform.position = Player.instance.currentHex.transform.position + Hex.posOffset;
         }
 
         KillMarkedEnemies();
@@ -167,6 +170,16 @@ public class GameController : MonoBehaviour
 		}
 
 		enemy.animator.Play(enemyAction.clip);
+
+
+		Vector3 basePos = Player.instance.transform.position;
+		if (enemyAction != Skill.ShootArrow)
+		{
+			Vector3 offset = playerShouldFaceLeft ? new Vector3(-0.3f, 0f, 0f) : new Vector3(0.3f, 0f, 0f);
+			enemy.transform.position = basePos + offset;
+
+			Player.instance.transform.position -= offset;
+		}
 	}
 
     public void MarkEnemyForDeath(Enemy enemy)
