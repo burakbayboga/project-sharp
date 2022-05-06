@@ -17,6 +17,11 @@ public class Block : Skill
 		clip = Animator.StringToHash("block");
     }
 
+	public override int GetCoveredWeaknessByEnemy()
+	{
+		return 2;
+	}
+
 	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)
 	{
 		switch (enemyAction)

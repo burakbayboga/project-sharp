@@ -16,6 +16,11 @@ public class Counter : Skill
 
 		clip = Animator.StringToHash("counter");
     }
+
+	public override int GetCoveredWeaknessByEnemy()
+	{
+		return 1;
+	}
     
 	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)
 	{

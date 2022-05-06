@@ -13,7 +13,11 @@ public class Skill
 	{
 		if (playerReaction == null)
 		{
-			if (!enemy.IsDefensive())
+			if (enemy.IsDefensive())
+			{
+				enemy.CoverWeakness(GetCoveredWeaknessByEnemy());
+			}
+			else
 			{
 				Player.instance.GetInjury();
 			}
@@ -32,6 +36,8 @@ public class Skill
     public virtual Resource GetTotalCost(SkillType enemyAction) { return new Resource(); }
 
 	public virtual int GetDamageAgainstEnemyAction(SkillType enemyAction) { return 0; }
+
+	public virtual int GetCoveredWeaknessByEnemy() { return 0; }
 
     public static HeavyAttack HeavyAttack;
     public static SwiftAttack SwiftAttack;

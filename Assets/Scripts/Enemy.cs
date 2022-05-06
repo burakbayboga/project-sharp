@@ -161,12 +161,30 @@ public class Enemy : MonoBehaviour
                 MakeVulnerable();
             }
 
-            for (int i = 0; i < CurrentWeaknessExposed; i++)
-            {
-                ExposedWeaknessImages[i].color = ExposedWeaknessColor;
-            }
+            UpdateWeaknessImages();
         }
     }
+
+	public void CoverWeakness(int coverAmount)
+	{
+		CurrentWeaknessExposed = Mathf.Max(0, CurrentWeaknessExposed - coverAmount);
+		UpdateWeaknessImages();
+	}
+
+	void UpdateWeaknessImages()
+	{
+		for (int i = 0; i < ExposedWeaknessImages.Length; i++)
+		{
+			if (i >= CurrentWeaknessExposed)
+			{
+				ExposedWeaknessImages[i].color = NotExposedWeaknessColor;
+			}
+			else
+			{
+				ExposedWeaknessImages[i].color = ExposedWeaknessColor;
+			}
+		}
+	}
 
     void MakeVulnerable()
     {
