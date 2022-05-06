@@ -27,11 +27,11 @@ public class KillingBlow : Skill
         {
 			if (enemyAction == SkillType.Block)
 			{
-				return BaseCost + 1;
+				return BaseCost;
 			}
 			else
 			{
-				return BaseCost;
+				return BaseCost + 1;
 			}
         }
         else
