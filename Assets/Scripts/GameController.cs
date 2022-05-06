@@ -170,13 +170,13 @@ public class GameController : MonoBehaviour
 		enemy.animator.Play(enemyAction.clip);
 
 
-		Vector3 basePos = Player.instance.transform.position;
+		Vector3 basePos = enemy.IsDefensive() ? enemy.transform.position : Player.instance.transform.position;
 		if (enemyAction != Skill.ShootArrow)
 		{
 			Vector3 offset = playerShouldFaceLeft ? new Vector3(-0.3f, 0f, 0f) : new Vector3(0.3f, 0f, 0f);
 			enemy.transform.position = basePos + offset;
 
-			Player.instance.transform.position -= offset;
+			Player.instance.transform.position = basePos - offset;
 		}
 	}
 
