@@ -147,6 +147,7 @@ public class GameController : MonoBehaviour
         KillMarkedEnemies();
         Player.instance.RechargeResources();
         ResetClashes();
+		TurnProgressButton.interactable = true;
         ProgressTurn();
     }
 
@@ -186,6 +187,7 @@ public class GameController : MonoBehaviour
 
     void EndTurn()
     {
+		TurnProgressButton.interactable = false;
 		if (CurrentEnemy != null)
 		{
 			CurrentEnemy.currentHex.UnselectAsTarget();
