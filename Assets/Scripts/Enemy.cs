@@ -140,7 +140,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            return (SkillType)Random.Range(0, 4);
+            return (SkillType)Random.Range(0, 2);
         }
     }
 
