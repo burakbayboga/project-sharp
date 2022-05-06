@@ -270,12 +270,12 @@ public class GameController : MonoBehaviour
 			bool isEnemyShootingArrow = Clashes[CurrentEnemy].Action.Type == SkillType.ShootArrow;
 			bool isEnemyDefensive = CurrentEnemy.IsDefensive();
 
-			BlockButton.interactable = !isEnemyShootingArrow && !isEnemyDefensive;
-			CounterButton.interactable = !isEnemyShootingArrow && !isEnemyDefensive;
-			SwiftAttackButton.interactable = !isEnemyShootingArrow;
-			HeavyAttackButton.interactable = !isEnemyShootingArrow;
-			KillingBlowButton.interactable = !isEnemyShootingArrow;
-			DeflectArrowButton.interactable = isEnemyShootingArrow;
+			BlockButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive);
+			CounterButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive);
+			SwiftAttackButton.gameObject.SetActive(!isEnemyShootingArrow);
+			HeavyAttackButton.gameObject.SetActive(!isEnemyShootingArrow);
+			KillingBlowButton.gameObject.SetActive(!isEnemyShootingArrow);
+			DeflectArrowButton.gameObject.SetActive(isEnemyShootingArrow);
         }
     }
 
