@@ -26,13 +26,6 @@ public class GameController : MonoBehaviour
 
     public GameObject BloodEffectPrefab;
 
-    Button BlockButton;
-    Button CounterButton;
-	Button DeflectArrowButton;
-	Button SwiftAttackButton;
-	Button HeavyAttackButton;
-	Button KillingBlowButton;
-
     Dictionary<Enemy, Clash> Clashes = new Dictionary<Enemy, Clash>();
     List<Enemy> EnemiesMarkedForDeath = new List<Enemy>();
 
@@ -45,13 +38,7 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         instance = this;
-
-        BlockButton = BlockSkillButton.GetComponent<Button>();
-        CounterButton = CounterSkillButton.GetComponent<Button>();
-		DeflectArrowButton = DeflectArrowSkillButton.GetComponent<Button>();
-		KillingBlowButton = KillingBlowSkillButton.GetComponent<Button>();
-		SwiftAttackButton = SwiftAttackSkillButton.GetComponent<Button>();
-		HeavyAttackButton = HeavyAttackSkillButton.GetComponent<Button>();
+        
         IsGameOver = false;
     }
 
@@ -274,13 +261,14 @@ public class GameController : MonoBehaviour
 			
 			bool isEnemyShootingArrow = Clashes[CurrentEnemy].Action.Type == SkillType.ShootArrow;
 			bool isEnemyDefensive = CurrentEnemy.IsDefensive();
+			bool isEnemyVulnerable = CurrentEnemy.IsVulnerable;
 
-			BlockButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive);
-			CounterButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive);
-			SwiftAttackButton.gameObject.SetActive(!isEnemyShootingArrow);
-			HeavyAttackButton.gameObject.SetActive(!isEnemyShootingArrow);
-			KillingBlowButton.gameObject.SetActive(!isEnemyShootingArrow);
-			DeflectArrowButton.gameObject.SetActive(isEnemyShootingArrow);
+			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && !isEnemyVulnerable);
+			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && !isEnemyVulnerable);
+			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable);
+			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable);
+			KillingBlowSkillButton.gameObject.SetActive(!isEnemyShootingArrow);
+			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow && !isEnemyVulnerable);
         }
     }
 
