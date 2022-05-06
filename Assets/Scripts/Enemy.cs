@@ -105,18 +105,31 @@ public class Enemy : MonoBehaviour
 		{
 			return SkillType.ShootArrow;
 		}
-        if (IsVulnerable)
+
+		if (IsVulnerable)
+		{
+			int random = Random.Range(0, 2);
+			if (random == 0)
+			{
+				return SkillType.Block;
+			}
+			else
+			{
+				return SkillType.Counter;
+			}
+		}
+		else if (CurrentWeaknessExposed > 1)
         {
-            int random = Random.Range(0, 6);
-            if (random == 0)
+            int random = Random.Range(0, 10);
+            if (random < 2)
             {
                 return SkillType.HeavyAttack;
             }
-            else if (random == 1)
+            else if (random < 4)
             {
                 return SkillType.SwiftAttack;
             }
-            else if (random < 4)
+            else if (random < 7)
             {
                 return SkillType.Block;
             }
@@ -158,7 +171,7 @@ public class Enemy : MonoBehaviour
             if (CurrentWeaknessExposed >= TotalDurability)
             {
                 CurrentWeaknessExposed = TotalDurability;
-                MakeVulnerable();
+                SetVulnerable(true);
             }
 
             UpdateWeaknessImages();
@@ -168,6 +181,10 @@ public class Enemy : MonoBehaviour
 	public void CoverWeakness(int coverAmount)
 	{
 		CurrentWeaknessExposed = Mathf.Max(0, CurrentWeaknessExposed - coverAmount);
+		if (IsVulnerable)
+		{
+			SetVulnerable(false);
+		}
 		UpdateWeaknessImages();
 	}
 
@@ -186,14 +203,14 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-    void MakeVulnerable()
+    void SetVulnerable(bool vulnerable)
     {
-        IsVulnerable = true;
-        VulnerableIcon.SetActive(true);
+        IsVulnerable = vulnerable;
+        VulnerableIcon.SetActive(vulnerable);
 
-		for (int i = 0; i < ExposedWeaknessImages.Length; i++)
+		for (int i = 0; i < TotalDurability; i++)
 		{
-			ExposedWeaknessImages[i].gameObject.SetActive(false);
+			ExposedWeaknessImages[i].gameObject.SetActive(!vulnerable);
 		}
     }
 

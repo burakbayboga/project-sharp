@@ -25,7 +25,14 @@ public class KillingBlow : Skill
 		}
 		else if (GameController.instance.IsCurrentEnemyVulnerable())
         {
-            return BaseCost;
+			if (enemyAction == SkillType.Block)
+			{
+				return BaseCost + 1;
+			}
+			else
+			{
+				return BaseCost;
+			}
         }
         else
         {
