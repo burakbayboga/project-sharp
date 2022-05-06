@@ -137,6 +137,11 @@ public class Enemy : MonoBehaviour
     {
         IsVulnerable = true;
         VulnerableIcon.SetActive(true);
+
+		for (int i = 0; i < ExposedWeaknessImages.Length; i++)
+		{
+			ExposedWeaknessImages[i].gameObject.SetActive(false);
+		}
     }
 
     public void ResetIcons()
