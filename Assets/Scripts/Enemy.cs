@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
 	public Sprite[] skillSprites;
 
-    Skill CurrentAction;
+    public Skill CurrentAction;
 
     public int TotalDurability;
 	public Hex currentHex;
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
 	public void MoveTurn()
 	{
-		if (currentHex.IsAdjacentToPlayer() || Random.Range(0f, 1f) < 0.6f)
+		if (currentHex.IsAdjacentToPlayer() || Random.Range(0f, 1f) < 0.55f)
 		{
 			return;
 		}
@@ -99,11 +99,32 @@ public class Enemy : MonoBehaviour
         }
     }
 
+	bool HasLosToPlayer()
+	{
+		Ray ray = new Ray(transform.position, Player.instance.transform.position - transform.position);
+		float distance = Vector3.Distance(Player.instance.transform.position, transform.position);
+		if (Physics2D.RaycastAll(ray.origin, ray.direction, distance, 1 << 10).Length == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
     SkillType GetActionType()
     {
 		if (!currentHex.IsAdjacentToPlayer())
 		{
-			return SkillType.ShootArrow;
+			if (HasLosToPlayer())
+			{
+				return SkillType.ShootArrow;
+			}
+			else
+			{
+				return SkillType.None;
+			}
 		}
 
 		if (IsVulnerable)
@@ -153,6 +174,13 @@ public class Enemy : MonoBehaviour
     {
 		SkillType action = GetActionType();
 		CurrentAction = Skill.GetSkillForType(action);
+
+		if (CurrentAction == null)
+		{
+			// TODO: まじか...
+			return;
+		}
+
 		CurrentActionImage.sprite = skillSprites[(int)action];
 
 		Color color = CurrentActionImage.color;

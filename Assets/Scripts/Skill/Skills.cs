@@ -66,7 +66,6 @@ public class Skill
 			case SkillType.DeflectArrow:
 				return DeflectArrow;
 			default:
-				Debug.Log("something's wrong i can feel it");
 				return null;
 		}
 	}

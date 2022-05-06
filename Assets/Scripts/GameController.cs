@@ -131,6 +131,11 @@ public class GameController : MonoBehaviour
     {
         foreach (KeyValuePair<Enemy, Clash> clash in Clashes)
         {
+			if (clash.Value.Action == null)
+			{
+				// TODO: まじか
+				continue;
+			}
 			clash.Value.Action.HandleClash(clash.Key, clash.Value.Reaction);
 			if (clash.Value.Reaction == null && clash.Key.IsDefensive())
 			{
