@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
 	public void MoveTurn()
 	{
-		if (currentHex.IsAdjacentToPlayer() || Random.Range(0f, 1f) < 0.55f)
+		if (currentHex.IsAdjacentToPlayer() || Random.Range(0f, 1f) < 0.6f)
 		{
 			return;
 		}
