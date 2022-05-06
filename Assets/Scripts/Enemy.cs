@@ -48,9 +48,44 @@ public class Enemy : MonoBehaviour
 		rend.flipX = flip;
 	}
 
-	void GoTowardsPlayer()
+	public void MoveTurn()
 	{
+		if (currentHex.IsAdjacentToPlayer() || Random.Range(0f, 1f) < 0.55f)
+		{
+			return;
+		}
 
+		Hex newHex = GetHexCloserToPlayer();
+		currentHex.isOccupiedByEnemy = false;
+		transform.position = newHex.transform.position + Hex.posOffset;
+		newHex.isOccupiedByEnemy = true;
+		currentHex = newHex;
+	}
+
+	Hex GetHexCloserToPlayer()
+	{
+		Hex closestHex = currentHex;
+		Hex playerHex = Player.instance.currentHex;
+		float closestDistance = Vector3.Distance(closestHex.transform.position, playerHex.transform.position);
+
+		for (int i = 0; i < currentHex.adjacents.Length; i++)
+		{
+			Hex traverse = currentHex.adjacents[i];
+			if (traverse.isOccupied)
+			{
+				continue;
+			}
+
+			float traverseDistance = Vector3.Distance(traverse.transform.position, playerHex.transform.position);
+			if (traverseDistance < closestDistance)
+			{
+				closestDistance = traverseDistance;
+				closestHex = traverse;
+			}
+		}
+
+
+		return closestHex;
 	}
 
     void InitWeaknessIcons()

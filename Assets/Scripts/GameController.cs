@@ -82,6 +82,11 @@ public class GameController : MonoBehaviour
 		// TODO: should enemies even move?
 		CurrentTurnState = TurnState.EnemyMovement;
         TurnStateText.text = CurrentTurnState.ToString();
+
+        foreach (KeyValuePair<Enemy, Clash> clash in Clashes)
+		{
+			clash.Key.MoveTurn();
+		}
 		ProgressTurn();
 	}
 

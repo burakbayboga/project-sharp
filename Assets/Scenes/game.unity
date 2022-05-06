@@ -2273,6 +2273,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4204724682709242236, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4204724682709242238, guid: f25ae309c7e8a97428091c48a05d2aed,
         type: 3}
       propertyPath: m_Pivot.x

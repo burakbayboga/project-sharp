@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
         ResourceRecharge = new Resource
         {
-            Focus = 3,
+            Focus = 4,
             Strength = 2,
             Stability = 3
         };
