@@ -38,7 +38,7 @@ public class GameController : MonoBehaviour
 
     Enemy CurrentEnemy;
 
-    TurnState CurrentTurnState;
+    public TurnState CurrentTurnState;
 
     public bool IsGameOver;
 

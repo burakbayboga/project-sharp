@@ -10,14 +10,14 @@ public class IngameInput : MonoBehaviour
     public bool IsIngameInputActive;
 
     Camera MainCamera;
-    int CreatureLayerMask;
-	int clickLayermask;
+    int creatureLayermask;
+	int hexLayermask;
 
     void Awake()
     {
         instance = this;
-        CreatureLayerMask = 1 << 8;
-		clickLayermask = 1 << 8 | 1 << 9;
+        creatureLayermask = 1 << 8;
+		hexLayermask = 1 << 9;
         IsIngameInputActive = true;
     }
 
@@ -32,7 +32,16 @@ public class IngameInput : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-				RaycastHit2D[] hits = Physics2D.RaycastAll(MainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickLayermask);
+				int layermask = 1 << 20;
+				if (GameController.instance.CurrentTurnState == TurnState.PlayerMovement)
+				{
+					layermask = hexLayermask;
+				}
+				else if (GameController.instance.CurrentTurnState == TurnState.PlayerAnswer)
+				{
+					layermask = creatureLayermask;
+				}
+				RaycastHit2D[] hits = Physics2D.RaycastAll(MainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, layermask);
                 if (hits.Length > 0)
                 {
                     if (hits[0].collider.CompareTag("Player"))
