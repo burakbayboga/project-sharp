@@ -256,9 +256,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4445491665929223902}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2984477050524504245 stripped
+--- !u!1 &1971028172533008020 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1502919202573004395, guid: 7e5f0c2940a378c40afda1ec39897178,
+  m_CorrespondingSourceObject: {fileID: 2804599848814622794, guid: 7e5f0c2940a378c40afda1ec39897178,
+    type: 3}
+  m_PrefabInstance: {fileID: 4445491665929223902}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6242122079891038942 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7715220213795167232, guid: 7e5f0c2940a378c40afda1ec39897178,
     type: 3}
   m_PrefabInstance: {fileID: 4445491665929223902}
   m_PrefabAsset: {fileID: 0}
@@ -279,4 +285,6 @@ MonoBehaviour:
   stabilityModifier: -1
   modifiedSkillType: 2
   itemType: 0
-  description: {fileID: 2984477050524504245}
+  description: {fileID: 1971028172533008020}
+  shortDescription: {fileID: 6242122079891038942}
+  inInventory: 0

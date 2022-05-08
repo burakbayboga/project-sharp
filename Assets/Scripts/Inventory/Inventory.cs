@@ -15,6 +15,7 @@ public class Inventory : MonoBehaviour
 	public void PutItemIntoInventory(Item item)
 	{
 		item.description.SetActive(false);
+		item.shortDescription.SetActive(true);
 		item.transform.SetParent(panel.transform, false);
 		item.inInventory = true;
 	}

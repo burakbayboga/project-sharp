@@ -13,6 +13,7 @@ public class Item : MonoBehaviour
 	public ItemType itemType;
 
 	public GameObject description;
+	public GameObject shortDescription;
 
 	public bool inInventory;
 
@@ -24,22 +25,6 @@ public class Item : MonoBehaviour
 			Strength = strengthModifier,
 			Stability = stabilityModifier
 		};
-	}
-
-	public void OnMouseEnter()
-	{
-		if (inInventory)
-		{
-			description.SetActive(true);
-		}
-	}
-
-	public void OnMouseExit()
-	{
-		if (inInventory)
-		{
-			description.SetActive(false);
-		}
 	}
 
 	public void OnItemClicked()

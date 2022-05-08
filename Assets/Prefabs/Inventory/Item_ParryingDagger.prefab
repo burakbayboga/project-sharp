@@ -193,10 +193,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_ParryingDagger
       objectReference: {fileID: 0}
+    - target: {fileID: 2804599848814622794, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364870718956217431, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9f00a6657a2ba044f92d97081b113e02,
+        type: 3}
+    - target: {fileID: 4610469536206654841, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_Text
+      value: Counter (
+      objectReference: {fileID: 0}
     - target: {fileID: 6477442196525717261, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
       propertyPath: m_Text
       value: Modifies the cost of Counter (
+      objectReference: {fileID: 0}
+    - target: {fileID: 7249115688893829530, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715220213795167232, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8520655702181952687, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
@@ -277,9 +303,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7494684986111014215}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8996231918444059436 stripped
+--- !u!1 &5686226614827617549 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1502919202573004395, guid: 7e5f0c2940a378c40afda1ec39897178,
+  m_CorrespondingSourceObject: {fileID: 2804599848814622794, guid: 7e5f0c2940a378c40afda1ec39897178,
+    type: 3}
+  m_PrefabInstance: {fileID: 7494684986111014215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &221678728385997127 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7715220213795167232, guid: 7e5f0c2940a378c40afda1ec39897178,
     type: 3}
   m_PrefabInstance: {fileID: 7494684986111014215}
   m_PrefabAsset: {fileID: 0}
@@ -300,4 +332,6 @@ MonoBehaviour:
   stabilityModifier: 1
   modifiedSkillType: 3
   itemType: 1
-  description: {fileID: 8996231918444059436}
+  description: {fileID: 5686226614827617549}
+  shortDescription: {fileID: 221678728385997127}
+  inInventory: 0
