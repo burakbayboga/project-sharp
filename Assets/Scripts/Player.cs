@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
 	public GameObject hawkFocusButton;
 	public GameObject bullStrengthButton;
 	public GameObject turtleStabilityButton;
+	public GameObject hawkFocusIndicator;
+	public GameObject bullStrengthIndicator;
+	public GameObject turtleStabilityIndicator;
 
     public GameObject[] InjuryIcons;
 
@@ -114,6 +117,7 @@ public class Player : MonoBehaviour
 		focusIconsParent.SetActive(false);
 		CurrentResource.Focus = int.MaxValue - 100;	// such workaround
 		hawkFocusButton.SetActive(false);
+		hawkFocusIndicator.SetActive(true);
 	}
 
 	public void OnBullStrengthClicked()
@@ -122,6 +126,7 @@ public class Player : MonoBehaviour
 		strengthIconsParent.SetActive(false);
 		CurrentResource.Strength = int.MaxValue - 100;	// much brain
 		bullStrengthButton.SetActive(false);
+		bullStrengthIndicator.SetActive(true);
 	}
 
 	public void OnTurtleStabilityClicked()
@@ -130,6 +135,7 @@ public class Player : MonoBehaviour
 		stabilityIconsParent.SetActive(false);
 		CurrentResource.Stability = int.MaxValue - 100;	// wow
 		turtleStabilityButton.SetActive(false);
+		turtleStabilityIndicator.SetActive(true);
 	}
 
     public void RechargeResources()
@@ -144,14 +150,17 @@ public class Player : MonoBehaviour
 		if (hawkFocusRemaining == 0)
 		{
 			CurrentResource.Focus = Mathf.Clamp(CurrentResource.Focus + ResourceRecharge.Focus, 0, MaxResource.Focus);
+			hawkFocusIndicator.SetActive(false);
 		}
 		if (bullStrengthRemaining == 0)
 		{
 			CurrentResource.Strength = Mathf.Clamp(CurrentResource.Strength + ResourceRecharge.Strength, 0, MaxResource.Strength);
+			bullStrengthIndicator.SetActive(false);
 		}
 		if (turtleStabilityRemaining == 0)
 		{
 			CurrentResource.Stability = Mathf.Clamp(CurrentResource.Stability + ResourceRecharge.Stability, 0, MaxResource.Stability);
+			turtleStabilityIndicator.SetActive(false);
 		}
         
         HandleResourceIcons();
