@@ -266,6 +266,7 @@ public class Player : MonoBehaviour
 		items.Add(newItem);
 	}
 
+
     void HandleResourceIcons()
     {
 		if (hawkFocusRemaining == 0)

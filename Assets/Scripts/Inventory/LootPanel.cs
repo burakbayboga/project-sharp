@@ -38,7 +38,8 @@ public class LootPanel : MonoBehaviour
 				break;
 			}
 		}
-		pickedItem.gameObject.SetActive(false);
+		
+		Inventory.instance.PutItemIntoInventory(pickedItem);
 		Player.instance.PickItem(pickedItem);
 	}
 

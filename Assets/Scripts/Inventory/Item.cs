@@ -14,6 +14,8 @@ public class Item : MonoBehaviour
 
 	public GameObject description;
 
+	public bool inInventory;
+
 	void Awake()
 	{
 		resourceModifier = new Resource
@@ -24,8 +26,27 @@ public class Item : MonoBehaviour
 		};
 	}
 
+	public void OnMouseEnter()
+	{
+		if (inInventory)
+		{
+			description.SetActive(true);
+		}
+	}
+
+	public void OnMouseExit()
+	{
+		if (inInventory)
+		{
+			description.SetActive(false);
+		}
+	}
+
 	public void OnItemClicked()
 	{
-		GameController.instance.OnItemClicked(itemType);
+		if (!inInventory)
+		{
+			GameController.instance.OnItemClicked(itemType);
+		}
 	}
 }
