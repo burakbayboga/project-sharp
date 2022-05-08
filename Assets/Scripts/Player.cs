@@ -13,9 +13,16 @@ public class Player : MonoBehaviour
     public Color InactiveResourceColor;
     public Color ActiveResourceColor;
 
+	public GameObject focusIconsParent;
+	public GameObject strengthIconsParent;
+	public GameObject stabilityIconsParent;
     public Image[] FocusIcons;
     public Image[] StrengthIcons;
     public Image[] StabilityIcons;
+
+	public GameObject hawkFocusButton;
+	public GameObject bullStrengthButton;
+	public GameObject turtleStabilityButton;
 
     public GameObject[] InjuryIcons;
 
@@ -34,6 +41,12 @@ public class Player : MonoBehaviour
 
     int CurrentInjury;
     int MaxInjury;
+
+	int hawkFocusRemaining = 0;
+	int bullStrengthRemaining = 0;
+	int turtleStabilityRemaining = 0;
+
+	int powerupDuration = 3;
 
     void Awake()
     {
@@ -95,13 +108,51 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	public void OnHawkFocusClicked()
+	{
+		hawkFocusRemaining = powerupDuration;
+		focusIconsParent.SetActive(false);
+		CurrentResource.Focus = int.MaxValue - 100;	// such workaround
+		hawkFocusButton.SetActive(false);
+	}
+
+	public void OnBullStrengthClicked()
+	{
+		bullStrengthRemaining = powerupDuration;
+		strengthIconsParent.SetActive(false);
+		CurrentResource.Strength = int.MaxValue - 100;	// much brain
+		bullStrengthButton.SetActive(false);
+	}
+
+	public void OnTurtleStabilityClicked()
+	{
+		turtleStabilityRemaining = powerupDuration;
+		stabilityIconsParent.SetActive(false);
+		CurrentResource.Stability = int.MaxValue - 100;	// wow
+		turtleStabilityButton.SetActive(false);
+	}
+
     public void RechargeResources()
     {
         // sad shit
         //CurrentResource += ResourceRecharge;
-        CurrentResource.Focus = Mathf.Clamp(CurrentResource.Focus + ResourceRecharge.Focus, 0, MaxResource.Focus);
-        CurrentResource.Strength = Mathf.Clamp(CurrentResource.Strength + ResourceRecharge.Strength, 0, MaxResource.Strength);
-        CurrentResource.Stability = Mathf.Clamp(CurrentResource.Stability + ResourceRecharge.Stability, 0, MaxResource.Stability);
+		hawkFocusRemaining = Mathf.Max(hawkFocusRemaining - 1, 0);
+		bullStrengthRemaining = Mathf.Max(bullStrengthRemaining - 1, 0);
+		turtleStabilityRemaining = Mathf.Max(turtleStabilityRemaining - 1, 0);
+
+
+		if (hawkFocusRemaining == 0)
+		{
+			CurrentResource.Focus = Mathf.Clamp(CurrentResource.Focus + ResourceRecharge.Focus, 0, MaxResource.Focus);
+		}
+		if (bullStrengthRemaining == 0)
+		{
+			CurrentResource.Strength = Mathf.Clamp(CurrentResource.Strength + ResourceRecharge.Strength, 0, MaxResource.Strength);
+		}
+		if (turtleStabilityRemaining == 0)
+		{
+			CurrentResource.Stability = Mathf.Clamp(CurrentResource.Stability + ResourceRecharge.Stability, 0, MaxResource.Stability);
+		}
         
         HandleResourceIcons();
     }
@@ -182,34 +233,52 @@ public class Player : MonoBehaviour
 
     void HandleResourceIcons()
     {
-        for (int i = 0; i < FocusIcons.Length; i++)
-        {
-            if (i < CurrentResource.Focus)
-            {
-                FocusIcons[i].color = ActiveResourceColor;
-            }
-            else
-            {
-                FocusIcons[i].color = InactiveResourceColor;
-            }
+		if (hawkFocusRemaining == 0)
+		{
+			focusIconsParent.SetActive(true);
+			for (int i = 0; i < FocusIcons.Length; i++)
+			{
+				if (i < CurrentResource.Focus)
+				{
+					FocusIcons[i].color = ActiveResourceColor;
+				}
+				else
+				{
+					FocusIcons[i].color = InactiveResourceColor;
+				}
+			}
+		}
 
-            if (i < CurrentResource.Strength)
-            {
-                StrengthIcons[i].color = ActiveResourceColor;
-            }
-            else
-            {
-                StrengthIcons[i].color = InactiveResourceColor;
-            }
+		if (bullStrengthRemaining == 0)
+		{
+			strengthIconsParent.SetActive(true);
+			for (int i = 0; i < StrengthIcons.Length; i++)
+			{
+				if (i < CurrentResource.Strength)
+				{
+					StrengthIcons[i].color = ActiveResourceColor;
+				}
+				else
+				{
+					StrengthIcons[i].color = InactiveResourceColor;
+				}
+			}
+		}
 
-            if (i < CurrentResource.Stability)
-            {
-                StabilityIcons[i].color = ActiveResourceColor;
-            }
-            else
-            {
-                StabilityIcons[i].color = InactiveResourceColor;
-            }
-        }
+		if (turtleStabilityRemaining == 0)
+		{
+			stabilityIconsParent.SetActive(true);
+			for (int i = 0; i < StabilityIcons.Length; i++)
+			{
+				if (i < CurrentResource.Stability)
+				{
+					StabilityIcons[i].color = ActiveResourceColor;
+				}
+				else
+				{
+					StabilityIcons[i].color = InactiveResourceColor;
+				}		
+			}
+		}
     }
 }
