@@ -42,6 +42,41 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7494684984951048700}
+    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnItemClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Item, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1885035236955616335, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
       propertyPath: m_Sprite
@@ -199,4 +234,5 @@ MonoBehaviour:
   strengthModifier: 1
   stabilityModifier: 1
   modifiedSkillType: 3
+  itemType: 1
   description: {fileID: 8996231918444059436}

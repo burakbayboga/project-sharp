@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     public Resource CurrentResource;
     public Resource MaxResource;
 
+	public List<Item> items;
+
 	public Hex currentHex;
 
     SkillButton HeavyAttackButton;
@@ -230,7 +232,12 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        Resource unspentResource = CurrentResource + GameController.instance.GetResourceSpentOnCurrentEnemy();
+		skillCost += ApplyItemsToSkillCost(skill.Type);
+
+		Resource previouslySpent = GameController.instance.GetResourceSpentOnCurrentEnemy(out SkillType previousSkill);
+		previouslySpent += ApplyItemsToSkillCost(previousSkill);
+
+		Resource unspentResource = CurrentResource + previouslySpent;
 
         if (skillCost <= unspentResource)
         {
@@ -239,6 +246,25 @@ public class Player : MonoBehaviour
             HandleResourceIcons();
         }
     }
+
+	Resource ApplyItemsToSkillCost(SkillType skillType)
+	{
+		Resource itemModifier = new Resource();
+		for (int i = 0; i < items.Count; i++)
+		{
+			if (items[i].modifiedSkillType == skillType)
+			{
+				itemModifier += items[i].resourceModifier;
+			}
+		}
+
+		return itemModifier;
+	}
+
+	public void PickItem(Item newItem)
+	{
+		items.Add(newItem);
+	}
 
     void HandleResourceIcons()
     {

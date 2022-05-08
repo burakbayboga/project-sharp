@@ -10,6 +10,7 @@ public class Item : MonoBehaviour
 
     public Resource resourceModifier;
 	public SkillType modifiedSkillType;
+	public ItemType itemType;
 
 	public GameObject description;
 
@@ -21,5 +22,10 @@ public class Item : MonoBehaviour
 			Strength = strengthModifier,
 			Stability = stabilityModifier
 		};
+	}
+
+	public void OnItemClicked()
+	{
+		GameController.instance.OnItemClicked(itemType);
 	}
 }

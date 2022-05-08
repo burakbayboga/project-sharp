@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
 
     public Text TurnStateText;
     public GameObject SkillsParent;
+
+	public LootPanel lootPanel;
     
     public SkillButton SwiftAttackSkillButton;
     public SkillButton HeavyAttackSkillButton;
@@ -34,6 +36,8 @@ public class GameController : MonoBehaviour
     public TurnState CurrentTurnState;
 
     public bool IsGameOver;
+
+	bool pendingLootTurn;
 
     void Awake()
     {
@@ -110,10 +114,36 @@ public class GameController : MonoBehaviour
 				EndTurn();
 				break;
 			case TurnState.Clash:
+				if (pendingLootTurn)
+				{
+					EnterLootTurn();
+				}
+				else
+				{
+					CycleTurn();
+				}
+				break;
+			case TurnState.Loot:
 				CycleTurn();
 				break;
         }
     }
+
+	void EnterLootTurn()
+	{
+		pendingLootTurn = false;
+		CurrentTurnState = TurnState.Loot;
+		if (lootPanel.PoolHasItem())
+		{
+			lootPanel.gameObject.SetActive(true);
+			lootPanel.Fill();
+			TurnProgressButton.interactable = false;
+		}
+		else
+		{
+			ProgressTurn();
+		}
+	}
 
 	void CycleTurn()
 	{
@@ -218,6 +248,7 @@ public class GameController : MonoBehaviour
         {
             WaveManager.instance.SendNewWave();
 			Player.instance.ResetInjuries();
+			pendingLootTurn = true;
         }
     }
 
@@ -279,15 +310,17 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public Resource GetResourceSpentOnCurrentEnemy()
+    public Resource GetResourceSpentOnCurrentEnemy(out SkillType skillType)
     {
         Clash currentClash = Clashes[CurrentEnemy];
         if (currentClash.Reaction != null)
         {
+			skillType = currentClash.Reaction.Type;
             return currentClash.Reaction.GetTotalCost(currentClash.Action.Type);
         }
         else
         {
+			skillType = SkillType.None;
             return new Resource();
         }
     }
@@ -377,8 +410,16 @@ public class GameController : MonoBehaviour
     {
         Application.Quit();
     }
-}
 
+
+	public void OnItemClicked(ItemType itemType)
+	{
+		TurnProgressButton.interactable = true;
+		lootPanel.OnItemPicked(itemType);
+		lootPanel.gameObject.SetActive(false);
+		ProgressTurn();
+	}
+}
 
 public class Clash
 {
@@ -393,5 +434,6 @@ public enum TurnState
 	PlayerMovement,	// player moves, player resolve
 	EnemyAction,	// enemy actions appear, auto resolve
 	PlayerAnswer,	// player answers, player resolve
-	Clash			// handle clash, auto resolve
+	Clash,			// handle clash, auto resolve
+	Loot			// new items. resolved when item is picked. this state is only reached after wave is cleared
 }
