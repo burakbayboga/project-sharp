@@ -11,6 +11,8 @@ public class Item : MonoBehaviour
     public Resource resourceModifier;
 	public SkillType modifiedSkillType;
 
+	public GameObject description;
+
 	void Awake()
 	{
 		resourceModifier = new Resource
