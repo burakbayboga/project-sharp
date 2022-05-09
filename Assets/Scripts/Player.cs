@@ -179,7 +179,6 @@ public class Player : MonoBehaviour
             InjuryIcons[CurrentInjury].SetActive(true);
             CurrentInjury++;
             MaxResource = (MaxResource / 2) + 1;
-            CurrentResource += 0;   // blood for the blood god
             HandleResourceIcons();
         }
     }
@@ -232,9 +231,7 @@ public class Player : MonoBehaviour
                 break;
         }
 
-		skillCost += ApplyItemsToSkillCost(skill.Type);
-
-		Resource previouslySpent = GameController.instance.GetResourceSpentOnCurrentEnemy(out SkillType previousSkill);
+		Resource previouslySpent = GameController.instance.GetResourceSpentOnCurrentEnemy(out Skill previousSkill);
 		previouslySpent += ApplyItemsToSkillCost(previousSkill);
 
 		Resource unspentResource = CurrentResource + previouslySpent;
@@ -247,8 +244,9 @@ public class Player : MonoBehaviour
         }
     }
 
-	Resource ApplyItemsToSkillCost(SkillType skillType)
+	public Resource ApplyItemsToSkillCost(Skill skill)
 	{
+		SkillType skillType = skill != null ? skill.Type : SkillType.None;
 		Resource itemModifier = new Resource();
 		for (int i = 0; i < items.Count; i++)
 		{

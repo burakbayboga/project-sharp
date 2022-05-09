@@ -310,17 +310,16 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public Resource GetResourceSpentOnCurrentEnemy(out SkillType skillType)
+    public Resource GetResourceSpentOnCurrentEnemy(out Skill skill)
     {
         Clash currentClash = Clashes[CurrentEnemy];
+		skill = currentClash.Reaction;
         if (currentClash.Reaction != null)
         {
-			skillType = currentClash.Reaction.Type;
             return currentClash.Reaction.GetTotalCost(currentClash.Action.Type);
         }
         else
         {
-			skillType = SkillType.None;
             return new Resource();
         }
     }
@@ -329,24 +328,22 @@ public class GameController : MonoBehaviour
     {
 		SkillType enemyActionType = Clashes[CurrentEnemy].Action.Type;
 
-        HeavyAttackSkillButton.HandleCostAndDamage(Skill.HeavyAttack.GetTotalCost(enemyActionType),
-									Skill.HeavyAttack.GetDamageAgainstEnemyAction(enemyActionType));
-
-        SwiftAttackSkillButton.HandleCostAndDamage(Skill.SwiftAttack.GetTotalCost(enemyActionType),
-									Skill.SwiftAttack.GetDamageAgainstEnemyAction(enemyActionType));
-
-        BlockSkillButton.HandleCostAndDamage(Skill.Block.GetTotalCost(enemyActionType),
-									Skill.Block.GetDamageAgainstEnemyAction(enemyActionType));
-
-        CounterSkillButton.HandleCostAndDamage(Skill.Counter.GetTotalCost(enemyActionType),
-									Skill.Counter.GetDamageAgainstEnemyAction(enemyActionType));
-
-        KillingBlowSkillButton.HandleCostAndDamage(Skill.KillingBlow.GetTotalCost(enemyActionType),
-									Skill.KillingBlow.GetDamageAgainstEnemyAction(enemyActionType));
-
-		DeflectArrowSkillButton.HandleCostAndDamage(Skill.DeflectArrow.GetTotalCost(enemyActionType),
-									Skill.DeflectArrow.GetDamageAgainstEnemyAction(enemyActionType));
+		HandleButtonIconsForSkill(Skill.HeavyAttack, enemyActionType, HeavyAttackSkillButton);
+		HandleButtonIconsForSkill(Skill.SwiftAttack, enemyActionType, SwiftAttackSkillButton);
+		HandleButtonIconsForSkill(Skill.Block, enemyActionType, BlockSkillButton);
+		HandleButtonIconsForSkill(Skill.Counter, enemyActionType, CounterSkillButton);
+		HandleButtonIconsForSkill(Skill.KillingBlow, enemyActionType, KillingBlowSkillButton);
+		HandleButtonIconsForSkill(Skill.DeflectArrow, enemyActionType, DeflectArrowSkillButton);
     }
+
+	void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
+	{
+		Resource cost = skill.GetTotalCost(enemyActionType);
+		Resource itemModifier = Player.instance.ApplyItemsToSkillCost(skill);
+		cost += itemModifier;
+		int damage = skill.GetDamageAgainstEnemyAction(enemyActionType);
+		skillButton.HandleCostAndDamage(cost, damage);
+	}
 
     public void OnPlayerClicked()
     {

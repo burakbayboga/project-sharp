@@ -88,24 +88,28 @@ public struct Resource
     public int Strength;
     public int Stability;
 
+	public void PrintCost()
+	{
+		Debug.Log("Foc: " + Focus + "  Str: " + Strength + "  Sta: " + Stability);
+	}
+
     public static Resource operator + (Resource a, Resource b)
     {
         return new Resource
         {
-            Focus = Mathf.Clamp(a.Focus + b.Focus, 0, int.MaxValue),
-            Strength = Mathf.Clamp(a.Strength + b.Strength, 0, int.MaxValue),
-            Stability = Mathf.Clamp(a.Stability + b.Stability, 0, int.MaxValue),
+			Focus = a.Focus + b.Focus,
+            Strength = a.Strength + b.Strength,
+            Stability = a.Stability + b.Stability
         };
     }
 
-    // skulls for the skull throne
     public static Resource operator + (Resource a, int b)
     {
         return new Resource
         {
-            Focus = Mathf.Clamp(a.Focus + b, 0, Player.instance.MaxResource.Focus),
-            Strength = Mathf.Clamp(a.Strength + b, 0, Player.instance.MaxResource.Strength),
-            Stability = Mathf.Clamp(a.Stability + b, 0, Player.instance.MaxResource.Stability)
+            Focus = a.Focus + b,
+            Strength = a.Strength + b,
+            Stability = a.Stability + b
         };
     }
 
@@ -113,9 +117,9 @@ public struct Resource
     {
         return new Resource
         {
-            Focus = Mathf.Clamp(a.Focus / b, 0, int.MaxValue),
-            Strength = Mathf.Clamp(a.Strength / b, 0, int.MaxValue),
-            Stability = Mathf.Clamp(a.Stability / b, 0, int.MaxValue)
+            Focus = a.Focus / b,
+            Strength = a.Strength / b,
+            Stability = a.Stability / b
         };
     }
 
@@ -123,9 +127,9 @@ public struct Resource
     {
         return new Resource
         {
-            Focus = Mathf.Clamp(a.Focus - b.Focus, 0, int.MaxValue),
-            Strength = Mathf.Clamp(a.Strength - b.Strength, 0, int.MaxValue),
-            Stability = Mathf.Clamp(a.Stability - b.Stability, 0, int.MaxValue)
+            Focus = a.Focus - b.Focus,
+            Strength = a.Strength - b.Strength,
+            Stability = a.Stability - b.Stability
         };
     }
 
