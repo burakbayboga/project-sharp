@@ -409,10 +409,10 @@ public class GameController : MonoBehaviour
     }
 
 
-	public void OnItemClicked(ItemType itemType)
+	public void OnItemClicked(Item item)
 	{
 		TurnProgressButton.interactable = true;
-		lootPanel.OnItemPicked(itemType);
+		lootPanel.OnItemPicked(item);
 		lootPanel.gameObject.SetActive(false);
 		ProgressTurn();
 	}

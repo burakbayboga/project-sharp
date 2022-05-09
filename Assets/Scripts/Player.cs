@@ -16,9 +16,13 @@ public class Player : MonoBehaviour
 	public GameObject focusIconsParent;
 	public GameObject strengthIconsParent;
 	public GameObject stabilityIconsParent;
-    public Image[] FocusIcons;
-    public Image[] StrengthIcons;
-    public Image[] StabilityIcons;
+	public GameObject focusIconPrefab;
+	public GameObject strengthIconPrefab;
+	public GameObject stabilityIconPrefab;
+
+    List<Image> FocusIcons;
+    List<Image> StrengthIcons;
+    List<Image> StabilityIcons;
 
 	public GameObject hawkFocusButton;
 	public GameObject bullStrengthButton;
@@ -57,12 +61,7 @@ public class Player : MonoBehaviour
     {
         instance = this;
 
-        MaxResource = new Resource
-        {
-            Focus = FocusIcons.Length,
-            Strength = StrengthIcons.Length,
-            Stability = StabilityIcons.Length
-        };
+        InitResources();
 
         CurrentResource = new Resource
         {
@@ -71,16 +70,33 @@ public class Player : MonoBehaviour
             Stability = MaxResource.Stability
         };
 
-        ResourceRecharge = new Resource
-        {
-            Focus = 4,
-            Strength = 2,
-            Stability = 3
-        };
-
         CurrentInjury = 0;
         MaxInjury = InjuryIcons.Length;
     }
+
+	void InitResources()
+	{
+		FocusIcons = new List<Image>();
+		for (int i = 0; i < MaxResource.Focus; i++)
+		{
+			Image icon = Instantiate(focusIconPrefab, focusIconsParent.transform).GetComponent<Image>();
+			FocusIcons.Add(icon);
+		}
+
+		StrengthIcons = new List<Image>();
+		for (int i = 0; i < MaxResource.Strength; i++)
+		{
+			Image icon = Instantiate(strengthIconPrefab, strengthIconsParent.transform).GetComponent<Image>();
+			StrengthIcons.Add(icon);
+		}
+
+		StabilityIcons = new List<Image>();
+		for (int i = 0; i < MaxResource.Stability; i++)
+		{
+			Image icon = Instantiate(stabilityIconPrefab, stabilityIconsParent.transform).GetComponent<Image>();
+			StabilityIcons.Add(icon);
+		}
+	}
 
     void Start()
     {
@@ -102,9 +118,9 @@ public class Player : MonoBehaviour
 		CurrentInjury = 0;
 		MaxResource = new Resource
 		{
-			Focus = FocusIcons.Length,
-			Strength = StrengthIcons.Length,
-			Stability = StabilityIcons.Length
+			Focus = FocusIcons.Count,
+			Strength = StrengthIcons.Count,
+			Stability = StabilityIcons.Count
 		};
 
 		for (int i = 0; i < InjuryIcons.Length; i++)
@@ -250,7 +266,7 @@ public class Player : MonoBehaviour
 		Resource itemModifier = new Resource();
 		for (int i = 0; i < items.Count; i++)
 		{
-			if (items[i].modifiedSkillType == skillType)
+			if (items[i].itemType == ItemType.skillModifier && items[i].modifiedSkillType == skillType)
 			{
 				itemModifier += items[i].resourceModifier;
 			}
@@ -262,6 +278,32 @@ public class Player : MonoBehaviour
 	public void PickItem(Item newItem)
 	{
 		items.Add(newItem);
+		if (newItem.itemType == ItemType.resourceBooster)
+		{
+			IncreaseMaxResource(newItem.resourceModifier);
+			HandleResourceIcons();
+		}
+	}
+
+	void IncreaseMaxResource(Resource resource)
+	{
+		MaxResource += resource;
+		for (int i = 0; i < resource.Focus; i++)
+		{
+			Image icon = Instantiate(focusIconPrefab, focusIconsParent.transform).GetComponent<Image>();
+			FocusIcons.Add(icon);
+		}
+		for (int i = 0; i < resource.Strength; i++)
+		{
+			Image icon = Instantiate(strengthIconPrefab, strengthIconsParent.transform).GetComponent<Image>();
+			StrengthIcons.Add(icon);
+		}
+		for (int i = 0; i < resource.Stability; i++)
+		{
+			Image icon = Instantiate(stabilityIconPrefab, stabilityIconsParent.transform).GetComponent<Image>();
+			StabilityIcons.Add(icon);
+		}
+		CurrentResource += resource;
 	}
 
 
@@ -270,7 +312,7 @@ public class Player : MonoBehaviour
 		if (hawkFocusRemaining == 0)
 		{
 			focusIconsParent.SetActive(true);
-			for (int i = 0; i < FocusIcons.Length; i++)
+			for (int i = 0; i < FocusIcons.Count; i++)
 			{
 				if (i < CurrentResource.Focus)
 				{
@@ -286,7 +328,7 @@ public class Player : MonoBehaviour
 		if (bullStrengthRemaining == 0)
 		{
 			strengthIconsParent.SetActive(true);
-			for (int i = 0; i < StrengthIcons.Length; i++)
+			for (int i = 0; i < StrengthIcons.Count; i++)
 			{
 				if (i < CurrentResource.Strength)
 				{
@@ -302,7 +344,7 @@ public class Player : MonoBehaviour
 		if (turtleStabilityRemaining == 0)
 		{
 			stabilityIconsParent.SetActive(true);
-			for (int i = 0; i < StabilityIcons.Length; i++)
+			for (int i = 0; i < StabilityIcons.Count; i++)
 			{
 				if (i < CurrentResource.Stability)
 				{

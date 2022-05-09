@@ -19,19 +19,19 @@ public class LootPanel : MonoBehaviour
 		}
 
 		int count = Mathf.Min(2, itemPool.Count);
-		itemPool = itemPool.OrderBy(r => Random.Range(0f, 1f) < 0.5f).ToList();
+		itemPool = itemPool.OrderBy(r => Random.Range(0f, 1f)).ToList();
 		for (int i = 0; i < count; i++)
 		{
 			itemPool[i].gameObject.SetActive(true);
 		}
 	}
 
-	public void OnItemPicked(ItemType _itemType)
+	public void OnItemPicked(Item item)
 	{
 		Item pickedItem = null;
 		for (int i = 0; i < itemPool.Count; i++)
 		{
-			if (itemPool[i].itemType == _itemType)
+			if (itemPool[i] == item)
 			{
 				pickedItem = itemPool[i];
 				itemPool.RemoveAt(i);
@@ -63,6 +63,6 @@ public class LootPanel : MonoBehaviour
 
 public enum ItemType
 {
-	shield = 0,
-	parryingDagger = 1
+	skillModifier = 0,
+	resourceBooster = 1
 }

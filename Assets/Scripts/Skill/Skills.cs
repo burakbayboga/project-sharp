@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Skill
 {
@@ -82,6 +83,7 @@ public class Skill
     }
 }
 
+[Serializable]
 public struct Resource
 {
     public int Focus;

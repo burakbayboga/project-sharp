@@ -130,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 6901594448101603420}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.35, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 6901594447979951911}
   m_Father: {fileID: 0}
@@ -152,39 +152,37 @@ MonoBehaviour:
   rend: {fileID: 3505319535106679005}
   InactiveResourceColor: {r: 0.41568628, g: 0.41568628, b: 0.41568628, a: 1}
   ActiveResourceColor: {r: 1, g: 1, b: 1, a: 1}
-  FocusIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  StrengthIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  StabilityIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  focusIconsParent: {fileID: 0}
+  strengthIconsParent: {fileID: 0}
+  stabilityIconsParent: {fileID: 0}
+  focusIconPrefab: {fileID: 1373258702491010774, guid: 0856ffc33ee55a34c9b0684aed89d497,
+    type: 3}
+  strengthIconPrefab: {fileID: 6062261367876441311, guid: b3a8648ee0ea81647aed4da344e08ba5,
+    type: 3}
+  stabilityIconPrefab: {fileID: 8526658764574756138, guid: 2d03d5b150bda814d8dc395966ce866a,
+    type: 3}
+  hawkFocusButton: {fileID: 0}
+  bullStrengthButton: {fileID: 0}
+  turtleStabilityButton: {fileID: 0}
+  hawkFocusIndicator: {fileID: 0}
+  bullStrengthIndicator: {fileID: 0}
+  turtleStabilityIndicator: {fileID: 0}
   InjuryIcons:
   - {fileID: 6901594448494771446}
   - {fileID: 6901594449659569826}
+  ResourceRecharge:
+    Focus: 4
+    Strength: 2
+    Stability: 3
+  CurrentResource:
+    Focus: 0
+    Strength: 0
+    Stability: 0
+  MaxResource:
+    Focus: 8
+    Strength: 8
+    Stability: 8
+  items: []
   currentHex: {fileID: 0}
 --- !u!61 &5859783567178802665
 BoxCollider2D:

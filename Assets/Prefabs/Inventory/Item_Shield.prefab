@@ -32,6 +32,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 1502919203274970047, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -280,9 +285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996012ba698532e4bb58b1b4cdf1215f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusModifier: -1
-  strengthModifier: 1
-  stabilityModifier: -1
+  resourceModifier:
+    Focus: -1
+    Strength: 1
+    Stability: -1
   modifiedSkillType: 2
   itemType: 0
   description: {fileID: 1971028172533008020}
