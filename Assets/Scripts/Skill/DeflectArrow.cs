@@ -21,6 +21,7 @@ public class DeflectArrow : Skill
 	{
 		Resource modifier;
 		Resource totalCost;
+		Resource itemModifier = GetItemModifier();
 
 		switch (enemyAction)
 		{
@@ -31,7 +32,7 @@ public class DeflectArrow : Skill
 					Strength = 0,
 					Stability = 0
 				};
-				totalCost = BaseCost + modifier;
+				totalCost = BaseCost + modifier + itemModifier;
 
 				break;
 			default:
@@ -40,6 +41,7 @@ public class DeflectArrow : Skill
 				break;
 		}
 
+		totalCost.Clamp();
 		return totalCost;
 	}
 }

@@ -24,6 +24,9 @@ public class Skewer : Skill
 
 	public override Resource GetTotalCost(SkillType enemyAction)
 	{
-		return BaseCost;
+		Resource itemModifier = GetItemModifier();
+		Resource totalCost = BaseCost + itemModifier;
+		totalCost.Clamp();
+		return totalCost;
 	}
 }

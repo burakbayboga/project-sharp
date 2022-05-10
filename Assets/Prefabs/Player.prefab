@@ -111,9 +111,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6901594448101603424}
   - component: {fileID: 6901594448101603425}
-  - component: {fileID: 5859783567178802665}
   - component: {fileID: 3505319535106679005}
   - component: {fileID: 9099523828780621430}
+  - component: {fileID: 5676441034108480144}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -184,32 +184,6 @@ MonoBehaviour:
     Stability: 8
   items: []
   currentHex: {fileID: 0}
---- !u!61 &5859783567178802665
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6901594448101603420}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.23087697}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.631579, y: 1.9473684}
-    newSize: {x: 0.5, y: 0.37}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.4617538}
-  m_EdgeRadius: 0
 --- !u!212 &3505319535106679005
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -280,6 +254,38 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!60 &5676441034108480144
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901594448101603420}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.631579, y: 1.9473684}
+    newSize: {x: 0.5, y: 0.37}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.4308741, y: 0.5199673}
+      - {x: -0.830602, y: -0.117362946}
+      - {x: -0.3758538, y: -0.8811182}
+      - {x: -0.37585336, y: -0.8812803}
+      - {x: 0.31307608, y: -0.8670643}
+      - {x: 0.73744184, y: -0.22968346}
+      - {x: 0.34150806, y: 0.54129124}
 --- !u!1 &6901594448494771446
 GameObject:
   m_ObjectHideFlags: 0

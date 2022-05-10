@@ -38,6 +38,21 @@ public class Skill
 
 	public virtual int GetDamageAgainstEnemyAction(SkillType enemyAction) { return 0; }
 
+	protected Resource GetItemModifier()
+	{
+		List<Item> items = Player.instance.items;
+		Resource itemModifier = new Resource();
+		for (int i = 0; i < items.Count; i++)
+		{
+			if (items[i].modifiedSkillType == Type)
+			{
+				itemModifier += items[i].resourceModifier;
+			}
+		}
+
+		return itemModifier;
+	}
+
 	public virtual int GetCoveredWeaknessByEnemy() { return 0; }
 
     public static HeavyAttack HeavyAttack;
@@ -81,6 +96,7 @@ public class Skill
         KillingBlow = new KillingBlow();
 		ShootArrow = new ShootArrow();
 		DeflectArrow = new DeflectArrow();
+		Skewer = new Skewer();
     }
 }
 
@@ -94,6 +110,13 @@ public struct Resource
 	public void PrintCost()
 	{
 		Debug.Log("Foc: " + Focus + "  Str: " + Strength + "  Sta: " + Stability);
+	}
+
+	public void Clamp()
+	{
+		Focus = Mathf.Max(0, Focus);
+		Strength = Mathf.Max(0, Strength);
+		Stability = Mathf.Max(0, Stability);
 	}
 
     public static Resource operator + (Resource a, Resource b)

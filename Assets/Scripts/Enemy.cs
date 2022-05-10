@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
 
     public Skill CurrentAction;
 	public Skill CurrentPlayerReaction;
+	public Clash CurrentClash;
 
     public int TotalDurability;
 	public Hex currentHex;
@@ -29,7 +30,6 @@ public class Enemy : MonoBehaviour
 
     int CurrentWeaknessCue;
     public bool IsVulnerable { get; private set; }
-	public bool includedInClash;
 
     Coroutine WeaknessCueCoroutine;
 
@@ -172,11 +172,6 @@ public class Enemy : MonoBehaviour
 		return CurrentAction == Skill.Block || CurrentAction == Skill.Counter;
 	}
 
-	public void RegisterPlayerReaction(Skill skill)
-	{
-		CurrentPlayerReaction = skill;
-	}
-
     public void PickAction()
     {
 		SkillType action = GetActionType();
@@ -223,6 +218,7 @@ public class Enemy : MonoBehaviour
 
 	void UpdateWeaknessImages()
 	{
+		StopPreviousWeaknessCue();
 		for (int i = 0; i < ExposedWeaknessImages.Length; i++)
 		{
 			if (i >= CurrentWeaknessExposed)
@@ -267,7 +263,10 @@ public class Enemy : MonoBehaviour
 		SetReactionImage(reactionType);
 		StopPreviousWeaknessCue();
 		CurrentWeaknessCue = damage;
-		WeaknessCueCoroutine = StartCoroutine(WeaknessCue());
+		if (damage > 0)
+		{
+			WeaknessCueCoroutine = StartCoroutine(WeaknessCue());
+		}
 	}
 
     void StopPreviousWeaknessCue()

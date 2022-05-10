@@ -19,19 +19,21 @@ public class KillingBlow : Skill
 
     public override Resource GetTotalCost(SkillType enemyAction)
     {
+		Resource totalCost;
+		Resource itemModifier = GetItemModifier();
 		if (enemyAction == SkillType.ShootArrow)
 		{
-			return new Resource();
+			totalCost =  new Resource();
 		}
 		else if (GameController.instance.IsCurrentEnemyVulnerable())
         {
 			if (enemyAction == SkillType.Block)
 			{
-				return BaseCost;
+				totalCost =  BaseCost + itemModifier;
 			}
 			else
 			{
-				return BaseCost + 1;
+				totalCost =  BaseCost + 1 + itemModifier;
 			}
         }
         else
@@ -42,7 +44,11 @@ public class KillingBlow : Skill
                 Strength = 4,
                 Stability = 4
             };
-            return BaseCost + modifier;
+
+			totalCost = BaseCost + modifier + itemModifier;
         }
+
+		totalCost.Clamp();
+		return totalCost;
     }
 }

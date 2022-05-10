@@ -35,6 +35,7 @@ public class SwiftAttack : Skill
     {
         Resource modifier;
         Resource totalCost;
+		Resource itemModifier = GetItemModifier();
 
         switch (enemyAction)
         {
@@ -46,7 +47,7 @@ public class SwiftAttack : Skill
                     Strength = 1,
                     Stability = 0
                 };
-                totalCost = BaseCost + modifier;
+                totalCost = BaseCost + modifier + itemModifier;
 
                 break;
             case SkillType.SwiftAttack:
@@ -57,7 +58,7 @@ public class SwiftAttack : Skill
                     Strength = -1,
                     Stability = 0
                 };
-                totalCost = BaseCost + modifier;
+                totalCost = BaseCost + modifier + itemModifier;
 
                 break;
             case SkillType.Block:
@@ -68,7 +69,7 @@ public class SwiftAttack : Skill
                     Strength = 0,
                     Stability = 0
                 };
-                totalCost = BaseCost + modifier;
+                totalCost = BaseCost + modifier + itemModifier;
 
                 break;
             case SkillType.Counter:
@@ -79,7 +80,7 @@ public class SwiftAttack : Skill
                     Strength = 0,
                     Stability = 1
                 };
-                totalCost = BaseCost + modifier;
+                totalCost = BaseCost + modifier + itemModifier;
 
                 break;
             default:
@@ -87,6 +88,7 @@ public class SwiftAttack : Skill
                 break;
         }
 
+		totalCost.Clamp();
         return totalCost;
     }
 }

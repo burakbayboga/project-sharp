@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     SkillButton CounterButton;
     SkillButton KillingBlowButton;
 	SkillButton DeflectArrowButton;
+	SkillButton SkewerButton;
 
     int CurrentInjury;
     int MaxInjury;
@@ -106,6 +107,7 @@ public class Player : MonoBehaviour
         CounterButton = GameController.instance.CounterSkillButton;
         KillingBlowButton = GameController.instance.KillingBlowSkillButton;
 		DeflectArrowButton = GameController.instance.DeflectArrowSkillButton;
+		SkewerButton = GameController.instance.SkewerSkillButton;
     }
 
 	public void SetRendererFlip(bool flip)
@@ -239,6 +241,11 @@ public class Player : MonoBehaviour
 				skill = Skill.DeflectArrow;
 				damage = DeflectArrowButton.Damage;
 				break;
+			case SkillType.Skewer:
+				skillCost = SkewerButton.Cost;
+				skill = Skill.Skewer;
+				damage = SkewerButton.Damage;
+				break;
             case SkillType.None:
             default:
                 skillCost = new Resource();
@@ -247,33 +254,17 @@ public class Player : MonoBehaviour
                 break;
         }
 
-		Resource previouslySpent = GameController.instance.GetResourceSpentOnCurrentEnemy(out Skill previousSkill);
-		previouslySpent += ApplyItemsToSkillCost(previousSkill);
+		Resource previouslySpent = GameController.instance.GetResourceSpentOnCurrentEnemy(skill);
 
 		Resource unspentResource = CurrentResource + previouslySpent;
 
         if (skillCost <= unspentResource)
         {
             CurrentResource = unspentResource - skillCost;
-            GameController.instance.RegisterPlayerAction(skill, damage);
+            GameController.instance.RegisterPlayerAction(skill, damage, skillCost);
             HandleResourceIcons();
         }
     }
-
-	public Resource ApplyItemsToSkillCost(Skill skill)
-	{
-		SkillType skillType = skill != null ? skill.Type : SkillType.None;
-		Resource itemModifier = new Resource();
-		for (int i = 0; i < items.Count; i++)
-		{
-			if (items[i].itemType == ItemType.skillModifier && items[i].modifiedSkillType == skillType)
-			{
-				itemModifier += items[i].resourceModifier;
-			}
-		}
-
-		return itemModifier;
-	}
 
 	public void PickItem(Item newItem)
 	{
