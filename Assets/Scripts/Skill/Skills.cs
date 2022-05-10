@@ -47,6 +47,7 @@ public class Skill
     public static KillingBlow KillingBlow;
 	public static ShootArrow ShootArrow;
 	public static DeflectArrow DeflectArrow;
+	public static Skewer Skewer;
 
 	public static Skill GetSkillForType(SkillType type)
 	{
@@ -155,5 +156,6 @@ public enum SkillType
     KillingBlow = 4,
 	ShootArrow = 5,
 	DeflectArrow = 6,
+	Skewer = 7,
     None = -1
 }

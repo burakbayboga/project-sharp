@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
 	public Sprite[] skillSprites;
 
     public Skill CurrentAction;
+	public Skill CurrentPlayerReaction;
 
     public int TotalDurability;
 	public Hex currentHex;
@@ -28,6 +29,7 @@ public class Enemy : MonoBehaviour
 
     int CurrentWeaknessCue;
     public bool IsVulnerable { get; private set; }
+	public bool includedInClash;
 
     Coroutine WeaknessCueCoroutine;
 
@@ -170,7 +172,12 @@ public class Enemy : MonoBehaviour
 		return CurrentAction == Skill.Block || CurrentAction == Skill.Counter;
 	}
 
-    public void RegisterAction()
+	public void RegisterPlayerReaction(Skill skill)
+	{
+		CurrentPlayerReaction = skill;
+	}
+
+    public void PickAction()
     {
 		SkillType action = GetActionType();
 		CurrentAction = Skill.GetSkillForType(action);
@@ -186,8 +193,6 @@ public class Enemy : MonoBehaviour
 		Color color = CurrentActionImage.color;
 		color.a = 1f;
 		CurrentActionImage.color = color;
-
-		GameController.instance.RegisterEnemyAction(this, CurrentAction);
     }
 
     public void ExposeWeakness(int exposeAmount)
@@ -255,13 +260,15 @@ public class Enemy : MonoBehaviour
         StopPreviousWeaknessCue();
     }
 
-    public void SetReactionImageAndWeaknessCue(SkillType reactionType, int damage)
-    {
-        SetReactionImage(reactionType);
-        StopPreviousWeaknessCue();
-        CurrentWeaknessCue = damage;
-        WeaknessCueCoroutine = StartCoroutine(WeaknessCue());
-    }
+	public void SetPlayerReaction(Skill reaction, int damage)
+	{
+		CurrentPlayerReaction = reaction;
+		SkillType reactionType = reaction == null ? SkillType.None : reaction.Type;
+		SetReactionImage(reactionType);
+		StopPreviousWeaknessCue();
+		CurrentWeaknessCue = damage;
+		WeaknessCueCoroutine = StartCoroutine(WeaknessCue());
+	}
 
     void StopPreviousWeaknessCue()
     {

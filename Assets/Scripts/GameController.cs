@@ -28,7 +28,8 @@ public class GameController : MonoBehaviour
 
     public GameObject BloodEffectPrefab;
 
-    Dictionary<Enemy, Clash> Clashes = new Dictionary<Enemy, Clash>();
+    List<Clash> Clashes = new List<Clash>();
+	List<Enemy> Enemies = new List<Enemy>();
     List<Enemy> EnemiesMarkedForDeath = new List<Enemy>();
 
     Enemy CurrentEnemy;
@@ -51,22 +52,18 @@ public class GameController : MonoBehaviour
         CurrentTurnState = TurnState.NewTurn;
         TurnStateText.text = CurrentTurnState.ToString();
 
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < enemies.Length; i++)
         {
-            Clashes.Add(enemies[i].GetComponent<Enemy>(), new Clash());
+			Enemies.Add(enemies[i].GetComponent<Enemy>());
         }
-
         Skill.InitSkills();
     }
 
-    public void RegisterEnemies(Enemy[] newEnemies)
-    {
-        for (int i = 0; i < newEnemies.Length; i++)
-        {
-            Clashes.Add(newEnemies[i], new Clash());
-        }
-    }
+	public void RegisterNewEnemies(List<Enemy> newEnemies)
+	{
+		Enemies.AddRange(newEnemies);
+	}
 
 	void MakeEnemiesMove()
 	{
@@ -74,10 +71,11 @@ public class GameController : MonoBehaviour
 		CurrentTurnState = TurnState.EnemyMovement;
         TurnStateText.text = CurrentTurnState.ToString();
 
-        foreach (KeyValuePair<Enemy, Clash> clash in Clashes)
+		for (int i = 0; i < Enemies.Count; i++)
 		{
-			clash.Key.MoveTurn();
+			Enemies[i].MoveTurn();
 		}
+        
 		ProgressTurn();
 	}
 
@@ -159,25 +157,35 @@ public class GameController : MonoBehaviour
 
     IEnumerator ProcessCombat()
     {
-        foreach (KeyValuePair<Enemy, Clash> clash in Clashes)
-        {
-			if (clash.Value.Action == null)
+		for (int i = 0; i < Enemies.Count; i++)
+		{
+			Enemy enemy = Enemies[i];
+			if (!enemy.includedInClash)
 			{
-				// TODO: まじか
-				continue;
+				Clash newClash = new Clash()
+				{
+					enemies = new List<Enemy>{ enemy },
+					playerAnswer = null
+				};
+				Clashes.Add(newClash);
+				enemy.includedInClash = true;
 			}
-			clash.Value.Action.HandleClash(clash.Key, clash.Value.Reaction);
-			if (clash.Value.Reaction == null && clash.Key.IsDefensive())
+		}
+
+		for (int i = 0; i < Clashes.Count; i++)
+		{
+			Clash clash = Clashes[i];
+			for (int j = 0; j < clash.enemies.Count; j++)
 			{
-				continue;
+				Enemy enemy = clash.enemies[j];
+				if (enemy.CurrentAction == null)
+				{
+					continue;
+				}
+				enemy.CurrentAction.HandleClash(enemy, clash.playerAnswer);
 			}
-			HandleClashAnimations(clash.Key, clash.Value.Action, clash.Value.Reaction);
-
-			yield return new WaitForSeconds(1.5f);
-
-			clash.Key.transform.position = clash.Key.currentHex.transform.position + Hex.posOffset;
-			Player.instance.transform.position = Player.instance.currentHex.transform.position + Hex.posOffset;
-        }
+			yield return StartCoroutine(HandleClashAnimations(clash));
+		}
 
         KillMarkedEnemies();
         Player.instance.RechargeResources();
@@ -186,27 +194,48 @@ public class GameController : MonoBehaviour
         ProgressTurn();
     }
 
-	void HandleClashAnimations(Enemy enemy, Skill enemyAction, Skill playerReaction)
+	IEnumerator HandleClashAnimations(Clash clash)
 	{
-		bool playerShouldFaceLeft = enemy.transform.position.x < Player.instance.transform.position.x;
-		Player.instance.SetRendererFlip(playerShouldFaceLeft);
-		enemy.SetRendererFlip(!playerShouldFaceLeft);
-
-		if (playerReaction != null)
+		if (clash.enemies.Count > 1)
 		{
-			Player.instance.animator.Play(playerReaction.clip);
+			// TODO: multi enemy animations
 		}
-
-		enemy.animator.Play(enemyAction.clip);
-
-
-		Vector3 basePos = enemy.IsDefensive() ? enemy.transform.position : Player.instance.transform.position;
-		if (enemyAction != Skill.ShootArrow)
+		else
 		{
-			Vector3 offset = playerShouldFaceLeft ? new Vector3(-0.3f, 0f, 0f) : new Vector3(0.3f, 0f, 0f);
-			enemy.transform.position = basePos + offset;
+			Enemy enemy = clash.enemies[0];
+			Skill enemyAction = enemy.CurrentAction;
+			Skill playerReaction = clash.playerAnswer;
 
-			Player.instance.transform.position = basePos - offset;
+			if (enemy.IsDefensive() && playerReaction == null)
+			{
+				yield break;
+			}
+
+			bool playerShouldFaceLeft = enemy.transform.position.x < Player.instance.transform.position.x;
+			Player.instance.SetRendererFlip(playerShouldFaceLeft);
+			enemy.SetRendererFlip(!playerShouldFaceLeft);
+
+			if (playerReaction != null)
+			{
+				Player.instance.animator.Play(playerReaction.clip);
+			}
+			enemy.animator.Play(enemyAction.clip);
+
+
+			Vector3 basePos = enemy.IsDefensive() ? enemy.transform.position : Player.instance.transform.position;
+			if (enemyAction != Skill.ShootArrow)
+			{
+				Vector3 offset = playerShouldFaceLeft ? new Vector3(-0.3f, 0f, 0f) : new Vector3(0.3f, 0f, 0f);
+				enemy.transform.position = basePos + offset;
+
+				Player.instance.transform.position = basePos - offset;
+			}
+
+
+			yield return new WaitForSeconds(1.5f);
+
+			enemy.transform.position = enemy.currentHex.transform.position + Hex.posOffset;
+			Player.instance.transform.position = Player.instance.currentHex.transform.position + Hex.posOffset;
 		}
 	}
 
@@ -237,14 +266,14 @@ public class GameController : MonoBehaviour
         while (EnemiesMarkedForDeath.Count > 0)
         {
             Enemy temp = EnemiesMarkedForDeath[0];
-            Clashes.Remove(temp);
+            Enemies.Remove(temp);
             EnemiesMarkedForDeath.Remove(temp);
             Instantiate(BloodEffectPrefab, temp.transform.position, Quaternion.identity);
 			temp.currentHex.isOccupiedByEnemy = false;
             Destroy(temp.gameObject);
         }
 
-        if (Clashes.Count == 0)
+        if (Enemies.Count == 0)
         {
             WaveManager.instance.SendNewWave();
 			Player.instance.ResetInjuries();
@@ -254,12 +283,14 @@ public class GameController : MonoBehaviour
 
     void ResetClashes()
     {
-        foreach (KeyValuePair<Enemy, Clash> clash in Clashes)
-        {
-            clash.Key.ResetIcons();
-            clash.Value.Reaction = null;
-            clash.Value.Action = null;
-        }
+		for (int i = 0; i < Enemies.Count; i++)
+		{
+			Enemies[i].ResetIcons();
+			Enemies[i].CurrentAction = null;
+			Enemies[i].CurrentPlayerReaction = null;
+			Enemies[i].includedInClash = false;
+		}
+		Clashes.Clear();
     }
 
     void EnterEnemyActionTurn()
@@ -267,10 +298,10 @@ public class GameController : MonoBehaviour
         CurrentTurnState = TurnState.EnemyAction;
         TurnStateText.text = CurrentTurnState.ToString();
 
-        foreach (KeyValuePair<Enemy, Clash> clash in Clashes)
-        {
-            clash.Key.RegisterAction();
-        }
+		for (int i = 0; i < Enemies.Count; i++)
+		{
+			Enemies[i].PickAction();
+		}
 
 		ProgressTurn();
     }
@@ -297,7 +328,7 @@ public class GameController : MonoBehaviour
 
             HandleSkillButtonIcons();
 			
-			bool isEnemyShootingArrow = Clashes[CurrentEnemy].Action.Type == SkillType.ShootArrow;
+			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction.Type == SkillType.ShootArrow;
 			bool isEnemyDefensive = CurrentEnemy.IsDefensive();
 			bool isEnemyVulnerable = CurrentEnemy.IsVulnerable;
 
@@ -312,11 +343,10 @@ public class GameController : MonoBehaviour
 
     public Resource GetResourceSpentOnCurrentEnemy(out Skill skill)
     {
-        Clash currentClash = Clashes[CurrentEnemy];
-		skill = currentClash.Reaction;
-        if (currentClash.Reaction != null)
+		skill = CurrentEnemy.CurrentAction;
+        if (skill != null && CurrentEnemy.CurrentPlayerReaction != null)
         {
-            return currentClash.Reaction.GetTotalCost(currentClash.Action.Type);
+            return CurrentEnemy.CurrentPlayerReaction.GetTotalCost(CurrentEnemy.CurrentAction.Type);
         }
         else
         {
@@ -326,7 +356,7 @@ public class GameController : MonoBehaviour
 
     void HandleSkillButtonIcons()
     {
-		SkillType enemyActionType = Clashes[CurrentEnemy].Action.Type;
+		SkillType enemyActionType = CurrentEnemy.CurrentAction.Type;
 
 		HandleButtonIconsForSkill(Skill.HeavyAttack, enemyActionType, HeavyAttackSkillButton);
 		HandleButtonIconsForSkill(Skill.SwiftAttack, enemyActionType, SwiftAttackSkillButton);
@@ -380,23 +410,48 @@ public class GameController : MonoBehaviour
         CurrentEnemy = null;
     }
 
-    public void RegisterEnemyAction(Enemy enemy, Skill action)
-    {
-        Clashes[enemy].Action = action;
-    }
-
     public void RegisterPlayerAction(Skill reaction, int damage)
     {
-        Clashes[CurrentEnemy].Reaction = reaction;
-        if (reaction == null)
-        {
-            CurrentEnemy.SetReactionImageAndWeaknessCue(SkillType.None, damage);
-        }
-        else
-        {
-            CurrentEnemy.SetReactionImageAndWeaknessCue(reaction.Type, damage);
-        }
+		for (int i = 0; i < Clashes.Count; i++)
+		{
+			if (Clashes[i].enemies.Contains(CurrentEnemy))
+			{
+				Clash clash = Clashes[i];
+				for (int j = 0; j < clash.enemies.Count; j++)
+				{
+					clash.enemies[j].SetPlayerReaction(null, 0);
+				}
+				Clashes.RemoveAt(i);
+			}
+		}
+
+		if (reaction != null)
+		{
+			Clash newClash = new Clash()
+			{
+				enemies = GetAnsweredEnemiesBySkill(reaction),
+				playerAnswer = reaction
+			};
+			for (int i = 0; i < newClash.enemies.Count; i++)
+			{
+				newClash.enemies[i].includedInClash = true;
+			}
+			Clashes.Add(newClash);
+
+			CurrentEnemy.SetPlayerReaction(reaction, damage);
+		}
     }
+
+	List<Enemy> GetAnsweredEnemiesBySkill(Skill skill)
+	{
+		List<Enemy> answeredEnemies = new List<Enemy>{ CurrentEnemy };
+		if (skill == Skill.Skewer)
+		{
+			// TODO: skewer enemies
+		}
+
+		return answeredEnemies;
+	}
 
     public void OnHowToPlayClicked()
     {
@@ -420,8 +475,8 @@ public class GameController : MonoBehaviour
 
 public class Clash
 {
-    public Skill Action;
-    public Skill Reaction;
+	public List<Enemy> enemies;
+    public Skill playerAnswer;
 }
 
 public enum TurnState

@@ -18,7 +18,7 @@ public class WaveManager : MonoBehaviour
 		List<Hex> hexes = Player.instance.currentHex.GetAdjacentsWithRange(2);
 
         int enemyCount = Random.Range(2, Mathf.Min(5, hexes.Count));
-        Enemy[] newEnemies = new Enemy[enemyCount];
+        List<Enemy> newEnemies = new List<Enemy>();
 
         for (int i = 0; i < enemyCount; i++)
         {
@@ -26,11 +26,11 @@ public class WaveManager : MonoBehaviour
             Enemy enemy = Instantiate(EnemyPrefab, spawnHex.transform.position + Hex.posOffset, Quaternion.identity).GetComponent<Enemy>();
 			enemy.currentHex = spawnHex;
 			spawnHex.isOccupiedByEnemy = true;
-            newEnemies[i] = enemy;
+            newEnemies.Add(enemy);
             enemy.TotalDurability = Random.Range(2, 5);
 			hexes.Remove(spawnHex);
         }
 
-        GameController.instance.RegisterEnemies(newEnemies);
+		GameController.instance.RegisterNewEnemies(newEnemies);
     }
 }
