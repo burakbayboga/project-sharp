@@ -52,23 +52,54 @@ public class Enemy : MonoBehaviour
 
 	public void MoveTurn()
 	{
-		if (currentHex.IsAdjacentToPlayer() || Random.Range(0f, 1f) < 0.55f)
+		if (currentHex.IsAdjacentToPlayer())
 		{
 			return;
 		}
 
-		Hex newHex = GetHexCloserToPlayer();
+		if (!HasLosToPlayer(currentHex))
+		{
+			// no line of sight to player
+			Hex newHex = GetHexWithLosToPlayer();
+			if (newHex != null)
+			{
+				// go to hex with line of sight to player
+				MoveToHex(newHex);
+			}
+			else
+			{
+				// no adjacent hex with line of sight to player, try to get closer at least
+				newHex = GetHexCloserToPlayer();
+				if (newHex != null)
+				{
+					MoveToHex(newHex);
+				}
+			}
+		}
+		else if (Random.Range(0f, 1f) < 0.5f)
+		{
+			// has line of sight to player, get closer anyway
+			Hex newHex = GetHexCloserToPlayer();
+			if (newHex != null)
+			{
+				MoveToHex(newHex);
+			}
+		}
+	}
+
+	void MoveToHex(Hex hex)
+	{
 		currentHex.isOccupiedByEnemy = false;
-		transform.position = newHex.transform.position + Hex.posOffset;
-		newHex.isOccupiedByEnemy = true;
-		currentHex = newHex;
+		transform.position = hex.transform.position + Hex.posOffset;
+		hex.isOccupiedByEnemy = true;
+		currentHex = hex;
 	}
 
 	Hex GetHexCloserToPlayer()
 	{
-		Hex closestHex = currentHex;
+		List<Hex> candidates = new List<Hex>();
 		Hex playerHex = Player.instance.currentHex;
-		float closestDistance = Vector3.Distance(closestHex.transform.position, playerHex.transform.position);
+		float currentDistance = Vector3.Distance(currentHex.transform.position, playerHex.transform.position);
 
 		for (int i = 0; i < currentHex.adjacents.Length; i++)
 		{
@@ -79,15 +110,47 @@ public class Enemy : MonoBehaviour
 			}
 
 			float traverseDistance = Vector3.Distance(traverse.transform.position, playerHex.transform.position);
-			if (traverseDistance < closestDistance)
+			if (traverseDistance < currentDistance)
 			{
-				closestDistance = traverseDistance;
-				closestHex = traverse;
+				candidates.Add(traverse);
 			}
 		}
 
+		if (candidates.Count > 0)
+		{
+			return candidates[Random.Range(0, candidates.Count)];
+		}
+		else
+		{
+			return null;
+		}
+	}
 
-		return closestHex;
+	Hex GetHexWithLosToPlayer()
+	{
+		Hex[] adjacents = currentHex.adjacents;
+		List<Hex> candidates = new List<Hex>();
+		for (int i = 0; i < adjacents.Length; i++)
+		{
+			if (adjacents[i].isOccupied)
+			{
+				continue;
+			}
+
+			if (HasLosToPlayer(adjacents[i]))
+			{
+				candidates.Add(adjacents[i]);
+			}
+		}
+
+		if (candidates.Count > 0)
+		{
+			return candidates[Random.Range(0, candidates.Count)];
+		}
+		else
+		{
+			return null;
+		}
 	}
 
     void InitWeaknessIcons()
@@ -101,10 +164,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-	bool HasLosToPlayer()
+	bool HasLosToPlayer(Hex hex)
 	{
-		Ray ray = new Ray(transform.position, Player.instance.transform.position - transform.position);
-		float distance = Vector3.Distance(Player.instance.transform.position, transform.position);
+		Ray ray = new Ray(hex.transform.position, Player.instance.currentHex.transform.position - hex.transform.position);
+		float distance = Vector3.Distance(Player.instance.currentHex.transform.position, hex.transform.position);
 		if (Physics2D.RaycastAll(ray.origin, ray.direction, distance, 1 << 10).Length == 0)
 		{
 			return true;
@@ -119,7 +182,7 @@ public class Enemy : MonoBehaviour
     {
 		if (!currentHex.IsAdjacentToPlayer())
 		{
-			if (HasLosToPlayer())
+			if (HasLosToPlayer(currentHex))
 			{
 				return SkillType.ShootArrow;
 			}
