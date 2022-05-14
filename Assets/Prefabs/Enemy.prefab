@@ -145,9 +145,9 @@ MonoBehaviour:
   - {fileID: 8355749346602332410, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: 4285185840188377049, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: 3230059895664381876, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
+  - {fileID: 8960789074176448079, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   TotalDurability: 5
   currentHex: {fileID: 0}
-  includedInClash: 0
 --- !u!212 &3617285728854271623
 SpriteRenderer:
   m_ObjectHideFlags: 0

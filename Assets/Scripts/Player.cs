@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
     SkillButton KillingBlowButton;
 	SkillButton DeflectArrowButton;
 	SkillButton SkewerButton;
+	SkillButton BlockArrowButton;
 
     int CurrentInjury;
     int MaxInjury;
@@ -108,6 +109,7 @@ public class Player : MonoBehaviour
         KillingBlowButton = GameController.instance.KillingBlowSkillButton;
 		DeflectArrowButton = GameController.instance.DeflectArrowSkillButton;
 		SkewerButton = GameController.instance.SkewerSkillButton;
+		BlockArrowButton = GameController.instance.BlockArrowSkillButton;
     }
 
 	public void SetRendererFlip(bool flip)
@@ -201,6 +203,7 @@ public class Player : MonoBehaviour
         }
     }
 
+	// TODO: refactorlenebilir
     public void OnSkillClicked(SkillType skillType)
     {
         Resource skillCost;
@@ -243,6 +246,11 @@ public class Player : MonoBehaviour
 				skillCost = SkewerButton.Cost;
 				skill = Skill.Skewer;
 				damage = SkewerButton.Damage;
+				break;
+			case SkillType.BlockArrow:
+				skillCost = BlockArrowButton.Cost;
+				skill = Skill.BlockArrow;
+				damage = BlockArrowButton.Damage;
 				break;
             case SkillType.None:
             default:

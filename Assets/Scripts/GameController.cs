@@ -22,9 +22,11 @@ public class GameController : MonoBehaviour
     public SkillButton KillingBlowSkillButton;
 	public SkillButton DeflectArrowSkillButton;
 	public SkillButton SkewerSkillButton;
+	public SkillButton BlockArrowSkillButton;
 
 	// TODO: skill unlock system
-	bool isSkewerUnlocked = true;
+	bool isSkewerUnlocked;
+	bool isBlockArrowUnlocked;
 
     public Button TurnProgressButton;
 
@@ -354,6 +356,7 @@ public class GameController : MonoBehaviour
 			SkewerSkillButton.gameObject.SetActive(isSkewerUnlocked && !isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
 			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
 			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
+			BlockArrowSkillButton.gameObject.SetActive(isBlockArrowUnlocked && isEnemyShootingArrow);
         }
     }
 
@@ -394,6 +397,7 @@ public class GameController : MonoBehaviour
 		HandleButtonIconsForSkill(Skill.KillingBlow, enemyActionType, KillingBlowSkillButton);
 		HandleButtonIconsForSkill(Skill.DeflectArrow, enemyActionType, DeflectArrowSkillButton);
 		HandleButtonIconsForSkill(Skill.Skewer, enemyActionType, SkewerSkillButton);
+		HandleButtonIconsForSkill(Skill.BlockArrow, enemyActionType, BlockArrowSkillButton);
     }
 
 	void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
@@ -525,6 +529,9 @@ public class GameController : MonoBehaviour
 		{
 			case SkillType.Skewer:
 				isSkewerUnlocked = true;
+				break;
+			case SkillType.BlockArrow:
+				isBlockArrowUnlocked = true;
 				break;
 			default:
 				break;

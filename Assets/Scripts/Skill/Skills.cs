@@ -63,6 +63,7 @@ public class Skill
 	public static ShootArrow ShootArrow;
 	public static DeflectArrow DeflectArrow;
 	public static Skewer Skewer;
+	public static BlockArrow BlockArrow;
 
 	public static Skill GetSkillForType(SkillType type)
 	{
@@ -84,6 +85,8 @@ public class Skill
 				return DeflectArrow;
 			case SkillType.Skewer:
 				return Skewer;
+			case SkillType.BlockArrow:
+				return BlockArrow;
 			default:
 				return null;
 		}
@@ -99,6 +102,7 @@ public class Skill
 		ShootArrow = new ShootArrow();
 		DeflectArrow = new DeflectArrow();
 		Skewer = new Skewer();
+		BlockArrow = new BlockArrow();
     }
 }
 
@@ -182,5 +186,6 @@ public enum SkillType
 	ShootArrow = 5,
 	DeflectArrow = 6,
 	Skewer = 7,
+	BlockArrow = 8,
     None = -1
 }
