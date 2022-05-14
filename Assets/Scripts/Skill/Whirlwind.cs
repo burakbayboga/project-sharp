@@ -9,7 +9,7 @@ public class Whirlwind : Skill
 		Type = SkillType.Whirlwind;
 		BaseCost = new Resource()
 		{
-			Focus = 4,
+			Focus = 2,
 			Strength = 2,
 			Stability = 3
 		};
@@ -25,7 +25,9 @@ public class Whirlwind : Skill
 	public override Resource GetTotalCost(SkillType enemyAction)
 	{
 		Resource itemModifier = GetItemModifier();
-		Resource totalCost = BaseCost + itemModifier;
+		Resource enemyCountModifier = new Resource();
+		enemyCountModifier.Focus = Player.instance.currentHex.GetAdjacentEnemyCount();
+		Resource totalCost = BaseCost + itemModifier + enemyCountModifier;
 		totalCost.Clamp();
 		return totalCost;
 	}

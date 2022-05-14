@@ -86,6 +86,20 @@ public class Hex : MonoBehaviour
 		return hexes;
 	}
 
+	public int GetAdjacentEnemyCount()
+	{
+		int enemyCount = 0;
+		for (int i = 0; i < adjacents.Length; i++)
+		{
+			if (adjacents[i].isOccupiedByEnemy)
+			{
+				enemyCount++;
+			}
+		}
+
+		return enemyCount;
+	}
+
 	public void HandleInput()
 	{
 		if (isHighlighted)
