@@ -342,14 +342,15 @@ public class GameController : MonoBehaviour
 			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction.Type == SkillType.ShootArrow;
 			bool isEnemyDefensive = CurrentEnemy.IsDefensive();
 			bool isEnemyVulnerable = CurrentEnemy.IsVulnerable;
+			bool isAdjacentToEnemy = CurrentEnemy.currentHex.IsAdjacentToPlayer();
 
-			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && !isEnemyVulnerable);
-			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && !isEnemyVulnerable);
-			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable);
-			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable);
-			SkewerSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable);
-			KillingBlowSkillButton.gameObject.SetActive(!isEnemyShootingArrow);
-			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow && !isEnemyVulnerable);
+			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy);
+			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy);
+			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
+			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
+			SkewerSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
+			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
+			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
         }
     }
 
