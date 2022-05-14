@@ -11,6 +11,8 @@ public class SkillButton : MonoBehaviour
 
     public GameObject[] DamageIcons;
 
+	public SkillType skillType;
+
     int CostIconCount;
 
     public Resource Cost { get; private set; }
@@ -77,5 +79,25 @@ public class SkillButton : MonoBehaviour
             }
         }
     }
+
+	public void OnSkillClicked()
+	{
+		Player.instance.OnSkillClicked(skillType);
+	}
+
+	public void OnMouseButtonDown()
+	{
+		GameController.instance.OnMouseButtonDownOnSkill();
+	}
+
+	public void OnMouseButtonEnter()
+	{
+		GameController.instance.OnMouseButtonEnterOnSkill(skillType);
+	}
+
+	public void OnMouseButtonExit()
+	{
+		GameController.instance.OnMouseButtonExitOnSkill(skillType);
+	}
 
 }

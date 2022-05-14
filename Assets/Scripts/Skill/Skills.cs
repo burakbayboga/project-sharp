@@ -82,6 +82,8 @@ public class Skill
 				return ShootArrow;
 			case SkillType.DeflectArrow:
 				return DeflectArrow;
+			case SkillType.Skewer:
+				return Skewer;
 			default:
 				return null;
 		}

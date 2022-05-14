@@ -1702,14 +1702,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnAttackClicked
+      - m_Target: {fileID: 8713673070871552832}
+        m_TargetAssemblyTypeName: SkillButton, Assembly-CSharp
+        m_MethodName: OnSkillClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1731,9 +1731,41 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: OnButtonMouseDown
+        - m_Target: {fileID: 8713673070871552832}
+          m_TargetAssemblyTypeName: SkillButton, Assembly-CSharp
+          m_MethodName: OnMouseButtonDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8713673070871552832}
+          m_TargetAssemblyTypeName: SkillButton, Assembly-CSharp
+          m_MethodName: OnMouseButtonEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8713673070871552832}
+          m_TargetAssemblyTypeName: SkillButton, Assembly-CSharp
+          m_MethodName: OnMouseButtonExit
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1791,6 +1823,7 @@ MonoBehaviour:
   - {fileID: 8926238092703393679}
   - {fileID: 5414790169547501026}
   - {fileID: 8233903593085808895}
+  skillType: 0
 --- !u!1 &5433023404612256562
 GameObject:
   m_ObjectHideFlags: 0

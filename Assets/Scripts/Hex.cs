@@ -14,6 +14,7 @@ public class Hex : MonoBehaviour
 	public Sprite highlightSprite;
 	public bool isOccupiedByEnemy;
 	public bool isOccupiedByPlayer;
+	public GameObject affectedBySkillEffect;
 
 	public static Vector3 posOffset = new Vector3(0.04f, 0.09f, 0f);
 
@@ -113,6 +114,11 @@ public class Hex : MonoBehaviour
 		}
 
 		return false;
+	}
+
+	public void SetAffectedBySkill(bool active)
+	{
+		affectedBySkillEffect.SetActive(active);
 	}
 
 	public void RevertAdjacentHighlights()

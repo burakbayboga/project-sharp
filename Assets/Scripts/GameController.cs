@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour
 	public SkillButton SkewerSkillButton;
 
 	// TODO: skill unlock system
-	bool isSkewerUnlocked;
+	bool isSkewerUnlocked = true;
 
     public Button TurnProgressButton;
 
@@ -414,10 +414,28 @@ public class GameController : MonoBehaviour
         SkillsParent.SetActive(false);
     }
 
-    public void OnButtonMouseDown()
+    public void OnMouseButtonDownOnSkill()
     {
         IngameInput.instance.IsIngameInputActive = false;
     }
+
+	public void OnMouseButtonEnterOnSkill(SkillType skillType)
+	{
+		List<Enemy> enemies = GetAnsweredEnemiesBySkill(Skill.GetSkillForType(skillType));
+		for (int i = 0; i < enemies.Count; i++)
+		{
+			enemies[i].currentHex.SetAffectedBySkill(true);
+		}
+	}
+
+	public void OnMouseButtonExitOnSkill(SkillType skillType)
+	{
+		List<Enemy> enemies = GetAnsweredEnemiesBySkill(Skill.GetSkillForType(skillType));
+		for (int i = 0; i < enemies.Count; i++)
+		{
+			enemies[i].currentHex.SetAffectedBySkill(false);
+		}
+	}
 
     public void HandlePlayerDeath()
     {

@@ -201,10 +201,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void OnSkillClicked(int skillTypeValue)
+    public void OnSkillClicked(SkillType skillType)
     {
-        SkillType skillType = (SkillType)skillTypeValue;
-
         Resource skillCost;
         Skill skill;
         int damage;
