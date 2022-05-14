@@ -64,6 +64,7 @@ public class Skill
 	public static DeflectArrow DeflectArrow;
 	public static Skewer Skewer;
 	public static BlockArrow BlockArrow;
+	public static Whirlwind Whirlwind;
 
 	public static Skill GetSkillForType(SkillType type)
 	{
@@ -87,6 +88,8 @@ public class Skill
 				return Skewer;
 			case SkillType.BlockArrow:
 				return BlockArrow;
+			case SkillType.Whirlwind:
+				return Whirlwind;
 			default:
 				return null;
 		}
@@ -103,6 +106,7 @@ public class Skill
 		DeflectArrow = new DeflectArrow();
 		Skewer = new Skewer();
 		BlockArrow = new BlockArrow();
+		Whirlwind = new Whirlwind();
     }
 }
 
@@ -187,5 +191,6 @@ public enum SkillType
 	DeflectArrow = 6,
 	Skewer = 7,
 	BlockArrow = 8,
+	Whirlwind = 9,
     None = -1
 }

@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
 	SkillButton DeflectArrowButton;
 	SkillButton SkewerButton;
 	SkillButton BlockArrowButton;
+	SkillButton WhirlwindButton;
 
     int CurrentInjury;
     int MaxInjury;
@@ -110,6 +111,7 @@ public class Player : MonoBehaviour
 		DeflectArrowButton = GameController.instance.DeflectArrowSkillButton;
 		SkewerButton = GameController.instance.SkewerSkillButton;
 		BlockArrowButton = GameController.instance.BlockArrowSkillButton;
+		WhirlwindButton = GameController.instance.WhirlwindSkillButton;
     }
 
 	public void SetRendererFlip(bool flip)
@@ -251,6 +253,11 @@ public class Player : MonoBehaviour
 				skillCost = BlockArrowButton.Cost;
 				skill = Skill.BlockArrow;
 				damage = BlockArrowButton.Damage;
+				break;
+			case SkillType.Whirlwind:
+				skillCost = WhirlwindButton.Cost;
+				skill = Skill.Whirlwind;
+				damage = WhirlwindButton.Damage;
 				break;
             case SkillType.None:
             default:

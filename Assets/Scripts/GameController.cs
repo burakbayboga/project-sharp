@@ -23,10 +23,12 @@ public class GameController : MonoBehaviour
 	public SkillButton DeflectArrowSkillButton;
 	public SkillButton SkewerSkillButton;
 	public SkillButton BlockArrowSkillButton;
+	public SkillButton WhirlwindSkillButton;
 
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
 	bool isBlockArrowUnlocked;
+	bool isWhirlwindUnlocked;
 
     public Button TurnProgressButton;
 
@@ -198,7 +200,8 @@ public class GameController : MonoBehaviour
 
 	IEnumerator HandleClashAnimations(Clash clash)
 	{
-		if (clash.playerAnswer == Skill.Skewer)
+		if (clash.playerAnswer == Skill.Skewer
+				|| clash.playerAnswer == Skill.Whirlwind)
 		{
 			// TODO: maybe merge cases?
 			for (int i = 0; i < clash.enemies.Count; i++)
@@ -357,6 +360,7 @@ public class GameController : MonoBehaviour
 			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
 			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
 			BlockArrowSkillButton.gameObject.SetActive(isBlockArrowUnlocked && isEnemyShootingArrow);
+			WhirlwindSkillButton.gameObject.SetActive(isWhirlwindUnlocked && isAdjacentToEnemy);
         }
     }
 
@@ -398,6 +402,7 @@ public class GameController : MonoBehaviour
 		HandleButtonIconsForSkill(Skill.DeflectArrow, enemyActionType, DeflectArrowSkillButton);
 		HandleButtonIconsForSkill(Skill.Skewer, enemyActionType, SkewerSkillButton);
 		HandleButtonIconsForSkill(Skill.BlockArrow, enemyActionType, BlockArrowSkillButton);
+		HandleButtonIconsForSkill(Skill.Whirlwind, enemyActionType, WhirlwindSkillButton);
     }
 
 	void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
@@ -505,6 +510,17 @@ public class GameController : MonoBehaviour
 				}
 			}
 		}
+		else if (skill == Skill.Whirlwind)
+		{
+			Collider2D[] colliders = Physics2D.OverlapCircleAll(Player.instance.transform.position, 1f, 1 << 8);
+			for (int i = 0; i < colliders.Length; i++)
+			{
+				if (colliders[i].CompareTag("Enemy"))
+				{
+					answeredEnemies.Add(colliders[i].GetComponent<Enemy>());
+				}
+			}
+		}
 		else
 		{
 			answeredEnemies.Add(CurrentEnemy);
@@ -532,6 +548,9 @@ public class GameController : MonoBehaviour
 				break;
 			case SkillType.BlockArrow:
 				isBlockArrowUnlocked = true;
+				break;
+			case SkillType.Whirlwind:
+				isWhirlwindUnlocked = true;
 				break;
 			default:
 				break;
