@@ -64,5 +64,6 @@ public class LootPanel : MonoBehaviour
 public enum ItemType
 {
 	skillModifier = 0,
-	resourceBooster = 1
+	resourceBooster = 1,
+	unlocksSkill = 2
 }

@@ -6,6 +6,7 @@ public class Item : MonoBehaviour
 {
     public Resource resourceModifier;
 	public SkillType modifiedSkillType;
+	public SkillType unlockedSkillType;
 	public ItemType itemType;
 
 	public GameObject description;

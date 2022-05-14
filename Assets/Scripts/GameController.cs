@@ -23,6 +23,9 @@ public class GameController : MonoBehaviour
 	public SkillButton DeflectArrowSkillButton;
 	public SkillButton SkewerSkillButton;
 
+	// TODO: skill unlock system
+	bool isSkewerUnlocked;
+
     public Button TurnProgressButton;
 
     public GameObject DeathPanel;
@@ -348,7 +351,7 @@ public class GameController : MonoBehaviour
 			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy);
 			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
 			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
-			SkewerSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
+			SkewerSkillButton.gameObject.SetActive(isSkewerUnlocked && !isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
 			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
 			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
         }
@@ -498,6 +501,17 @@ public class GameController : MonoBehaviour
         Application.Quit();
     }
 
+	public void OnSkillUnlocked(SkillType skillType)
+	{
+		switch (skillType)
+		{
+			case SkillType.Skewer:
+				isSkewerUnlocked = true;
+				break;
+			default:
+				break;
+		}
+	}
 
 	public void OnItemClicked(Item item)
 	{

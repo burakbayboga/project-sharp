@@ -271,6 +271,7 @@ MonoBehaviour:
     Strength: 0
     Stability: 1
   modifiedSkillType: -1
+  unlockedSkillType: -1
   itemType: 1
   description: {fileID: 3072472435742459185}
   shortDescription: {fileID: 7447153047228309883}

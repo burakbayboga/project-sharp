@@ -188,6 +188,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_Shield
       objectReference: {fileID: 0}
+    - target: {fileID: 2804599848814622794, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7249115688893829530, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715220213795167232, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8543186402495714749, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
       propertyPath: m_Delegates.Array.size
@@ -290,6 +305,7 @@ MonoBehaviour:
     Strength: 1
     Stability: -1
   modifiedSkillType: 2
+  unlockedSkillType: -1
   itemType: 0
   description: {fileID: 1971028172533008020}
   shortDescription: {fileID: 6242122079891038942}

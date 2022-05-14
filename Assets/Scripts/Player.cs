@@ -274,6 +274,10 @@ public class Player : MonoBehaviour
 			IncreaseMaxResource(newItem.resourceModifier);
 			HandleResourceIcons();
 		}
+		else if (newItem.itemType == ItemType.unlocksSkill)
+		{
+			GameController.instance.OnSkillUnlocked(newItem.unlockedSkillType);
+		}
 	}
 
 	void IncreaseMaxResource(Resource resource)
