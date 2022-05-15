@@ -354,6 +354,15 @@ public class Player : MonoBehaviour
 		{
 			totalArmor++;
 		}
+		else if (newItem.itemType == ItemType.rechargeBooster)
+		{
+			IncreaseResourceRecharge(newItem.resourceModifier);
+		}
+	}
+
+	void IncreaseResourceRecharge(Resource resource)
+	{
+		ResourceRecharge += resource;
 	}
 
 	void IncreaseMaxResource(Resource resource)

@@ -66,5 +66,6 @@ public enum ItemType
 	skillModifier = 0,
 	resourceBooster = 1,
 	unlocksSkill = 2,
-	armor = 3
+	armor = 3,
+	rechargeBooster = 4
 }
