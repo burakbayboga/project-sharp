@@ -8,6 +8,7 @@ public class LootPanel : MonoBehaviour
 	public Item[] itemPrefabs;
 	
 	List<Item> itemPool = new List<Item>();
+	List<Item> currentlyVisible = new List<Item>();
 
 	bool inited = false;
 
@@ -22,22 +23,23 @@ public class LootPanel : MonoBehaviour
 		itemPool = itemPool.OrderBy(r => Random.Range(0f, 1f)).ToList();
 		for (int i = 0; i < count; i++)
 		{
+			currentlyVisible.Add(itemPool[i]);
 			itemPool[i].gameObject.SetActive(true);
 		}
 	}
 
-	public void OnItemPicked(Item item)
+	public void OnItemPicked(Item pickedItem)
 	{
-		Item pickedItem = null;
-		for (int i = 0; i < itemPool.Count; i++)
+		itemPool.Remove(pickedItem);
+		for (int i = 0; i < currentlyVisible.Count; i++)
 		{
-			if (itemPool[i] == item)
+			if (currentlyVisible[i] != pickedItem)
 			{
-				pickedItem = itemPool[i];
-				itemPool.RemoveAt(i);
-				break;
+				currentlyVisible[i].gameObject.SetActive(false);
 			}
 		}
+
+		currentlyVisible.Clear();
 		
 		Inventory.instance.PutItemIntoInventory(pickedItem);
 		Player.instance.PickItem(pickedItem);
