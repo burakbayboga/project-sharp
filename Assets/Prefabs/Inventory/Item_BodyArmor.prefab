@@ -264,6 +264,7 @@ MonoBehaviour:
   modifiedSkillType: -1
   unlockedSkillType: -1
   itemType: 3
+  itemRarity: 2
   description: {fileID: 1880250355274322252}
   shortDescription: {fileID: 6335996124053419270}
   inInventory: 0

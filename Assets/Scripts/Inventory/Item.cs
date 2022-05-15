@@ -8,6 +8,7 @@ public class Item : MonoBehaviour
 	public SkillType modifiedSkillType;
 	public SkillType unlockedSkillType;
 	public ItemType itemType;
+	public ItemRarity itemRarity;
 
 	public GameObject description;
 	public GameObject shortDescription;
@@ -21,4 +22,20 @@ public class Item : MonoBehaviour
 			GameController.instance.OnItemClicked(this);
 		}
 	}
+}
+
+public enum ItemType
+{
+	skillModifier = 0,
+	resourceBooster = 1,
+	unlocksSkill = 2,
+	armor = 3,
+	rechargeBooster = 4
+}
+
+public enum ItemRarity
+{
+	common = 0,
+	rare = 1,
+	epic = 2
 }

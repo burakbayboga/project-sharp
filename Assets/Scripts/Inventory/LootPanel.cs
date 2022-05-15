@@ -5,10 +5,14 @@ using System.Linq;
 
 public class LootPanel : MonoBehaviour
 {
-	public Item[] itemPrefabs;
-	
-	List<Item> itemPool = new List<Item>();
+	public List<Item> itemPool;
 	List<Item> currentlyVisible = new List<Item>();
+	public List<Item> commonItems = new List<Item>();
+	public List<Item> rareItems = new List<Item>();
+	public List<Item> epicItems = new List<Item>();
+
+
+	public float[] lootChances = new float[3]{ 0.7f, 0.25f, 0.05f };
 
 	bool inited = false;
 
@@ -19,23 +23,120 @@ public class LootPanel : MonoBehaviour
 			Init();
 		}
 
-		int count = Mathf.Min(2, itemPool.Count);
-		itemPool = itemPool.OrderBy(r => Random.Range(0f, 1f)).ToList();
+		commonItems = commonItems.OrderBy(r => Random.Range(0f, 1f)).ToList();
+		rareItems = rareItems.OrderBy(r => Random.Range(0f, 1f)).ToList();
+		epicItems = epicItems.OrderBy(r => Random.Range(0f, 1f)).ToList();
+
+		int count = Mathf.Min(3, itemPool.Count);
+
 		for (int i = 0; i < count; i++)
 		{
-			currentlyVisible.Add(itemPool[i]);
-			itemPool[i].gameObject.SetActive(true);
+			float random = Random.Range(0f, 1f);
+			ItemRarity rarity;
+			if (random < lootChances[0])
+			{
+				rarity = ItemRarity.common;
+			}
+			else if (random < lootChances[0] + lootChances[1])
+			{
+				rarity = ItemRarity.rare;
+			}
+			else
+			{
+				rarity = ItemRarity.epic;
+			}
+
+			Item lootableItem = GetItemFromPool(rarity);
+			currentlyVisible.Add(lootableItem);
+			lootableItem.gameObject.SetActive(true);
 		}
+	}
+
+	// TODO: bu kodu yazan çocuk kör sağır ve dilsiz oldu
+	Item GetItemFromPool(ItemRarity rarity)
+	{
+		Item item = null;
+		switch (rarity)
+		{
+			case ItemRarity.common:
+				if (commonItems.Count > 0)
+				{
+					item = commonItems[0];
+					commonItems.Remove(item);
+				}
+				else if (rareItems.Count > 0)
+				{
+					item = rareItems[0];
+					rareItems.Remove(item);
+				}
+				else if (epicItems.Count > 0)
+				{
+					item = epicItems[0];
+					epicItems.Remove(item);
+				}
+				break;
+			case ItemRarity.rare:
+				if (rareItems.Count > 0)
+				{
+					item = rareItems[0];
+					rareItems.Remove(item);
+				}
+				else if (epicItems.Count > 0)
+				{
+					item = epicItems[0];
+					epicItems.Remove(item);
+				}
+				else if (commonItems.Count > 0)
+				{
+					item = commonItems[0];
+					commonItems.Remove(item);
+				}
+				break;
+			case ItemRarity.epic:
+				if (epicItems.Count > 0)
+				{
+					item = epicItems[0];
+					epicItems.Remove(item);
+				}
+				else if (rareItems.Count > 0)
+				{
+					item = rareItems[0];
+					rareItems.Remove(item);
+				}
+				else if (commonItems.Count > 0)
+				{
+					item = commonItems[0];
+					commonItems.Remove(item);
+				}
+				break;
+			default:
+				item = null;
+				break;
+		}
+
+		return item;
 	}
 
 	public void OnItemPicked(Item pickedItem)
 	{
-		itemPool.Remove(pickedItem);
 		for (int i = 0; i < currentlyVisible.Count; i++)
 		{
-			if (currentlyVisible[i] != pickedItem)
+			Item traverse = currentlyVisible[i];
+			if (traverse != pickedItem)
 			{
-				currentlyVisible[i].gameObject.SetActive(false);
+				traverse.gameObject.SetActive(false);
+				if (traverse.itemRarity == ItemRarity.common)
+				{
+					commonItems.Add(traverse);
+				}
+				else if (traverse.itemRarity == ItemRarity.rare)
+				{
+					rareItems.Add(traverse);
+				}
+				else if (traverse.itemRarity == ItemRarity.epic)
+				{
+					epicItems.Add(traverse);
+				}
 			}
 		}
 
@@ -48,12 +149,22 @@ public class LootPanel : MonoBehaviour
 	void Init()
 	{
 		inited = true;
-
-		for (int i = 0; i < itemPrefabs.Length; i++)
+		for (int i = 0; i < itemPool.Count; i++)
 		{
-			itemPool.Add(Instantiate(itemPrefabs[i], transform).GetComponent<Item>());
-			itemPool[i].gameObject.SetActive(false);
+			if (itemPool[i].itemRarity == ItemRarity.common)
+			{
+				commonItems.Add(itemPool[i]);
+			}
+			else if (itemPool[i].itemRarity == ItemRarity.rare)
+			{
+				rareItems.Add(itemPool[i]);
+			}
+			else if (itemPool[i].itemRarity == ItemRarity.epic)
+			{
+				epicItems.Add(itemPool[i]);
+			}
 		}
+		
 	}
 
 	public bool PoolHasItem()
@@ -63,11 +174,4 @@ public class LootPanel : MonoBehaviour
 }
 
 
-public enum ItemType
-{
-	skillModifier = 0,
-	resourceBooster = 1,
-	unlocksSkill = 2,
-	armor = 3,
-	rechargeBooster = 4
-}
+
