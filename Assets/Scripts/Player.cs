@@ -23,6 +23,10 @@ public class Player : MonoBehaviour
     List<Image> FocusIcons;
     List<Image> StrengthIcons;
     List<Image> StabilityIcons;
+	public Sprite FocusSprite;
+	public Sprite StrengthSprite;
+	public Sprite StabilitySprite;
+	public Sprite InjurySprite;
 
 	public GameObject hawkFocusButton;
 	public GameObject bullStrengthButton;
@@ -373,55 +377,36 @@ public class Player : MonoBehaviour
 		CurrentResource += resource;
 	}
 
+	void HandleIconsForResource(int powerupRemaining, GameObject parent, List<Image> icons, int current, int max, Sprite sprite)
+	{
+		if (powerupRemaining == 0)
+		{
+			parent.SetActive(true);
+			for (int i = 0; i < icons.Count; i++)
+			{
+				if (i < current)
+				{
+					icons[i].color = ActiveResourceColor;
+					icons[i].sprite = sprite;
+				}
+				else if (i < max)
+				{
+					icons[i].color = InactiveResourceColor;
+					icons[i].sprite = sprite;
+				}
+				else
+				{
+					icons[i].color = InactiveResourceColor;
+					icons[i].sprite = InjurySprite;
+				}
+			}
+		}
+	}
 
     void HandleResourceIcons()
     {
-		if (hawkFocusRemaining == 0)
-		{
-			focusIconsParent.SetActive(true);
-			for (int i = 0; i < FocusIcons.Count; i++)
-			{
-				if (i < CurrentResource.Focus)
-				{
-					FocusIcons[i].color = ActiveResourceColor;
-				}
-				else
-				{
-					FocusIcons[i].color = InactiveResourceColor;
-				}
-			}
-		}
-
-		if (bullStrengthRemaining == 0)
-		{
-			strengthIconsParent.SetActive(true);
-			for (int i = 0; i < StrengthIcons.Count; i++)
-			{
-				if (i < CurrentResource.Strength)
-				{
-					StrengthIcons[i].color = ActiveResourceColor;
-				}
-				else
-				{
-					StrengthIcons[i].color = InactiveResourceColor;
-				}
-			}
-		}
-
-		if (turtleStabilityRemaining == 0)
-		{
-			stabilityIconsParent.SetActive(true);
-			for (int i = 0; i < StabilityIcons.Count; i++)
-			{
-				if (i < CurrentResource.Stability)
-				{
-					StabilityIcons[i].color = ActiveResourceColor;
-				}
-				else
-				{
-					StabilityIcons[i].color = InactiveResourceColor;
-				}		
-			}
-		}
+		HandleIconsForResource(hawkFocusRemaining, focusIconsParent, FocusIcons, CurrentResource.Focus, MaxResource.Focus, FocusSprite);
+		HandleIconsForResource(bullStrengthRemaining, strengthIconsParent, StrengthIcons, CurrentResource.Strength, MaxResource.Strength, StrengthSprite);
+		HandleIconsForResource(turtleStabilityRemaining, stabilityIconsParent, StabilityIcons, CurrentResource.Stability, MaxResource.Stability, StabilitySprite);
     }
 }
