@@ -1011,6 +1011,7 @@ MonoBehaviour:
   BlockArrowSkillButton: {fileID: 576711745}
   WhirlwindSkillButton: {fileID: 1852115806}
   TurnProgressButton: {fileID: 1961063634}
+  unansweredEnemyText: {fileID: 2091764979}
   DeathPanel: {fileID: 1020101577}
   BloodEffectPrefab: {fileID: 9074138623377893325, guid: 42e32363c371fa7449a9af19ea0e1188,
     type: 3}
@@ -1554,6 +1555,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4204724681710474413}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2091764979 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6749806493555307670, guid: f25ae309c7e8a97428091c48a05d2aed,
+    type: 3}
+  m_PrefabInstance: {fileID: 4204724681710474413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2141873912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1884,6 +1897,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 124095971}
+    - target: {fileID: 3461385040464378269, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4204724682086003130, guid: f25ae309c7e8a97428091c48a05d2aed,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2013,6 +2031,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 40.899902
+      objectReference: {fileID: 0}
+    - target: {fileID: 6749806493555307670, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_Text
+      value: '0 Enemies
+
+        Not Answered'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}

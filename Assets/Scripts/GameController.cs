@@ -28,9 +28,11 @@ public class GameController : MonoBehaviour
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
 	bool isBlockArrowUnlocked;
-	bool isWhirlwindUnlocked;
+	bool isWhirlwindUnlocked = true;
 
     public Button TurnProgressButton;
+	public Text unansweredEnemyText;
+	int unansweredEnemyCount;
 
     public GameObject DeathPanel;
 
@@ -71,6 +73,12 @@ public class GameController : MonoBehaviour
 	public void RegisterNewEnemies(List<Enemy> newEnemies)
 	{
 		Enemies.AddRange(newEnemies);
+		UpdateUnansweredEnemyText();
+	}
+
+	void UpdateUnansweredEnemyText()
+	{
+		unansweredEnemyText.text = unansweredEnemyCount.ToString() + " Enemies\nNot Answered";
 	}
 
 	void MakeEnemiesMove()
@@ -161,6 +169,17 @@ public class GameController : MonoBehaviour
 	{
 		CurrentTurnState = TurnState.PlayerAnswer;
         TurnStateText.text = CurrentTurnState.ToString();
+
+		unansweredEnemyCount = 0;
+		for (int i = 0; i < Enemies.Count; i++)
+		{
+			if (Enemies[i].CurrentAction != null)
+			{
+				unansweredEnemyCount++;
+			}
+		}
+		UpdateUnansweredEnemyText();
+		unansweredEnemyText.gameObject.SetActive(true);
 	}
 
     IEnumerator ProcessCombat()
@@ -270,6 +289,7 @@ public class GameController : MonoBehaviour
 
     void EndTurn()
     {
+		unansweredEnemyText.gameObject.SetActive(false);
 		TurnProgressButton.interactable = false;
 		if (CurrentEnemy != null)
 		{
@@ -482,11 +502,16 @@ public class GameController : MonoBehaviour
 				enemies[i].CurrentClash = newClash;
 			}
 			Clashes.Add(newClash);
+
+			unansweredEnemyCount -= enemies.Count;
+			UpdateUnansweredEnemyText();
 		}
     }
 
 	void EraseClash(Clash clash)
 	{
+		unansweredEnemyCount += clash.enemies.Count;
+		UpdateUnansweredEnemyText();
 		for (int i = 0; i < clash.enemies.Count; i++)
 		{
 			clash.enemies[i].SetPlayerReaction(null, 0);
