@@ -53,6 +53,8 @@ public class Player : MonoBehaviour
 
     int CurrentInjury;
     int MaxInjury;
+	int totalArmor = 0;
+	int injuryBlockedThisTurn = 0;
 
 	int hawkFocusRemaining = 0;
 	int bullStrengthRemaining = 0;
@@ -188,11 +190,16 @@ public class Player : MonoBehaviour
 		}
         
         HandleResourceIcons();
+		injuryBlockedThisTurn = 0;
     }
 
     public void GetInjury()
     {
-        if (CurrentInjury == MaxInjury)
+		if (injuryBlockedThisTurn < totalArmor)
+		{
+			injuryBlockedThisTurn++;
+		}
+		else if (CurrentInjury == MaxInjury)
         {
             GameController.instance.HandlePlayerDeath();
         }
@@ -290,6 +297,10 @@ public class Player : MonoBehaviour
 		else if (newItem.itemType == ItemType.unlocksSkill)
 		{
 			GameController.instance.OnSkillUnlocked(newItem.unlockedSkillType);
+		}
+		else if (newItem.itemType == ItemType.armor)
+		{
+			totalArmor++;
 		}
 	}
 

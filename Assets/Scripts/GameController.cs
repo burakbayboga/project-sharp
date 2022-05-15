@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
 	bool isBlockArrowUnlocked;
-	bool isWhirlwindUnlocked = true;
+	bool isWhirlwindUnlocked;
 
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;

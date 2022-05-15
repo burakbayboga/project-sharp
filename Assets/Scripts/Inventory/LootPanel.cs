@@ -65,5 +65,6 @@ public enum ItemType
 {
 	skillModifier = 0,
 	resourceBooster = 1,
-	unlocksSkill = 2
+	unlocksSkill = 2,
+	armor = 3
 }
