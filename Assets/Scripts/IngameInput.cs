@@ -39,7 +39,14 @@ public class IngameInput : MonoBehaviour
 				}
 				else if (GameController.instance.CurrentTurnState == TurnState.PlayerAnswer)
 				{
-					layermask = creatureLayermask;
+					if (GameController.instance.isSidestepActive)
+					{
+						layermask = hexLayermask;
+					}
+					else
+					{
+						layermask = creatureLayermask;
+					}
 				}
 				RaycastHit2D[] hits = Physics2D.RaycastAll(MainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, layermask);
                 if (hits.Length > 0)

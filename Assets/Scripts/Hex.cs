@@ -104,11 +104,7 @@ public class Hex : MonoBehaviour
 	{
 		if (isHighlighted)
 		{
-			Player.instance.currentHex.RevertAdjacentHighlights();
-			Player.instance.currentHex.isOccupiedByPlayer = false;
-			Player.instance.transform.position = transform.position + posOffset;
-			Player.instance.currentHex = this;
-			isOccupiedByPlayer = true;
+			Player.instance.MovePlayer(this, GameController.instance.CurrentTurnState == TurnState.PlayerAnswer);
 			GameController.instance.OnPlayerMove();
 		}
 		else

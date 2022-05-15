@@ -21,11 +21,8 @@ public class KillingBlow : Skill
     {
 		Resource totalCost;
 		Resource itemModifier = GetItemModifier();
-		if (enemyAction == SkillType.ShootArrow)
-		{
-			totalCost =  new Resource();
-		}
-		else if (GameController.instance.IsCurrentEnemyVulnerable())
+		
+		if (GameController.instance.IsCurrentEnemyVulnerable())
         {
 			if (enemyAction == SkillType.Block)
 			{

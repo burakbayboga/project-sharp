@@ -178,6 +178,26 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
+	public void CheckActionValidity()
+	{
+		if (CurrentAction == Skill.ShootArrow)
+		{
+			if (!HasLosToPlayer(currentHex))
+			{
+				CurrentAction = null;
+				ResetIcons();
+			}
+		}
+		else if (CurrentAction != null && !IsDefensive())
+		{
+			if (!currentHex.IsAdjacentToPlayer())
+			{
+				CurrentAction = null;
+				ResetIcons();
+			}
+		}
+	}
+
     SkillType GetActionType()
     {
 		if (!currentHex.IsAdjacentToPlayer())

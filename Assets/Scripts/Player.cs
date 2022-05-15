@@ -50,11 +50,15 @@ public class Player : MonoBehaviour
 	SkillButton SkewerButton;
 	SkillButton BlockArrowButton;
 	SkillButton WhirlwindButton;
+	SkillButton SidestepButton;
 
     int CurrentInjury;
     int MaxInjury;
 	int totalArmor = 0;
 	int injuryBlockedThisTurn = 0;
+	public bool sidestepUsed = false;
+	// TODO: refactor sidestep injury logic
+	bool pendingInjuryFromSidestep = false;
 
 	int hawkFocusRemaining = 0;
 	int bullStrengthRemaining = 0;
@@ -114,6 +118,7 @@ public class Player : MonoBehaviour
 		SkewerButton = GameController.instance.SkewerSkillButton;
 		BlockArrowButton = GameController.instance.BlockArrowSkillButton;
 		WhirlwindButton = GameController.instance.WhirlwindSkillButton;
+		SidestepButton = GameController.instance.SidestepSkillButton;
     }
 
 	public void SetRendererFlip(bool flip)
@@ -191,6 +196,8 @@ public class Player : MonoBehaviour
         
         HandleResourceIcons();
 		injuryBlockedThisTurn = 0;
+		sidestepUsed = false;
+		pendingInjuryFromSidestep = false;
     }
 
     public void GetInjury()
@@ -208,6 +215,7 @@ public class Player : MonoBehaviour
             InjuryIcons[CurrentInjury].SetActive(true);
             CurrentInjury++;
             MaxResource = (MaxResource / 2) + 1;
+			CurrentResource.ClampToReference(MaxResource);
             HandleResourceIcons();
         }
     }
@@ -266,6 +274,11 @@ public class Player : MonoBehaviour
 				skill = Skill.Whirlwind;
 				damage = WhirlwindButton.Damage;
 				break;
+			case SkillType.Sidestep:
+				skillCost = SidestepButton.Cost;
+				skill = Skill.Sidestep;
+				damage = SidestepButton.Damage;
+				break;
             case SkillType.None:
             default:
                 skillCost = new Resource();
@@ -280,11 +293,46 @@ public class Player : MonoBehaviour
 
         if (skillCost <= unspentResource)
         {
-            CurrentResource = unspentResource - skillCost;
-            GameController.instance.RegisterPlayerAction(skill, damage, skillCost);
-            HandleResourceIcons();
+			if (skill == Skill.Sidestep)
+			{
+				currentHex.HighlightValidAdjacents();
+				GameController.instance.isSidestepActive = true;
+			}
+			else
+			{
+				CurrentResource = unspentResource - skillCost;
+				GameController.instance.RegisterPlayerAction(skill, damage, skillCost);
+				HandleResourceIcons();
+			}
         }
     }
+
+	public void OnPlayerSidestep(Resource resourceGivenBack)
+	{
+		CurrentResource = CurrentResource + resourceGivenBack - SidestepButton.Cost;
+		if (pendingInjuryFromSidestep)
+		{
+			GetInjury();
+			pendingInjuryFromSidestep = false;
+		}
+		HandleResourceIcons();
+	}
+
+	public void MovePlayer(Hex newHex, bool isSidestep)
+	{
+		if (isSidestep && GameController.instance.IsAggressiveEnemyAdjacentToPlayer())
+		{
+			pendingInjuryFromSidestep = true;
+		}
+
+		currentHex.RevertAdjacentHighlights();
+		currentHex.isOccupiedByPlayer = false;
+		transform.position = newHex.transform.position + Hex.posOffset;
+		currentHex = newHex;
+		newHex.isOccupiedByPlayer = true;
+
+		sidestepUsed = isSidestep;
+	}
 
 	public void PickItem(Item newItem)
 	{

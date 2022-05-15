@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
 	public SkillButton SkewerSkillButton;
 	public SkillButton BlockArrowSkillButton;
 	public SkillButton WhirlwindSkillButton;
+	public SkillButton SidestepSkillButton;
 
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
@@ -47,6 +48,8 @@ public class GameController : MonoBehaviour
     public TurnState CurrentTurnState;
 
     public bool IsGameOver;
+
+	public bool isSidestepActive = false;
 
 	bool pendingLootTurn;
 
@@ -104,7 +107,52 @@ public class GameController : MonoBehaviour
 
 	public void OnPlayerMove()
 	{
-		ProgressTurn();
+		if (CurrentTurnState == TurnState.PlayerMovement)
+		{
+			ProgressTurn();
+		}
+		else if (CurrentTurnState == TurnState.PlayerAnswer)
+		{
+			Resource resourceGivenBack = GetResourceSpentOnCurrentEnemy(Skill.Sidestep);
+			Player.instance.OnPlayerSidestep(resourceGivenBack);
+			while (Clashes.Count > 0)
+			{
+				EraseClash(Clashes[0]);
+			}
+			isSidestepActive = false;
+			SidestepSkillButton.gameObject.SetActive(false);
+			for (int i = 0; i < Enemies.Count; i++)
+			{
+				Enemies[i].CheckActionValidity();
+			}
+
+			// TODO: beni seviyosan refactorle
+			unansweredEnemyCount = 0;
+			for (int i = 0; i < Enemies.Count; i++)
+			{
+				if (Enemies[i].CurrentAction != null)
+				{
+					unansweredEnemyCount++;
+				}
+			}
+			UpdateUnansweredEnemyText();
+		}
+	}
+
+	// TODO: refactor plzz
+	public bool IsAggressiveEnemyAdjacentToPlayer()
+	{
+		for (int i = 0; i < Enemies.Count; i++)
+		{
+			if (Enemies[i].currentHex.IsAdjacentToPlayer()
+					&& Enemies[i].CurrentAction != null
+					&& !Enemies[i].IsDefensive())
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
     void ProgressTurn()
@@ -167,6 +215,8 @@ public class GameController : MonoBehaviour
 
 	void EnterPlayerAnswerTurn()
 	{
+		SidestepSkillButton.gameObject.SetActive(true);
+		HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 		CurrentTurnState = TurnState.PlayerAnswer;
         TurnStateText.text = CurrentTurnState.ToString();
 
@@ -289,6 +339,8 @@ public class GameController : MonoBehaviour
 
     void EndTurn()
     {
+		SidestepSkillButton.gameObject.SetActive(false);
+		Player.instance.currentHex.RevertAdjacentHighlights();
 		unansweredEnemyText.gameObject.SetActive(false);
 		TurnProgressButton.interactable = false;
 		if (CurrentEnemy != null)
@@ -354,6 +406,9 @@ public class GameController : MonoBehaviour
     {
         if (CurrentTurnState == TurnState.PlayerAnswer)
         {
+			SidestepSkillButton.gameObject.SetActive(false);
+			Player.instance.currentHex.RevertAdjacentHighlights();
+
             if (CurrentEnemy != null)
             {
                 CurrentEnemy.currentHex.UnselectAsTarget();
@@ -381,6 +436,7 @@ public class GameController : MonoBehaviour
 			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
 			BlockArrowSkillButton.gameObject.SetActive(isBlockArrowUnlocked && isEnemyShootingArrow);
 			WhirlwindSkillButton.gameObject.SetActive(isWhirlwindUnlocked && isAdjacentToEnemy);
+
         }
     }
 
@@ -481,6 +537,14 @@ public class GameController : MonoBehaviour
             CurrentEnemy.currentHex.UnselectAsTarget();
         }
         CurrentEnemy = null;
+
+		if (CurrentTurnState == TurnState.PlayerAnswer)
+		{
+			SidestepSkillButton.gameObject.SetActive(!Player.instance.sidestepUsed);
+			HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+			Player.instance.currentHex.RevertAdjacentHighlights();
+			isSidestepActive = false;
+		}
     }
 
     public void RegisterPlayerAction(Skill reaction, int damage, Resource skillCost)
@@ -545,6 +609,10 @@ public class GameController : MonoBehaviour
 					answeredEnemies.Add(colliders[i].GetComponent<Enemy>());
 				}
 			}
+		}
+		else if (skill == Skill.Sidestep)
+		{
+			return Enemies;
 		}
 		else
 		{

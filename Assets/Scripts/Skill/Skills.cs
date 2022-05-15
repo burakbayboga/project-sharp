@@ -65,6 +65,7 @@ public class Skill
 	public static Skewer Skewer;
 	public static BlockArrow BlockArrow;
 	public static Whirlwind Whirlwind;
+	public static Sidestep Sidestep;
 
 	public static Skill GetSkillForType(SkillType type)
 	{
@@ -90,6 +91,8 @@ public class Skill
 				return BlockArrow;
 			case SkillType.Whirlwind:
 				return Whirlwind;
+			case SkillType.Sidestep:
+				return Sidestep;
 			default:
 				return null;
 		}
@@ -107,6 +110,7 @@ public class Skill
 		Skewer = new Skewer();
 		BlockArrow = new BlockArrow();
 		Whirlwind = new Whirlwind();
+		Sidestep = new Sidestep();
     }
 }
 
@@ -127,6 +131,13 @@ public struct Resource
 		Focus = Mathf.Max(0, Focus);
 		Strength = Mathf.Max(0, Strength);
 		Stability = Mathf.Max(0, Stability);
+	}
+
+	public void ClampToReference(Resource reference)
+	{
+		Focus = Mathf.Min(Focus, reference.Focus);
+		Strength = Mathf.Min(Strength, reference.Strength);
+		Stability = Mathf.Min(Stability, reference.Stability);
 	}
 
     public static Resource operator + (Resource a, Resource b)
@@ -192,5 +203,6 @@ public enum SkillType
 	Skewer = 7,
 	BlockArrow = 8,
 	Whirlwind = 9,
-    None = -1
+    None = -1,
+	Sidestep = -2
 }
