@@ -291,6 +291,11 @@ public class GameController : MonoBehaviour
 			Player.instance.SetRendererFlip(playerShouldFaceLeft);
 			enemy.SetRendererFlip(!playerShouldFaceLeft);
 
+			if (enemy.IsDefensive() && playerReaction == null)
+			{
+				yield break;
+			}
+
 			if (playerReaction != null)
 			{
 				Player.instance.animator.Play(playerReaction.clip);
