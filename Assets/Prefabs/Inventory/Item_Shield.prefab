@@ -20,7 +20,7 @@ PrefabInstance:
     - target: {fileID: 1502919201606287403, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
       propertyPath: m_Text
-      value: +1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1502919202111251056, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
@@ -35,7 +35,7 @@ PrefabInstance:
     - target: {fileID: 1502919203274970047, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
@@ -301,12 +301,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceModifier:
-    Focus: -1
-    Strength: 1
+    Focus: 0
+    Strength: -1
     Stability: -1
   modifiedSkillType: 2
   unlockedSkillType: -1
   itemType: 0
+  itemRarity: 0
   description: {fileID: 1971028172533008020}
   shortDescription: {fileID: 6242122079891038942}
   inInventory: 0

@@ -10,7 +10,7 @@ public class SwiftAttack : Skill
         BaseCost = new Resource
         {
             Focus = 1,
-            Strength = 2,
+            Strength = 0,
             Stability = 1
         };
 
@@ -46,9 +46,9 @@ public class SwiftAttack : Skill
 
                 modifier = new Resource
                 {
-                    Focus = 1,
-                    Strength = 1,
-                    Stability = 0
+                    Focus = 0,
+                    Strength = 0,
+                    Stability = 2
                 };
                 totalCost = BaseCost + modifier + itemModifier;
 
@@ -57,8 +57,8 @@ public class SwiftAttack : Skill
 
                 modifier = new Resource
                 {
-                    Focus = 2,
-                    Strength = -1,
+                    Focus = 1,
+                    Strength = 0,
                     Stability = 0
                 };
                 totalCost = BaseCost + modifier + itemModifier;
@@ -79,7 +79,7 @@ public class SwiftAttack : Skill
 
                 modifier = new Resource
                 {
-                    Focus = 2,
+                    Focus = 1,
                     Strength = 0,
                     Stability = 1
                 };
@@ -91,8 +91,8 @@ public class SwiftAttack : Skill
 				modifier = new Resource()
 				{
 					Focus = -1,
-					Strength = -1,
-					Stability = -1
+					Strength = 0,
+					Stability = 0
 				};
 				totalCost = BaseCost + modifier + itemModifier;
 

@@ -9,8 +9,8 @@ public class Counter : Skill
         Type = SkillType.Counter;
         BaseCost = new Resource
         {
-            Focus = 3,
-            Strength = 1,
+            Focus = 2,
+            Strength = 0,
             Stability = 2
         };
 
@@ -50,9 +50,9 @@ public class Counter : Skill
 
                 modifier = new Resource
                 {
-                    Focus = -1,
+                    Focus = 0,
                     Strength = 0,
-                    Stability = 1
+                    Stability = 0
                 };
                 totalCost = BaseCost + modifier + itemModifier;
 
@@ -62,8 +62,8 @@ public class Counter : Skill
                 modifier = new Resource
                 {
                     Focus = 1,
-                    Strength = -1,
-                    Stability = 1
+                    Strength = 0,
+                    Stability = 0
                 };
                 totalCost = BaseCost + modifier + itemModifier;
 

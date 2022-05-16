@@ -94,7 +94,6 @@ public class GameController : MonoBehaviour
 
 	void UpdateUnansweredEnemyText()
 	{
-		print(GetUnansweredEnemyCount());
 		unansweredEnemyText.text = GetUnansweredEnemyCount().ToString() + " Enemies\nNot Answered";
 	}
 

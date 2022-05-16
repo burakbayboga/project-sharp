@@ -9,7 +9,7 @@ public class HeavyAttack : Skill
         Type = SkillType.HeavyAttack;
         BaseCost = new Resource
         {
-            Focus = 1,
+            Focus = 0,
             Strength = 3,
             Stability = 2
         };
@@ -46,9 +46,9 @@ public class HeavyAttack : Skill
 
                 modifier = new Resource
                 {
-                    Focus = -1,
+                    Focus = 0,
                     Strength = 1,
-                    Stability = 1
+                    Stability = 0
                 };
                 totalCost = BaseCost + modifier + itemModifier;
 
@@ -57,9 +57,9 @@ public class HeavyAttack : Skill
 
                 modifier = new Resource
                 {
-                    Focus = 1,
-                    Strength = 0,
-                    Stability = 0
+                    Focus = 0,
+                    Strength = -1,
+                    Stability = 1
                 };
                 totalCost = BaseCost + modifier + itemModifier;
 
@@ -68,9 +68,9 @@ public class HeavyAttack : Skill
 
                 modifier = new Resource
                 {
-                    Focus = -2,
-                    Strength = 0,
-                    Stability = 1
+                    Focus = 0,
+                    Strength = -1,
+                    Stability = 0
                 };
                 totalCost = BaseCost + modifier + itemModifier;
 
@@ -79,7 +79,7 @@ public class HeavyAttack : Skill
 
                 modifier = new Resource
                 {
-                    Focus = 3,
+                    Focus = 0,
                     Strength = 0,
                     Stability = 1
                 };
@@ -90,7 +90,7 @@ public class HeavyAttack : Skill
 
 				modifier = new Resource
 				{
-					Focus = -1,
+					Focus = 0,
 					Strength = -1,
 					Stability = -1
 				};

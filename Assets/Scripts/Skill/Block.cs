@@ -9,7 +9,7 @@ public class Block : Skill
         Type = SkillType.Block;
         BaseCost = new Resource
         {
-            Focus = 1,
+            Focus = 0,
             Strength = 2,
             Stability = 2
         };
@@ -50,7 +50,7 @@ public class Block : Skill
 
                 modifier = new Resource
                 {
-                    Focus = -1,
+                    Focus = 0,
                     Strength = 0,
                     Stability = 2
                 };
@@ -61,7 +61,7 @@ public class Block : Skill
 
                 modifier = new Resource
                 {
-                    Focus = 1,
+                    Focus = 0,
                     Strength = -1,
                     Stability = 0
                 };
