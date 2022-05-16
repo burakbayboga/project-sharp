@@ -11,7 +11,7 @@ public class BlockArrow : Skill
 		{
 			Focus = 0,
 			Strength = 0,
-			Stability = 1
+			Stability = 2
 		};
 
 		clip = Animator.StringToHash("block");
