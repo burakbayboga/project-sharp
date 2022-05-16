@@ -175,9 +175,9 @@ MonoBehaviour:
   - {fileID: 6901594448494771446}
   - {fileID: 6901594449659569826}
   ResourceRecharge:
-    Focus: 4
+    Focus: 3
     Strength: 2
-    Stability: 3
+    Stability: 2
   CurrentResource:
     Focus: 0
     Strength: 0

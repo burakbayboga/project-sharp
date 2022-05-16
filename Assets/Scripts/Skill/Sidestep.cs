@@ -9,9 +9,9 @@ public class Sidestep : Skill
 		Type = SkillType.Sidestep;
 		BaseCost = new Resource
 		{
-			Focus = 3,
+			Focus = 2,
 			Strength = 0,
-			Stability = 3
+			Stability = 2
 		};
 	}
 
