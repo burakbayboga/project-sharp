@@ -220,6 +220,18 @@ public class Player : MonoBehaviour
             CurrentInjury++;
             MaxResource = (MaxResource / 2) + 1;
 			CurrentResource.ClampToReference(MaxResource);
+			if (hawkFocusRemaining > 0)
+			{
+				CurrentResource.Focus = int.MaxValue - 100;
+			}
+			if (bullStrengthRemaining > 0)
+			{
+				CurrentResource.Strength = int.MaxValue - 100;
+			}
+			if (turtleStabilityRemaining > 0)
+			{
+				CurrentResource.Stability = int.MaxValue - 100;
+			}
             HandleResourceIcons();
         }
     }
