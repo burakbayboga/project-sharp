@@ -94,6 +94,7 @@ public class GameController : MonoBehaviour
 
 	void UpdateUnansweredEnemyText()
 	{
+		print(GetUnansweredEnemyCount());
 		unansweredEnemyText.text = GetUnansweredEnemyCount().ToString() + " Enemies\nNot Answered";
 	}
 
@@ -560,8 +561,8 @@ public class GameController : MonoBehaviour
 			}
 			Clashes.Add(newClash);
 
-			UpdateUnansweredEnemyText();
 		}
+		UpdateUnansweredEnemyText();
     }
 
 	void EraseClash(Clash clash)
