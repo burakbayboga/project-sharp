@@ -9,8 +9,8 @@ public class Whirlwind : Skill
 		Type = SkillType.Whirlwind;
 		BaseCost = new Resource()
 		{
-			Focus = 2,
-			Strength = 2,
+			Focus = 1,
+			Strength = 1,
 			Stability = 3
 		};
 

@@ -70,6 +70,7 @@ public class GameController : MonoBehaviour
 			Enemies.Add(enemies[i].GetComponent<Enemy>());
         }
         Skill.InitSkills();
+		lootPanel.Init();
     }
 
 	public void RegisterNewEnemies(List<Enemy> newEnemies)
@@ -199,7 +200,7 @@ public class GameController : MonoBehaviour
 	{
 		pendingLootTurn = false;
 		CurrentTurnState = TurnState.Loot;
-		if (lootPanel.PoolHasItem())
+		if (lootPanel.GetRemainingItemCount() > 0)
 		{
 			lootPanel.gameObject.SetActive(true);
 			lootPanel.Fill();

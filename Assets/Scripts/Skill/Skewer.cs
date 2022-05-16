@@ -9,8 +9,8 @@ public class Skewer : Skill
 		Type = SkillType.Skewer;
 		BaseCost = new Resource
 		{
-			Focus = 3,
-			Strength = 2,
+			Focus = 2,
+			Strength = 3,
 			Stability = 2
 		};
 

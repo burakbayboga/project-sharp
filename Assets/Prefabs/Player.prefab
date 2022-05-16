@@ -183,9 +183,9 @@ MonoBehaviour:
     Strength: 0
     Stability: 0
   MaxResource:
-    Focus: 8
-    Strength: 8
-    Stability: 8
+    Focus: 6
+    Strength: 6
+    Stability: 6
   items: []
   currentHex: {fileID: 0}
   sidestepUsed: 0

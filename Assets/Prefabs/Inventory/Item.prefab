@@ -661,6 +661,7 @@ GameObject:
   - component: {fileID: 1885035236955616332}
   - component: {fileID: 1885035236955616335}
   - component: {fileID: 1885035236955616334}
+  - component: {fileID: 1681274829772593811}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -769,7 +770,42 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1885035236955616335}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1681274829772593811}
+        m_TargetAssemblyTypeName: Item, Assembly-CSharp
+        m_MethodName: OnItemClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1681274829772593811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885035236955616371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4b7989318f3414ca4a4880a9c26e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceModifier:
+    Focus: 0
+    Strength: 0
+    Stability: 0
+  modifiedSkillType: -1
+  unlockedSkillType: -1
+  itemType: 0
+  itemRarity: 0
+  description: {fileID: 2804599848814622794}
+  shortDescription: {fileID: 7715220213795167232}
+  inInventory: 0
 --- !u!1 &2687668212773689276
 GameObject:
   m_ObjectHideFlags: 0

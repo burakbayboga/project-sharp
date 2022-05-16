@@ -30,47 +30,22 @@ PrefabInstance:
     - target: {fileID: 1502919203138436353, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
       propertyPath: m_Text
-      value: +1
+      value: +2
       objectReference: {fileID: 0}
     - target: {fileID: 1502919203274970047, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
+    - target: {fileID: 1681274829772593811, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      propertyPath: itemType
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
+    - target: {fileID: 1681274829772593811, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1441036296969048197}
-    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      propertyPath: resourceModifier.Stability
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnItemClicked
-      objectReference: {fileID: 0}
-    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Item, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1885035236955616334, guid: 7e5f0c2940a378c40afda1ec39897178,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1885035236955616335, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
@@ -236,43 +211,3 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e5f0c2940a378c40afda1ec39897178, type: 3}
---- !u!1 &1612447385655118088 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1885035236955616371, guid: 7e5f0c2940a378c40afda1ec39897178,
-    type: 3}
-  m_PrefabInstance: {fileID: 885078089165340027}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3072472435742459185 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2804599848814622794, guid: 7e5f0c2940a378c40afda1ec39897178,
-    type: 3}
-  m_PrefabInstance: {fileID: 885078089165340027}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7447153047228309883 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7715220213795167232, guid: 7e5f0c2940a378c40afda1ec39897178,
-    type: 3}
-  m_PrefabInstance: {fileID: 885078089165340027}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1441036296969048197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1612447385655118088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3b2001b4df8d1f478fa6f590e1f605d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resourceModifier:
-    Focus: 0
-    Strength: 0
-    Stability: 1
-  modifiedSkillType: -1
-  unlockedSkillType: -1
-  itemType: 1
-  description: {fileID: 3072472435742459185}
-  shortDescription: {fileID: 7447153047228309883}
-  inInventory: 0

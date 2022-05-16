@@ -5,29 +5,23 @@ using System.Linq;
 
 public class LootPanel : MonoBehaviour
 {
-	public List<Item> itemPool;
-	List<Item> currentlyVisible = new List<Item>();
 	public List<Item> commonItems = new List<Item>();
 	public List<Item> rareItems = new List<Item>();
 	public List<Item> epicItems = new List<Item>();
 
+	List<Item> currentlyVisible = new List<Item>();
+	List<Item> itemPool = new List<Item>();
 
 	public float[] lootChances = new float[3]{ 0.7f, 0.25f, 0.05f };
 
-	bool inited = false;
 
 	public void Fill()
 	{
-		if (!inited)
-		{
-			Init();
-		}
-
 		commonItems = commonItems.OrderBy(r => Random.Range(0f, 1f)).ToList();
 		rareItems = rareItems.OrderBy(r => Random.Range(0f, 1f)).ToList();
 		epicItems = epicItems.OrderBy(r => Random.Range(0f, 1f)).ToList();
 
-		int count = Mathf.Min(3, itemPool.Count);
+		int count = Mathf.Min(3, GetRemainingItemCount());
 
 		for (int i = 0; i < count; i++)
 		{
@@ -146,9 +140,13 @@ public class LootPanel : MonoBehaviour
 		Player.instance.PickItem(pickedItem);
 	}
 
-	void Init()
+	public void Init()
 	{
-		inited = true;
+		for (int i = 0; i < transform.childCount; i++)
+		{
+			itemPool.Add(transform.GetChild(i).GetComponent<Item>());
+		}
+
 		for (int i = 0; i < itemPool.Count; i++)
 		{
 			if (itemPool[i].itemRarity == ItemRarity.common)
@@ -164,12 +162,11 @@ public class LootPanel : MonoBehaviour
 				epicItems.Add(itemPool[i]);
 			}
 		}
-		
 	}
 
-	public bool PoolHasItem()
+	public int GetRemainingItemCount()
 	{
-		return itemPool.Count > 0 || !inited;
+		return commonItems.Count + rareItems.Count + epicItems.Count;
 	}
 }
 
