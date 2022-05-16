@@ -12,12 +12,14 @@ public class IngameInput : MonoBehaviour
     Camera MainCamera;
     int creatureLayermask;
 	int hexLayermask;
+	int interactableLayermask;
 
     void Awake()
     {
         instance = this;
         creatureLayermask = 1 << 8;
 		hexLayermask = 1 << 9;
+		interactableLayermask = 1 << 11;
         IsIngameInputActive = true;
     }
 
@@ -45,7 +47,7 @@ public class IngameInput : MonoBehaviour
 					}
 					else
 					{
-						layermask = creatureLayermask;
+						layermask = creatureLayermask | interactableLayermask;
 					}
 				}
 				RaycastHit2D[] hits = Physics2D.RaycastAll(MainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, layermask);
@@ -63,6 +65,11 @@ public class IngameInput : MonoBehaviour
 					else if (hits[0].collider.CompareTag("hex"))
 					{
 						hits[0].collider.GetComponent<Hex>().HandleInput();
+					}
+					else if (hits[0].collider.CompareTag("interactable"))
+					{
+						Hex hex = hits[0].collider.GetComponent<Hex>();
+						GameController.instance.OnInteractableHexClicked(hex);
 					}
                 }
                 else

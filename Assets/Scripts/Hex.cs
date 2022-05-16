@@ -15,6 +15,8 @@ public class Hex : MonoBehaviour
 	public bool isOccupiedByEnemy;
 	public bool isOccupiedByPlayer;
 	public GameObject affectedBySkillEffect;
+	public InteractableType type;
+	public Resource interactCost;
 
 	public static Vector3 posOffset = new Vector3(0.04f, 0.09f, 0f);
 
@@ -39,8 +41,12 @@ public class Hex : MonoBehaviour
 
 	void Start()
 	{
-		SetAdjacents();
-		SetInitialOccupier();
+		// TODO: refactor interactable hex system
+		if (type == InteractableType.none)
+		{
+			SetAdjacents();
+			SetInitialOccupier();
+		}
 	}
 
 	void SetInitialOccupier()
@@ -176,3 +182,10 @@ public class Hex : MonoBehaviour
 		isHighlighted = true;
 	}
 }
+
+public enum InteractableType
+{
+	barrel = 0,
+	none = -1
+}
+

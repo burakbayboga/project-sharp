@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - hex
+  - interactable
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - creature
   - hex
   - los breaker
-  - 
+  - interactable
   - 
   - 
   - 

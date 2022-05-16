@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
 	public SkillButton BlockArrowSkillButton;
 	public SkillButton WhirlwindSkillButton;
 	public SkillButton SidestepSkillButton;
+	public SkillButton InteractButton;
 
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
@@ -43,6 +44,7 @@ public class GameController : MonoBehaviour
     List<Enemy> EnemiesMarkedForDeath = new List<Enemy>();
 
     Enemy CurrentEnemy;
+	Hex CurrentInteractable;
 
     public TurnState CurrentTurnState;
 
@@ -339,6 +341,7 @@ public class GameController : MonoBehaviour
     void EndTurn()
     {
 		SidestepSkillButton.gameObject.SetActive(false);
+		InteractButton.gameObject.SetActive(false);
 		Player.instance.currentHex.RevertAdjacentHighlights();
 		unansweredEnemyText.gameObject.SetActive(false);
 		TurnProgressButton.interactable = false;
@@ -406,11 +409,32 @@ public class GameController : MonoBehaviour
         return CurrentEnemy.IsVulnerable;
     }
 
+	public void OnInteractableHexClicked(Hex hex)
+	{
+		CurrentInteractable = hex;
+		hex.SelectAsTarget();
+		InteractButton.HandleCostAndDamage(hex.interactCost, 0);
+	}
+
+	public void OnInteracted()
+	{
+		if (CurrentInteractable.type == InteractableType.barrel)
+		{
+			
+		}
+	}
+
     public void OnEnemyClicked(Enemy enemy)
     {
         if (CurrentTurnState == TurnState.PlayerAnswer)
         {
 			SidestepSkillButton.gameObject.SetActive(false);
+			InteractButton.gameObject.SetActive(false);
+			if (CurrentInteractable != null)
+			{
+				CurrentInteractable.UnselectAsTarget();
+			}
+			CurrentInteractable = null;
 			Player.instance.currentHex.RevertAdjacentHighlights();
 
             if (CurrentEnemy != null)
@@ -537,11 +561,17 @@ public class GameController : MonoBehaviour
     public void OnEmptyClick()
     {
         SkillsParent.SetActive(false);
+		InteractButton.gameObject.SetActive(false);
         if (CurrentEnemy != null)
         {
             CurrentEnemy.currentHex.UnselectAsTarget();
         }
         CurrentEnemy = null;
+		if (CurrentInteractable != null)
+		{
+			CurrentInteractable.UnselectAsTarget();
+		}
+		CurrentInteractable = null;
 
 		if (CurrentTurnState == TurnState.PlayerAnswer)
 		{

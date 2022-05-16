@@ -9,6 +9,19 @@ public class Skill
     public SkillType Type;
 	public int clip;
 
+    public static HeavyAttack HeavyAttack;
+    public static SwiftAttack SwiftAttack;
+    public static Counter Counter;
+    public static Block Block;
+    public static KillingBlow KillingBlow;
+	public static ShootArrow ShootArrow;
+	public static DeflectArrow DeflectArrow;
+	public static Skewer Skewer;
+	public static BlockArrow BlockArrow;
+	public static Whirlwind Whirlwind;
+	public static Sidestep Sidestep;
+	public static Skill Interact;
+
     //this is called for every enemy action. param:reaction refers to player action
     public static void HandleClash(Enemy enemy, Skill playerReaction)
 	{
@@ -55,18 +68,6 @@ public class Skill
 
 	public virtual int GetCoveredWeaknessByEnemy() { return 0; }
 
-    public static HeavyAttack HeavyAttack;
-    public static SwiftAttack SwiftAttack;
-    public static Counter Counter;
-    public static Block Block;
-    public static KillingBlow KillingBlow;
-	public static ShootArrow ShootArrow;
-	public static DeflectArrow DeflectArrow;
-	public static Skewer Skewer;
-	public static BlockArrow BlockArrow;
-	public static Whirlwind Whirlwind;
-	public static Sidestep Sidestep;
-
 	public static Skill GetSkillForType(SkillType type)
 	{
 		switch (type)
@@ -111,6 +112,7 @@ public class Skill
 		BlockArrow = new BlockArrow();
 		Whirlwind = new Whirlwind();
 		Sidestep = new Sidestep();
+		Interact = new Skill();
     }
 }
 
@@ -204,5 +206,6 @@ public enum SkillType
 	BlockArrow = 8,
 	Whirlwind = 9,
     None = -1,
-	Sidestep = -2
+	Sidestep = -2,
+	Interact = -3
 }
