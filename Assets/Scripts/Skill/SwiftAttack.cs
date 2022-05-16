@@ -10,8 +10,8 @@ public class SwiftAttack : Skill
         BaseCost = new Resource
         {
             Focus = 1,
-            Strength = 0,
-            Stability = 1
+            Strength = 1,
+            Stability = 0
         };
 
 		clip = Animator.StringToHash("swift attack");
@@ -47,8 +47,8 @@ public class SwiftAttack : Skill
                 modifier = new Resource
                 {
                     Focus = 0,
-                    Strength = 0,
-                    Stability = 2
+                    Strength = 2,
+                    Stability = 0
                 };
                 totalCost = BaseCost + modifier + itemModifier;
 
@@ -80,8 +80,8 @@ public class SwiftAttack : Skill
                 modifier = new Resource
                 {
                     Focus = 1,
-                    Strength = 0,
-                    Stability = 1
+                    Strength = 1,
+                    Stability = 0
                 };
                 totalCost = BaseCost + modifier + itemModifier;
 

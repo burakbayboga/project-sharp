@@ -39,9 +39,9 @@ public class KillingBlow : Skill
 			{
 				Resource modifier = new Resource
 				{
-					Focus = 5,
-					Strength = 3,
-					Stability = 3
+					Focus = 3,
+					Strength = 2,
+					Stability = 2
 				};
 				totalCost = BaseCost + modifier + itemModifier;
 			}
@@ -49,9 +49,9 @@ public class KillingBlow : Skill
 			{
 				Resource modifier = new Resource
 				{
-					Focus = 7,
-					Strength = 4,
-					Stability = 4
+					Focus = 4,
+					Strength = 3,
+					Stability = 3
 				};
 				totalCost = BaseCost + modifier + itemModifier;
 			}
