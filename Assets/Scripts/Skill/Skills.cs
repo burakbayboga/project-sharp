@@ -10,13 +10,13 @@ public class Skill
 	public int clip;
 
     //this is called for every enemy action. param:reaction refers to player action
-    public virtual void HandleClash(Enemy enemy, Skill playerReaction)
+    public static void HandleClash(Enemy enemy, Skill playerReaction)
 	{
 		if (playerReaction == null)
 		{
 			if (enemy.IsDefensive())
 			{
-				enemy.CoverWeakness(GetCoveredWeaknessByEnemy());
+				enemy.CoverWeakness(enemy.CurrentAction.GetCoveredWeaknessByEnemy());
 			}
 			else
 			{
@@ -29,14 +29,14 @@ public class Skill
 		}
 		else
 		{
-			enemy.ExposeWeakness(playerReaction.GetDamageAgainstEnemyAction(Type));
+			enemy.ExposeWeakness(playerReaction.GetDamageAgainstEnemyAction(enemy.CurrentAction));
 		}
 	}
 
     // player calls this for every skill. param:action refers to enemy action
     public virtual Resource GetTotalCost(SkillType enemyAction) { return new Resource(); }
 
-	public virtual int GetDamageAgainstEnemyAction(SkillType enemyAction) { return 0; }
+	public virtual int GetDamageAgainstEnemyAction(Skill enemyAction) { return 0; }
 
 	protected Resource GetItemModifier()
 	{

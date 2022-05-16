@@ -22,9 +22,10 @@ public class Counter : Skill
 		return 1;
 	}
     
-	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)
+	public override int GetDamageAgainstEnemyAction(Skill enemyAction)
 	{
-		switch (enemyAction)
+		SkillType enemyActionType = enemyAction != null ? enemyAction.Type : SkillType.None;
+		switch (enemyActionType)
 		{
 			case SkillType.HeavyAttack:
 				return 1;

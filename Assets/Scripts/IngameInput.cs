@@ -58,15 +58,7 @@ public class IngameInput : MonoBehaviour
                     else if (hits[0].collider.CompareTag("Enemy"))
                     {
                         Enemy enemy = hits[0].collider.GetComponent<Enemy>();
-						if (enemy.CurrentAction == null)
-						{
-							// TODO: まじか
-							GameController.instance.OnEmptyClick();
-						}
-						else
-						{
-							GameController.instance.OnEnemyClicked(enemy);
-						}
+						GameController.instance.OnEnemyClicked(enemy);
                     }
 					else if (hits[0].collider.CompareTag("hex"))
 					{

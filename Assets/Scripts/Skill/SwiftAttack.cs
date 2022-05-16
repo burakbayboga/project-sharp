@@ -17,15 +17,18 @@ public class SwiftAttack : Skill
 		clip = Animator.StringToHash("swift attack");
     }
 
-	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)
+	public override int GetDamageAgainstEnemyAction(Skill enemyAction)
 	{
-		switch (enemyAction)
+		SkillType enemyActionType = enemyAction != null ? enemyAction.Type : SkillType.None;
+		switch (enemyActionType)
 		{
 			case SkillType.HeavyAttack:
 			case SkillType.SwiftAttack:
 			case SkillType.Block:
 			case SkillType.Counter:
 				return 1;
+			case SkillType.None:
+				return 2;
 			default:
 				return 0;
 		}
@@ -83,6 +86,17 @@ public class SwiftAttack : Skill
                 totalCost = BaseCost + modifier + itemModifier;
 
                 break;
+			case SkillType.None:
+
+				modifier = new Resource()
+				{
+					Focus = -1,
+					Strength = -1,
+					Stability = -1
+				};
+				totalCost = BaseCost + modifier + itemModifier;
+
+				break;
             default:
                 totalCost = new Resource();
                 break;

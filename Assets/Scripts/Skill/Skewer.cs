@@ -17,7 +17,7 @@ public class Skewer : Skill
 		clip = Animator.StringToHash("counter");
 	}
 
-	public override int GetDamageAgainstEnemyAction(SkillType enemyAction)
+	public override int GetDamageAgainstEnemyAction(Skill enemyAction)
 	{
 		return 1;
 	}

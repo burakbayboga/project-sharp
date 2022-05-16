@@ -33,7 +33,6 @@ public class GameController : MonoBehaviour
 
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;
-	int unansweredEnemyCount;
 
     public GameObject DeathPanel;
 
@@ -79,9 +78,23 @@ public class GameController : MonoBehaviour
 		UpdateUnansweredEnemyText();
 	}
 
+	int GetUnansweredEnemyCount()
+	{
+		int count = 0;
+		for (int i = 0; i < Enemies.Count; i++)
+		{
+			if (Enemies[i].CurrentAction != null && Enemies[i].CurrentPlayerReaction == null)
+			{
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	void UpdateUnansweredEnemyText()
 	{
-		unansweredEnemyText.text = unansweredEnemyCount.ToString() + " Enemies\nNot Answered";
+		unansweredEnemyText.text = GetUnansweredEnemyCount().ToString() + " Enemies\nNot Answered";
 	}
 
 	void MakeEnemiesMove()
@@ -125,16 +138,7 @@ public class GameController : MonoBehaviour
 			{
 				Enemies[i].CheckActionValidity();
 			}
-
-			// TODO: beni seviyosan refactorle
-			unansweredEnemyCount = 0;
-			for (int i = 0; i < Enemies.Count; i++)
-			{
-				if (Enemies[i].CurrentAction != null)
-				{
-					unansweredEnemyCount++;
-				}
-			}
+			
 			UpdateUnansweredEnemyText();
 		}
 	}
@@ -220,14 +224,7 @@ public class GameController : MonoBehaviour
 		CurrentTurnState = TurnState.PlayerAnswer;
         TurnStateText.text = CurrentTurnState.ToString();
 
-		unansweredEnemyCount = 0;
-		for (int i = 0; i < Enemies.Count; i++)
-		{
-			if (Enemies[i].CurrentAction != null)
-			{
-				unansweredEnemyCount++;
-			}
-		}
+		
 		UpdateUnansweredEnemyText();
 		unansweredEnemyText.gameObject.SetActive(true);
 	}
@@ -237,7 +234,7 @@ public class GameController : MonoBehaviour
 		for (int i = 0; i < Enemies.Count; i++)
 		{
 			Enemy enemy = Enemies[i];
-			if (enemy.CurrentClash == null)
+			if (enemy.CurrentClash == null && (enemy.CurrentAction != null || enemy.CurrentPlayerReaction != null))
 			{
 				Clash newClash = new Clash(new List<Enemy>{ enemy }, null, new Resource());
 				enemy.CurrentClash = newClash;
@@ -251,11 +248,7 @@ public class GameController : MonoBehaviour
 			for (int j = 0; j < clash.enemies.Count; j++)
 			{
 				Enemy enemy = clash.enemies[j];
-				if (enemy.CurrentAction == null)
-				{
-					continue;
-				}
-				enemy.CurrentAction.HandleClash(enemy, clash.playerAnswer);
+				Skill.HandleClash(enemy, clash.playerAnswer);
 			}
 			yield return StartCoroutine(HandleClashAnimations(clash));
 		}
@@ -294,11 +287,6 @@ public class GameController : MonoBehaviour
 			Skill enemyAction = enemy.CurrentAction;
 			Skill playerReaction = clash.playerAnswer;
 
-			if (enemyAction == null || (enemy.IsDefensive() && playerReaction == null))
-			{
-				yield break;
-			}
-
 			bool playerShouldFaceLeft = enemy.transform.position.x < Player.instance.transform.position.x;
 			Player.instance.SetRendererFlip(playerShouldFaceLeft);
 			enemy.SetRendererFlip(!playerShouldFaceLeft);
@@ -307,10 +295,14 @@ public class GameController : MonoBehaviour
 			{
 				Player.instance.animator.Play(playerReaction.clip);
 			}
-			enemy.animator.Play(enemyAction.clip);
+
+			if (enemyAction != null)
+			{
+				enemy.animator.Play(enemyAction.clip);
+			}
 
 
-			Vector3 basePos = enemy.IsDefensive() ? enemy.transform.position : Player.instance.transform.position;
+			Vector3 basePos = (enemy.IsDefensive() || enemyAction == null) ? enemy.transform.position : Player.instance.transform.position;
 			if (enemyAction != Skill.ShootArrow)
 			{
 				Vector3 offset = playerShouldFaceLeft ? new Vector3(-0.3f, 0f, 0f) : new Vector3(0.3f, 0f, 0f);
@@ -422,13 +414,14 @@ public class GameController : MonoBehaviour
 
             HandleSkillButtonIcons();
 			
-			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction.Type == SkillType.ShootArrow;
+			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction == Skill.ShootArrow;
 			bool isEnemyDefensive = CurrentEnemy.IsDefensive();
 			bool isEnemyVulnerable = CurrentEnemy.IsVulnerable;
 			bool isAdjacentToEnemy = CurrentEnemy.currentHex.IsAdjacentToPlayer();
+			bool isEnemyIdle = CurrentEnemy.CurrentAction == null;
 
-			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy);
-			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy);
+			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
+			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
 			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
 			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
 			SkewerSkillButton.gameObject.SetActive(isSkewerUnlocked && isAdjacentToEnemy);
@@ -468,7 +461,7 @@ public class GameController : MonoBehaviour
 
     void HandleSkillButtonIcons()
     {
-		SkillType enemyActionType = CurrentEnemy.CurrentAction.Type;
+		SkillType enemyActionType = CurrentEnemy.CurrentAction != null ? CurrentEnemy.CurrentAction.Type : SkillType.None;
 
 		HandleButtonIconsForSkill(Skill.HeavyAttack, enemyActionType, HeavyAttackSkillButton);
 		HandleButtonIconsForSkill(Skill.SwiftAttack, enemyActionType, SwiftAttackSkillButton);
@@ -484,7 +477,7 @@ public class GameController : MonoBehaviour
 	void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
 	{
 		Resource cost = skill.GetTotalCost(enemyActionType);
-		int damage = skill.GetDamageAgainstEnemyAction(enemyActionType);
+		int damage = skill.GetDamageAgainstEnemyAction(Skill.GetSkillForType(enemyActionType));
 		skillButton.HandleCostAndDamage(cost, damage);
 	}
 
@@ -567,14 +560,12 @@ public class GameController : MonoBehaviour
 			}
 			Clashes.Add(newClash);
 
-			unansweredEnemyCount -= enemies.Count;
 			UpdateUnansweredEnemyText();
 		}
     }
 
 	void EraseClash(Clash clash)
 	{
-		unansweredEnemyCount += clash.enemies.Count;
 		UpdateUnansweredEnemyText();
 		for (int i = 0; i < clash.enemies.Count; i++)
 		{

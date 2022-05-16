@@ -35,14 +35,26 @@ public class KillingBlow : Skill
         }
         else
         {
-            Resource modifier = new Resource
-            {
-                Focus = 7,
-                Strength = 4,
-                Stability = 4
-            };
-
-			totalCost = BaseCost + modifier + itemModifier;
+			if (enemyAction == SkillType.None)
+			{
+				Resource modifier = new Resource
+				{
+					Focus = 5,
+					Strength = 3,
+					Stability = 3
+				};
+				totalCost = BaseCost + modifier + itemModifier;
+			}
+			else
+			{
+				Resource modifier = new Resource
+				{
+					Focus = 7,
+					Strength = 4,
+					Stability = 4
+				};
+				totalCost = BaseCost + modifier + itemModifier;
+			}
         }
 
 		totalCost.Clamp();
