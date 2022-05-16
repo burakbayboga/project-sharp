@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour
 	public bool isSidestepActive = false;
 
 	bool pendingLootTurn;
+	public int currentWave = 0;
 
     void Awake()
     {
@@ -364,6 +365,11 @@ public class GameController : MonoBehaviour
 
         if (Enemies.Count == 0)
         {
+			currentWave++;
+			if (currentWave % 2 == 0)
+			{
+				lootPanel.IncreaseItemQuality();
+			}
             WaveManager.instance.SendNewWave();
 			Player.instance.ResetInjuries();
 			pendingLootTurn = true;

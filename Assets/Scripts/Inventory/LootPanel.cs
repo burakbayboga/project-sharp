@@ -14,6 +14,12 @@ public class LootPanel : MonoBehaviour
 
 	public float[] lootChances = new float[3]{ 0.7f, 0.25f, 0.05f };
 
+	public void IncreaseItemQuality()
+	{
+		lootChances[0] -= 0.15f;
+		lootChances[1] += 0.1f;
+		lootChances[2] += 0.05f;
+	}
 
 	public void Fill()
 	{

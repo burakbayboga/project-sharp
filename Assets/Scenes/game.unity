@@ -1031,6 +1031,7 @@ MonoBehaviour:
   CurrentTurnState: 0
   IsGameOver: 0
   isSidestepActive: 0
+  currentWave: 0
 --- !u!4 &1253265046
 Transform:
   m_ObjectHideFlags: 0
