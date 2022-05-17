@@ -56,12 +56,14 @@ public class Player : MonoBehaviour
 	SkillButton WhirlwindButton;
 	SkillButton SidestepButton;
 	SkillButton HookButton;
+	SkillButton WrestleButton;
 
     int CurrentInjury;
     int MaxInjury;
 	int totalArmor = 0;
 	int injuryBlockedThisTurn = 0;
 	public bool sidestepUsed = false;
+	public bool wrestleUsed = false;
 	// TODO: refactor sidestep injury logic
 	bool pendingInjuryFromSidestep = false;
 
@@ -125,6 +127,7 @@ public class Player : MonoBehaviour
 		WhirlwindButton = GameController.instance.WhirlwindSkillButton;
 		SidestepButton = GameController.instance.SidestepSkillButton;
 		HookButton = GameController.instance.HookSkillButton;
+		WrestleButton = GameController.instance.WrestleSkillButton;
     }
 
 	public void SetRendererFlip(bool flip)
@@ -203,6 +206,7 @@ public class Player : MonoBehaviour
         HandleResourceIcons();
 		injuryBlockedThisTurn = 0;
 		sidestepUsed = false;
+		wrestleUsed = false;
 		pendingInjuryFromSidestep = false;
     }
 
@@ -302,6 +306,11 @@ public class Player : MonoBehaviour
 				skill = Skill.Hook;
 				damage = HookButton.Damage;
 				break;
+			case SkillType.Wrestle:
+				skillCost = WrestleButton.Cost;
+				skill = Skill.Wrestle;
+				damage = WrestleButton.Damage;
+				break;
             case SkillType.None:
             default:
                 skillCost = new Resource();
@@ -320,6 +329,13 @@ public class Player : MonoBehaviour
 			{
 				currentHex.HighlightValidAdjacents();
 				GameController.instance.isSidestepActive = true;
+			}
+			else if (skill == Skill.Wrestle)
+			{
+				CurrentResource = unspentResource - skillCost;
+				HandleResourceIcons();
+				GameController.instance.OnWrestle();
+				wrestleUsed = true;
 			}
 			else
 			{
@@ -341,7 +357,7 @@ public class Player : MonoBehaviour
 		HandleResourceIcons();
 	}
 
-	public void MovePlayer(Hex newHex, bool isSidestep)
+	public void MovePlayer(Hex newHex, bool isSidestep = false)
 	{
 		if (isSidestep && GameController.instance.IsAggressiveEnemyAdjacentToPlayer())
 		{

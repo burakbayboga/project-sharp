@@ -26,12 +26,14 @@ public class GameController : MonoBehaviour
 	public SkillButton WhirlwindSkillButton;
 	public SkillButton SidestepSkillButton;
 	public SkillButton HookSkillButton;
+	public SkillButton WrestleSkillButton;
 
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
 	bool isBlockArrowUnlocked;
 	bool isWhirlwindUnlocked;
 	bool isHookUnlocked;
+	bool isWrestleUnlocked;
 
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;
@@ -145,6 +147,26 @@ public class GameController : MonoBehaviour
 			
 			UpdateUnansweredEnemyText();
 		}
+	}
+
+	public void OnWrestle()
+	{
+		while (Clashes.Count > 0)
+		{
+			EraseClash(Clashes[0]);
+		}
+
+		Hex playerHex = Player.instance.currentHex;
+		Player.instance.MovePlayer(CurrentEnemy.currentHex);
+		CurrentEnemy.MoveToHex(playerHex);
+
+		for (int i = 0; i < Enemies.Count; i++)
+		{
+			Enemies[i].CheckActionValidity();
+		}
+		CurrentEnemy.ForceCancelAction();
+		UpdateUnansweredEnemyText();
+
 	}
 
 	// TODO: refactor plzz
@@ -496,6 +518,7 @@ public class GameController : MonoBehaviour
 			bool isAdjacentToEnemy = CurrentEnemy.currentHex.IsAdjacentToPlayer();
 			bool isEnemyIdle = CurrentEnemy.CurrentAction == null;
 			bool hasLos = CurrentEnemy.HasLosToPlayer(CurrentEnemy.currentHex);
+			bool wrestleUsed = Player.instance.wrestleUsed;
 
 			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
 			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
@@ -507,6 +530,7 @@ public class GameController : MonoBehaviour
 			BlockArrowSkillButton.gameObject.SetActive(isBlockArrowUnlocked && isEnemyShootingArrow);
 			WhirlwindSkillButton.gameObject.SetActive(isWhirlwindUnlocked && isAdjacentToEnemy);
 			HookSkillButton.gameObject.SetActive(isHookUnlocked && !isAdjacentToEnemy && hasLos);
+			WrestleSkillButton.gameObject.SetActive(isWrestleUnlocked && isAdjacentToEnemy && !wrestleUsed);
         }
     }
 
@@ -550,6 +574,7 @@ public class GameController : MonoBehaviour
 		HandleButtonIconsForSkill(Skill.BlockArrow, enemyActionType, BlockArrowSkillButton);
 		HandleButtonIconsForSkill(Skill.Whirlwind, enemyActionType, WhirlwindSkillButton);
 		HandleButtonIconsForSkill(Skill.Hook, enemyActionType, HookSkillButton);
+		HandleButtonIconsForSkill(Skill.Wrestle, enemyActionType, WrestleSkillButton);
     }
 
 	void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
@@ -577,6 +602,10 @@ public class GameController : MonoBehaviour
 
 	public void OnMouseButtonEnterOnSkill(SkillType skillType)
 	{
+		if (skillType == SkillType.Wrestle)
+		{
+			return;
+		}
 		List<Enemy> enemies = GetAnsweredEnemiesBySkill(Skill.GetSkillForType(skillType));
 		for (int i = 0; i < enemies.Count; i++)
 		{
@@ -586,6 +615,10 @@ public class GameController : MonoBehaviour
 
 	public void OnMouseButtonExitOnSkill(SkillType skillType)
 	{
+		if (skillType == SkillType.Wrestle)
+		{
+			return;
+		}
 		List<Enemy> enemies = GetAnsweredEnemiesBySkill(Skill.GetSkillForType(skillType));
 		for (int i = 0; i < enemies.Count; i++)
 		{
@@ -679,7 +712,7 @@ public class GameController : MonoBehaviour
 				}
 			}
 		}
-		else if (skill == Skill.Sidestep)
+		else if (skill == Skill.Sidestep || skill == Skill.Wrestle)
 		{
 			return Enemies;
 		}
@@ -716,6 +749,9 @@ public class GameController : MonoBehaviour
 				break;
 			case SkillType.Hook:
 				isHookUnlocked = true;
+				break;
+			case SkillType.Wrestle:
+				isWrestleUnlocked = true;
 				break;
 			default:
 				break;

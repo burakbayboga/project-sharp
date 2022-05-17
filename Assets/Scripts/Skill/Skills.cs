@@ -21,6 +21,7 @@ public class Skill
 	public static Whirlwind Whirlwind;
 	public static Sidestep Sidestep;
 	public static Hook Hook;
+	public static Wrestle Wrestle;
 
     //this is called for every enemy action. param:reaction refers to player action
     public static void HandleClash(Enemy enemy, Skill playerReaction)
@@ -96,6 +97,8 @@ public class Skill
 				return Sidestep;
 			case SkillType.Hook:
 				return Hook;
+			case SkillType.Wrestle:
+				return Wrestle;
 			default:
 				return null;
 		}
@@ -115,6 +118,7 @@ public class Skill
 		Whirlwind = new Whirlwind();
 		Sidestep = new Sidestep();
 		Hook = new Hook();
+		Wrestle = new Wrestle();
     }
 }
 
@@ -209,5 +213,6 @@ public enum SkillType
 	Whirlwind = 9,
 	Hook = 10,
     None = -1,
-	Sidestep = -2
+	Sidestep = -2,
+	Wrestle = -3
 }

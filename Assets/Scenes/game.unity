@@ -939,6 +939,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028dcacdb65c2f34e988e5915e0914f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &872806945 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2669336644192288388, guid: f25ae309c7e8a97428091c48a05d2aed,
+    type: 3}
+  m_PrefabInstance: {fileID: 4204724681710474413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 028dcacdb65c2f34e988e5915e0914f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &954444268 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8413193266931885589, guid: f25ae309c7e8a97428091c48a05d2aed,
@@ -1117,6 +1129,7 @@ MonoBehaviour:
   WhirlwindSkillButton: {fileID: 1852115806}
   SidestepSkillButton: {fileID: 760560477}
   HookSkillButton: {fileID: 857161674}
+  WrestleSkillButton: {fileID: 872806945}
   TurnProgressButton: {fileID: 1961063634}
   unansweredEnemyText: {fileID: 2091764979}
   DeathPanel: {fileID: 1020101577}
@@ -2126,6 +2139,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1253265045}
+    - target: {fileID: 6581995319952933283, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -28.400024
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
 --- !u!114 &4204724681710474414 stripped

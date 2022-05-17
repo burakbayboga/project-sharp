@@ -177,6 +177,12 @@ public class Enemy : MonoBehaviour
 			return false;
 		}
 	}
+	
+	public void ForceCancelAction()
+	{
+		CurrentAction = null;
+		ResetIcons();
+	}
 
 	public void CheckActionValidity()
 	{
