@@ -20,7 +20,6 @@ public class Skill
 	public static BlockArrow BlockArrow;
 	public static Whirlwind Whirlwind;
 	public static Sidestep Sidestep;
-	public static Skill Interact;
 
     //this is called for every enemy action. param:reaction refers to player action
     public static void HandleClash(Enemy enemy, Skill playerReaction)
@@ -112,7 +111,6 @@ public class Skill
 		BlockArrow = new BlockArrow();
 		Whirlwind = new Whirlwind();
 		Sidestep = new Sidestep();
-		Interact = new Skill();
     }
 }
 
@@ -206,6 +204,5 @@ public enum SkillType
 	BlockArrow = 8,
 	Whirlwind = 9,
     None = -1,
-	Sidestep = -2,
-	Interact = -3
+	Sidestep = -2
 }
