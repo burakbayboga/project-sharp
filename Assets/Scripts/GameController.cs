@@ -25,11 +25,13 @@ public class GameController : MonoBehaviour
 	public SkillButton BlockArrowSkillButton;
 	public SkillButton WhirlwindSkillButton;
 	public SkillButton SidestepSkillButton;
+	public SkillButton HookSkillButton;
 
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
 	bool isBlockArrowUnlocked;
 	bool isWhirlwindUnlocked;
+	bool isHookUnlocked;
 
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;
@@ -310,20 +312,81 @@ public class GameController : MonoBehaviour
 
 
 			Vector3 basePos = (enemy.IsDefensive() || enemyAction == null) ? enemy.transform.position : Player.instance.transform.position;
-			if (enemyAction != Skill.ShootArrow)
+			// move creatures for clash
+			if (enemyAction != Skill.ShootArrow && playerReaction != Skill.Hook)
 			{
 				Vector3 offset = playerShouldFaceLeft ? new Vector3(-0.3f, 0f, 0f) : new Vector3(0.3f, 0f, 0f);
 				enemy.transform.position = basePos + offset;
-
 				Player.instance.transform.position = basePos - offset;
 			}
 
 
 			yield return new WaitForSeconds(1.5f);
 
-			enemy.transform.position = enemy.currentHex.transform.position + Hex.posOffset;
+			if (playerReaction == Skill.Hook)
+			{
+				enemy.MoveToHex(GetNewHexForHookedEnemy(enemy));
+			}
+			else
+			{
+				enemy.transform.position = enemy.currentHex.transform.position + Hex.posOffset;
+			}
+
 			Player.instance.transform.position = Player.instance.currentHex.transform.position + Hex.posOffset;
 		}
+	}
+
+	Hex GetNewHexForHookedEnemy(Enemy enemy)
+	{
+		Hex traverse = enemy.currentHex;
+		Hex playerHex = Player.instance.currentHex;
+		Vector3 direction = Player.instance.currentHex.transform.position - traverse.transform.position;
+		float realStartTime = Time.realtimeSinceStartup;
+		while (true)
+		{
+			if (Time.realtimeSinceStartup - realStartTime > 10f)
+			{
+				Debug.LogError("new hex for hooked enemy safety net");
+				// safety net
+				break;
+			}
+			Hex next;
+			Ray ray = new Ray(traverse.transform.position, playerHex.transform.position - traverse.transform.position);
+			RaycastHit2D[] hits = Physics2D.CircleCastAll(ray.origin, 0.25f, ray.direction, 0.5f, 1 << 9);
+			Hex nextCandidate = GetHookableHexFromHits(hits, traverse);
+			if (nextCandidate != null)
+			{
+				next = nextCandidate;
+				if (next.isOccupiedByPlayer)
+				{
+					break;
+				}
+				else
+				{
+					traverse = next;
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		return traverse;
+	}
+
+	Hex GetHookableHexFromHits(RaycastHit2D[] hits, Hex baseHex)
+	{
+		for (int i = 0; i < hits.Length; i++)
+		{
+			Hex candidate = hits[i].collider.GetComponent<Hex>();
+			if (candidate != baseHex && !candidate.isOccupiedByEnemy)
+			{
+				return candidate;
+			}
+		}
+
+		return null;
 	}
 
     public void MarkEnemyForDeath(Enemy enemy)
@@ -432,6 +495,7 @@ public class GameController : MonoBehaviour
 			bool isEnemyVulnerable = CurrentEnemy.IsVulnerable;
 			bool isAdjacentToEnemy = CurrentEnemy.currentHex.IsAdjacentToPlayer();
 			bool isEnemyIdle = CurrentEnemy.CurrentAction == null;
+			bool hasLos = CurrentEnemy.HasLosToPlayer(CurrentEnemy.currentHex);
 
 			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
 			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
@@ -442,7 +506,7 @@ public class GameController : MonoBehaviour
 			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
 			BlockArrowSkillButton.gameObject.SetActive(isBlockArrowUnlocked && isEnemyShootingArrow);
 			WhirlwindSkillButton.gameObject.SetActive(isWhirlwindUnlocked && isAdjacentToEnemy);
-
+			HookSkillButton.gameObject.SetActive(isHookUnlocked && !isAdjacentToEnemy && hasLos);
         }
     }
 
@@ -485,6 +549,7 @@ public class GameController : MonoBehaviour
 		HandleButtonIconsForSkill(Skill.Skewer, enemyActionType, SkewerSkillButton);
 		HandleButtonIconsForSkill(Skill.BlockArrow, enemyActionType, BlockArrowSkillButton);
 		HandleButtonIconsForSkill(Skill.Whirlwind, enemyActionType, WhirlwindSkillButton);
+		HandleButtonIconsForSkill(Skill.Hook, enemyActionType, HookSkillButton);
     }
 
 	void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
@@ -648,6 +713,9 @@ public class GameController : MonoBehaviour
 				break;
 			case SkillType.Whirlwind:
 				isWhirlwindUnlocked = true;
+				break;
+			case SkillType.Hook:
+				isHookUnlocked = true;
 				break;
 			default:
 				break;

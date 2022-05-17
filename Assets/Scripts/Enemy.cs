@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-	void MoveToHex(Hex hex)
+	public void MoveToHex(Hex hex)
 	{
 		currentHex.isOccupiedByEnemy = false;
 		transform.position = hex.transform.position + Hex.posOffset;
@@ -164,7 +164,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-	bool HasLosToPlayer(Hex hex)
+	public bool HasLosToPlayer(Hex hex)
 	{
 		Ray ray = new Ray(hex.transform.position, Player.instance.currentHex.transform.position - hex.transform.position);
 		float distance = Vector3.Distance(Player.instance.currentHex.transform.position, hex.transform.position);
