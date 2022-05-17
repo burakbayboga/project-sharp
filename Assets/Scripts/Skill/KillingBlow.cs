@@ -24,7 +24,7 @@ public class KillingBlow : Skill
 		
 		if (GameController.instance.IsCurrentEnemyVulnerable())
         {
-			if (enemyAction == SkillType.Block)
+			if (enemyAction == SkillType.Block || enemyAction == SkillType.ShootArrow)
 			{
 				totalCost =  BaseCost + itemModifier;
 			}
