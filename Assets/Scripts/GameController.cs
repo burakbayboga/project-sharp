@@ -78,6 +78,17 @@ public class GameController : MonoBehaviour
 		lootPanel.Init();
     }
 
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			if (TurnProgressButton.interactable)
+			{
+				ProgressTurn();
+			}
+		}
+	}
+
 	public void RegisterNewEnemies(List<Enemy> newEnemies)
 	{
 		Enemies.AddRange(newEnemies);
