@@ -24,13 +24,10 @@ public class KillingBlow : Skill
 		
 		if (GameController.instance.IsCurrentEnemyVulnerable())
         {
-			if (enemyAction == SkillType.Block || enemyAction == SkillType.ShootArrow)
+			totalCost = BaseCost + itemModifier;
+			if (enemyAction == SkillType.Counter)
 			{
-				totalCost =  BaseCost + itemModifier;
-			}
-			else
-			{
-				totalCost =  BaseCost + 1 + itemModifier;
+				totalCost += 1;
 			}
         }
         else
