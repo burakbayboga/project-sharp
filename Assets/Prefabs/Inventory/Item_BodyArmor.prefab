@@ -39,6 +39,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1681274829772593811, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
+      propertyPath: armorGiven
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681274829772593811, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
       propertyPath: itemRarity
       value: 2
       objectReference: {fileID: 0}

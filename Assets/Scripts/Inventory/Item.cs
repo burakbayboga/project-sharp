@@ -9,6 +9,7 @@ public class Item : MonoBehaviour
 	public SkillType unlockedSkillType;
 	public ItemType itemType;
 	public ItemRarity itemRarity;
+	public int armorGiven;
 
 	public GameObject description;
 	public GameObject shortDescription;

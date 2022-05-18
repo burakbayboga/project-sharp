@@ -198,6 +198,7 @@ public class GameController : MonoBehaviour
 
     void ProgressTurn()
     {
+		SkillsParent.SetActive(false);
         switch (CurrentTurnState)
         {
 			case TurnState.NewTurn:
@@ -603,7 +604,6 @@ public class GameController : MonoBehaviour
     public void OnProgressTurnClicked()
     {
         ProgressTurn();
-        SkillsParent.SetActive(false);
     }
 
     public void OnMouseButtonDownOnSkill()

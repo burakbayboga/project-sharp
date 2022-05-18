@@ -35,6 +35,10 @@ public class Player : MonoBehaviour
 	public GameObject bullStrengthIndicator;
 	public GameObject turtleStabilityIndicator;
 
+	public GameObject armorIndicator;
+	public GameObject armorInjuryIndicator;
+	public Text armorText;
+
     public GameObject[] InjuryIcons;
 
     public Resource ResourceRecharge;
@@ -61,7 +65,7 @@ public class Player : MonoBehaviour
     int CurrentInjury;
     int MaxInjury;
 	int totalArmor = 0;
-	int injuryBlockedThisTurn = 0;
+	bool injuryBlockedThisTurn = false;
 	public bool sidestepUsed = false;
 	public bool wrestleUsed = false;
 	// TODO: refactor sidestep injury logic
@@ -204,7 +208,12 @@ public class Player : MonoBehaviour
 		}
         
         HandleResourceIcons();
-		injuryBlockedThisTurn = 0;
+		injuryBlockedThisTurn = false;
+		armorInjuryIndicator.SetActive(false);
+		if (totalArmor == 0)
+		{
+			armorIndicator.SetActive(false);
+		}
 		sidestepUsed = false;
 		wrestleUsed = false;
 		pendingInjuryFromSidestep = false;
@@ -212,9 +221,12 @@ public class Player : MonoBehaviour
 
     public void GetInjury()
     {
-		if (injuryBlockedThisTurn < totalArmor)
+		if (totalArmor > 0 && !injuryBlockedThisTurn)
 		{
-			injuryBlockedThisTurn++;
+			injuryBlockedThisTurn = true;
+			totalArmor--;
+			armorInjuryIndicator.SetActive(true);
+			UpdateArmorText();
 		}
 		else if (CurrentInjury == MaxInjury)
         {
@@ -387,12 +399,19 @@ public class Player : MonoBehaviour
 		}
 		else if (newItem.itemType == ItemType.armor)
 		{
-			totalArmor++;
+			armorIndicator.SetActive(true);
+			totalArmor += newItem.armorGiven;
+			UpdateArmorText();
 		}
 		else if (newItem.itemType == ItemType.rechargeBooster)
 		{
 			IncreaseResourceRecharge(newItem.resourceModifier);
 		}
+	}
+
+	void UpdateArmorText()
+	{
+		armorText.text = totalArmor.ToString();
 	}
 
 	void IncreaseResourceRecharge(Resource resource)
