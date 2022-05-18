@@ -681,6 +681,7 @@ public class GameController : MonoBehaviour
         if (CurrentEnemy != null)
         {
             CurrentEnemy.currentHex.UnselectAsTarget();
+			CurrentEnemy.currentHex.SetAffectedBySkill(false);
         }
         CurrentEnemy = null;
 
