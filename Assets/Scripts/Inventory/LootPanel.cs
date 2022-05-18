@@ -12,14 +12,13 @@ public class LootPanel : MonoBehaviour
 	List<Item> currentlyVisible = new List<Item>();
 	List<Item> itemPool = new List<Item>();
 
-	//public float[] lootChances = new float[3]{ 0.7f, 0.25f, 0.05f };
-	public float[] looootChances = new float[3]{ 0.1f, 0.1f, 0.05f };
+	public float[] lootChances = new float[3]{ 0.7f, 0.25f, 0.05f };
 
 	public void IncreaseItemQuality()
 	{
-		looootChances[0] -= 0.15f;
-		looootChances[1] += 0.1f;
-		looootChances[2] += 0.05f;
+		lootChances[0] -= 0.15f;
+		lootChances[1] += 0.1f;
+		lootChances[2] += 0.05f;
 	}
 
 	public void Fill()
@@ -34,11 +33,11 @@ public class LootPanel : MonoBehaviour
 		{
 			float random = Random.Range(0f, 1f);
 			ItemRarity rarity;
-			if (random < looootChances[0])
+			if (random < lootChances[0])
 			{
 				rarity = ItemRarity.common;
 			}
-			else if (random < looootChances[0] + looootChances[1])
+			else if (random < lootChances[0] + lootChances[1])
 			{
 				rarity = ItemRarity.rare;
 			}
