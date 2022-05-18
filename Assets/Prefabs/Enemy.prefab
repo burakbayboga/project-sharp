@@ -148,6 +148,7 @@ MonoBehaviour:
   - {fileID: 8960789074176448079, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: -6224410429619551159, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: 5509712231387707372, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
+  - {fileID: 8407236835019777618, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   TotalDurability: 5
   currentHex: {fileID: 0}
 --- !u!212 &3617285728854271623

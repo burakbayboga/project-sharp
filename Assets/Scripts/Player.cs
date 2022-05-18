@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
 	SkillButton SidestepButton;
 	SkillButton HookButton;
 	SkillButton WrestleButton;
+	SkillButton ShoveButton;
 
     int CurrentInjury;
     int MaxInjury;
@@ -132,6 +133,7 @@ public class Player : MonoBehaviour
 		SidestepButton = GameController.instance.SidestepSkillButton;
 		HookButton = GameController.instance.HookSkillButton;
 		WrestleButton = GameController.instance.WrestleSkillButton;
+		ShoveButton = GameController.instance.ShoveSkillButton;
     }
 
 	public void SetRendererFlip(bool flip)
@@ -322,6 +324,11 @@ public class Player : MonoBehaviour
 				skillCost = WrestleButton.Cost;
 				skill = Skill.Wrestle;
 				damage = WrestleButton.Damage;
+				break;
+			case SkillType.Shove:
+				skillCost = ShoveButton.Cost;
+				skill = Skill.Shove;
+				damage = ShoveButton.Damage;
 				break;
             case SkillType.None:
             default:

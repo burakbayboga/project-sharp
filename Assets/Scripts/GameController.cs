@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour
 	public SkillButton SidestepSkillButton;
 	public SkillButton HookSkillButton;
 	public SkillButton WrestleSkillButton;
+	public SkillButton ShoveSkillButton;
 
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
@@ -177,7 +178,7 @@ public class GameController : MonoBehaviour
 		}
 		CurrentEnemy.ForceCancelAction();
 		UpdateUnansweredEnemyText();
-
+		OnEmptyClick();
 	}
 
 	// TODO: refactor plzz
@@ -361,6 +362,10 @@ public class GameController : MonoBehaviour
 			{
 				enemy.MoveToHex(GetNewHexForHookedEnemy(enemy));
 			}
+			else if (playerReaction == Skill.Shove)
+			{
+				enemy.MoveToHex(GetNewHexForShovedEnemy(enemy));
+			}
 			else
 			{
 				enemy.transform.position = enemy.currentHex.transform.position + Hex.posOffset;
@@ -369,12 +374,35 @@ public class GameController : MonoBehaviour
 			Player.instance.transform.position = Player.instance.currentHex.transform.position + Hex.posOffset;
 		}
 	}
+	
+	Hex GetNewHexForShovedEnemy(Enemy enemy)
+	{
+		Hex traverse = enemy.currentHex;
+		Hex playerHex = Player.instance.currentHex;
+		Vector3 direction = traverse.transform.position - playerHex.transform.position;
+
+		for (int i = 0; i < 2; i++)
+		{
+			Ray ray = new Ray(traverse.transform.position, direction);
+			RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, 1f, 1 << 9);
+			Hex next = GetSuitableHexForEnemyFromHits(hits, traverse);
+			if (next != null)
+			{
+				traverse = next;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		return traverse;
+	}
 
 	Hex GetNewHexForHookedEnemy(Enemy enemy)
 	{
 		Hex traverse = enemy.currentHex;
 		Hex playerHex = Player.instance.currentHex;
-		Vector3 direction = Player.instance.currentHex.transform.position - traverse.transform.position;
 		float realStartTime = Time.realtimeSinceStartup;
 		while (true)
 		{
@@ -387,7 +415,7 @@ public class GameController : MonoBehaviour
 			Hex next;
 			Ray ray = new Ray(traverse.transform.position, playerHex.transform.position - traverse.transform.position);
 			RaycastHit2D[] hits = Physics2D.CircleCastAll(ray.origin, 0.25f, ray.direction, 0.5f, 1 << 9);
-			Hex nextCandidate = GetHookableHexFromHits(hits, traverse);
+			Hex nextCandidate = GetSuitableHexForEnemyFromHits(hits, traverse);
 			if (nextCandidate != null)
 			{
 				next = nextCandidate;
@@ -409,7 +437,7 @@ public class GameController : MonoBehaviour
 		return traverse;
 	}
 
-	Hex GetHookableHexFromHits(RaycastHit2D[] hits, Hex baseHex)
+	Hex GetSuitableHexForEnemyFromHits(RaycastHit2D[] hits, Hex baseHex)
 	{
 		for (int i = 0; i < hits.Length; i++)
 		{
@@ -543,6 +571,7 @@ public class GameController : MonoBehaviour
 			WhirlwindSkillButton.gameObject.SetActive(isWhirlwindUnlocked && isAdjacentToEnemy);
 			HookSkillButton.gameObject.SetActive(isHookUnlocked && !isAdjacentToEnemy && hasLos);
 			WrestleSkillButton.gameObject.SetActive(isWrestleUnlocked && isAdjacentToEnemy && !wrestleUsed);
+			ShoveSkillButton.gameObject.SetActive(isAdjacentToEnemy);
         }
     }
 
@@ -587,6 +616,7 @@ public class GameController : MonoBehaviour
 		HandleButtonIconsForSkill(Skill.Whirlwind, enemyActionType, WhirlwindSkillButton);
 		HandleButtonIconsForSkill(Skill.Hook, enemyActionType, HookSkillButton);
 		HandleButtonIconsForSkill(Skill.Wrestle, enemyActionType, WrestleSkillButton);
+		HandleButtonIconsForSkill(Skill.Shove, enemyActionType, ShoveSkillButton);
     }
 
 	void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
