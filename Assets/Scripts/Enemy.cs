@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
 {
 	public Animator animator;
 	public SpriteRenderer rend;
+	public Color color;
+	public EnemyType type;
 
     public Image CurrentActionImage;
     public Image CurrentReactionImage;
@@ -26,7 +28,7 @@ public class Enemy : MonoBehaviour
     public int TotalDurability;
 	public Hex currentHex;
 
-    int CurrentWeaknessExposed;
+    protected int CurrentWeaknessExposed;
 
     int CurrentWeaknessCue;
     public bool IsVulnerable { get; private set; }
@@ -40,17 +42,19 @@ public class Enemy : MonoBehaviour
         IsVulnerable = false;
     }
 
-    private void Start()
-    {
-        InitWeaknessIcons();
-    }
+	public virtual void Init(Hex spawnHex)
+	{
+		currentHex = spawnHex;
+		currentHex.isOccupiedByEnemy = true;
+		InitWeaknessIcons();
+	}
 
 	public void SetRendererFlip(bool flip)
 	{
 		rend.flipX = flip;
 	}
 
-	public void MoveTurn()
+	public virtual void MoveTurn()
 	{
 		if (currentHex.IsAdjacentToPlayer())
 		{
@@ -95,7 +99,43 @@ public class Enemy : MonoBehaviour
 		currentHex = hex;
 	}
 
-	Hex GetHexCloserToPlayer()
+	protected Hex GetHexFurtherToPlayer(bool withLos = false)
+	{
+		List<Hex> candidates = new List<Hex>();
+		Hex playerHex = Player.instance.currentHex;
+		float currentDistance = Vector3.Distance(currentHex.transform.position, playerHex.transform.position);
+
+		for (int i = 0; i < currentHex.adjacents.Length; i++)
+		{
+			Hex traverse = currentHex.adjacents[i];
+			if (traverse.isOccupied)
+			{
+				continue;
+			}
+
+			float traverseDistance = Vector3.Distance(traverse.transform.position, playerHex.transform.position);
+			if (traverseDistance > currentDistance)
+			{
+				if (withLos && !HasLosToPlayer(traverse))
+				{
+					continue;
+				}
+
+				candidates.Add(traverse);
+			}
+		}
+
+		if (candidates.Count > 0)
+		{
+			return candidates[Random.Range(0, candidates.Count)];
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	protected Hex GetHexCloserToPlayer(bool withLos = false)
 	{
 		List<Hex> candidates = new List<Hex>();
 		Hex playerHex = Player.instance.currentHex;
@@ -112,6 +152,10 @@ public class Enemy : MonoBehaviour
 			float traverseDistance = Vector3.Distance(traverse.transform.position, playerHex.transform.position);
 			if (traverseDistance < currentDistance)
 			{
+				if (withLos && !HasLosToPlayer(traverse))
+				{
+					continue;
+				}
 				candidates.Add(traverse);
 			}
 		}
@@ -126,7 +170,7 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-	Hex GetHexWithLosToPlayer()
+	protected Hex GetHexWithLosToPlayer()
 	{
 		Hex[] adjacents = currentHex.adjacents;
 		List<Hex> candidates = new List<Hex>();
@@ -204,7 +248,7 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-    SkillType GetActionType()
+    protected virtual SkillType GetActionType()
     {
 		if (!currentHex.IsAdjacentToPlayer())
 		{
@@ -404,4 +448,11 @@ public class Enemy : MonoBehaviour
             CurrentReactionImage.color = color;
         }
     }
+}
+
+public enum EnemyType
+{
+	basic,
+	archer,
+	brute
 }

@@ -74,6 +74,7 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < enemies.Length; i++)
         {
 			Enemies.Add(enemies[i].GetComponent<Enemy>());
+			Enemies[i].Init(Enemies[i].currentHex);	// wow
         }
         Skill.InitSkills();
 		lootPanel.Init();
@@ -85,6 +86,7 @@ public class GameController : MonoBehaviour
 		{
 			if (TurnProgressButton.interactable)
 			{
+				OnEmptyClick();
 				ProgressTurn();
 			}
 		}
@@ -199,7 +201,6 @@ public class GameController : MonoBehaviour
 
     void ProgressTurn()
     {
-		SkillsParent.SetActive(false);
         switch (CurrentTurnState)
         {
 			case TurnState.NewTurn:

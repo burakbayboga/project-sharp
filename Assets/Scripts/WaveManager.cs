@@ -6,7 +6,7 @@ public class WaveManager : MonoBehaviour
 {
     public static WaveManager instance;
 
-    public GameObject EnemyPrefab;
+    public GameObject[] EnemyPrefabs;
 
     void Awake()
     {
@@ -23,11 +23,9 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < enemyCount; i++)
         {
 			Hex spawnHex = hexes[Random.Range(0, hexes.Count)];
-            Enemy enemy = Instantiate(EnemyPrefab, spawnHex.transform.position + Hex.posOffset, Quaternion.identity).GetComponent<Enemy>();
-			enemy.currentHex = spawnHex;
-			spawnHex.isOccupiedByEnemy = true;
+            Enemy enemy = Instantiate(EnemyPrefabs[Random.Range(0, EnemyPrefabs.Length)], spawnHex.transform.position + Hex.posOffset, Quaternion.identity).GetComponent<Enemy>();
+			enemy.Init(spawnHex);
             newEnemies.Add(enemy);
-            enemy.TotalDurability = Random.Range(2, 5);
 			hexes.Remove(spawnHex);
         }
 
