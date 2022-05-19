@@ -10,7 +10,7 @@ public class Skewer : Skill
 		BaseCost = new Resource
 		{
 			Focus = 2,
-			Strength = 3,
+			Strength = 2,
 			Stability = 2
 		};
 

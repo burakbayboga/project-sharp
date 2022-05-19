@@ -306,7 +306,7 @@ public class GameController : MonoBehaviour
 			{
 				Clash newClash = new Clash(new List<Enemy>{ enemy }, null, new Resource());
 				enemy.CurrentClash = newClash;
-				Clashes.Add(newClash);
+				Clashes.Insert(0, newClash);
 			}
 		}
 
@@ -321,9 +321,14 @@ public class GameController : MonoBehaviour
 			yield return StartCoroutine(HandleClashAnimations(clash));
 		}
 
-        KillMarkedEnemies();
+        int killedEnemyCount = KillMarkedEnemies();
+		Resource rechargeStyleModifier = new Resource();
+		if (killedEnemyCount > 1)
+		{
+			rechargeStyleModifier += 1;
+		}
 		UpdateTurnCountText();
-        Player.instance.RechargeResources();
+        Player.instance.RechargeResources(rechargeStyleModifier);
         ResetClashes();
 		TurnProgressButton.interactable = true;
         ProgressTurn();
@@ -506,8 +511,9 @@ public class GameController : MonoBehaviour
         StartCoroutine(ProcessCombat());
     }
 
-    void KillMarkedEnemies()
+    int KillMarkedEnemies()
     {
+		int killedEnemyCount = EnemiesMarkedForDeath.Count;
         while (EnemiesMarkedForDeath.Count > 0)
         {
             Enemy temp = EnemiesMarkedForDeath[0];
@@ -538,6 +544,8 @@ public class GameController : MonoBehaviour
 			UpdateTurnCountText();
             WaveManager.instance.SendNewWave();
         }
+
+		return killedEnemyCount;
     }
 
     void ResetClashes()
@@ -850,6 +858,7 @@ public class GameController : MonoBehaviour
 				lootPanel.gameObject.SetActive(false);
 				TurnProgressButton.interactable = true;
 				Inventory.instance.SetInventoryActive(false);
+				buildingCharacter = false;
 			}
 			else
 			{
