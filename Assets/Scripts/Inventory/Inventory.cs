@@ -24,4 +24,9 @@ public class Inventory : MonoBehaviour
 	{
 		panel.SetActive(!panel.activeInHierarchy);
 	}
+
+	public void SetInventoryActive(bool active)
+	{
+		panel.SetActive(active);
+	}
 }

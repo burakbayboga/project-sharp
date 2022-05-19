@@ -63,6 +63,8 @@ public class GameController : MonoBehaviour
 
 	bool pendingLootTurn;
 	public int currentWave = 0;
+	int characterBuild;
+	bool buildingCharacter;
 
     void Awake()
     {
@@ -87,7 +89,19 @@ public class GameController : MonoBehaviour
         Skill.InitSkills();
 		lootPanel.Init();
 		killsUntilNextItem = killsRequiredForNewItem;
+
+		StartCharacterBuild();
     }
+
+	void StartCharacterBuild()
+	{
+		TurnProgressButton.interactable = false;
+		buildingCharacter = true;
+		characterBuild = 0;
+		lootPanel.Fill();
+		lootPanel.gameObject.SetActive(true);
+		Inventory.instance.SetInventoryActive(true);
+	}
 
 	void UpdateTurnCountText()
 	{
@@ -827,10 +841,27 @@ public class GameController : MonoBehaviour
 
 	public void OnItemClicked(Item item)
 	{
-		TurnProgressButton.interactable = true;
 		lootPanel.OnItemPicked(item);
-		lootPanel.gameObject.SetActive(false);
-		ProgressTurn();
+		if (buildingCharacter)
+		{
+			characterBuild++;
+			if (characterBuild == 3)
+			{
+				lootPanel.gameObject.SetActive(false);
+				TurnProgressButton.interactable = true;
+				Inventory.instance.SetInventoryActive(false);
+			}
+			else
+			{
+				lootPanel.Fill();
+			}
+		}
+		else
+		{
+			TurnProgressButton.interactable = true;
+			lootPanel.gameObject.SetActive(false);
+			ProgressTurn();
+		}
 	}
 }
 
