@@ -26,6 +26,7 @@ public class SwiftAttack : Skill
 			case SkillType.SwiftAttack:
 			case SkillType.Block:
 			case SkillType.Counter:
+			case SkillType.ShootArrow:
 				return 1;
 			case SkillType.None:
 				return 2;
@@ -91,6 +92,17 @@ public class SwiftAttack : Skill
 				modifier = new Resource()
 				{
 					Focus = -1,
+					Strength = 0,
+					Stability = 0
+				};
+				totalCost = BaseCost + modifier + itemModifier;
+
+				break;
+			case SkillType.ShootArrow:
+
+				modifier = new Resource()
+				{
+					Focus = 0,
 					Strength = 0,
 					Stability = 0
 				};

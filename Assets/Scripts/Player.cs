@@ -380,7 +380,7 @@ public class Player : MonoBehaviour
 	{
 		if (isSidestep && GameController.instance.IsAggressiveEnemyAdjacentToPlayer())
 		{
-			pendingInjuryFromSidestep = true;
+			//pendingInjuryFromSidestep = true;
 		}
 
 		currentHex.RevertAdjacentHighlights();

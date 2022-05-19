@@ -11,7 +11,7 @@ public class Sidestep : Skill
 		{
 			Focus = 2,
 			Strength = 0,
-			Stability = 2
+			Stability = 1
 		};
 	}
 

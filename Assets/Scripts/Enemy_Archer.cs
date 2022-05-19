@@ -37,7 +37,7 @@ public class Enemy_Archer : Enemy
 
 	public override void MoveTurn()
 	{
-		if (currentHex.IsAdjacentToPlayer() && Random.Range(0f, 1f) < 0.4f)
+		if (currentHex.IsAdjacentToPlayer() && Random.Range(0f, 1f) < 0.2f)
 		{
 			// try to get away sometimes
 			Hex newHex = GetHexFurtherToPlayer(true);
@@ -70,6 +70,14 @@ public class Enemy_Archer : Enemy
 			if (newHex != null)
 			{
 				MoveToHex(newHex);
+			}
+			else
+			{
+				newHex = GetHexCloserToPlayer();
+				if (newHex != null)
+				{
+					MoveToHex(newHex);
+				}
 			}
 		}
 	}

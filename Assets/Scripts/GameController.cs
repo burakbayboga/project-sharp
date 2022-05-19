@@ -38,6 +38,12 @@ public class GameController : MonoBehaviour
 
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;
+	public Text turnCountText;
+	int turnCount;
+	int turnLimitForNewWave = 10;
+
+	int killsRequiredForNewItem = 4;
+	int killsUntilNextItem;
 
     public GameObject DeathPanel;
 
@@ -69,6 +75,8 @@ public class GameController : MonoBehaviour
     {
         CurrentTurnState = TurnState.NewTurn;
         TurnStateText.text = CurrentTurnState.ToString();
+		turnCount = 1;
+		UpdateTurnCountText();
 
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < enemies.Length; i++)
@@ -78,7 +86,13 @@ public class GameController : MonoBehaviour
         }
         Skill.InitSkills();
 		lootPanel.Init();
+		killsUntilNextItem = killsRequiredForNewItem;
     }
+
+	void UpdateTurnCountText()
+	{
+		turnCountText.text = turnCount.ToString();
+	}
 
 	void Update()
 	{
@@ -204,13 +218,13 @@ public class GameController : MonoBehaviour
         switch (CurrentTurnState)
         {
 			case TurnState.NewTurn:
-				MakeEnemiesMove();
-				break;
-			case TurnState.EnemyMovement:
 				EnterPlayerMoveTurn();
 				break;
 			case TurnState.PlayerMovement:
 				Player.instance.currentHex.RevertAdjacentHighlights();
+				MakeEnemiesMove();
+				break;
+			case TurnState.EnemyMovement:
 				EnterEnemyActionTurn();
 				break;
 			case TurnState.EnemyAction:
@@ -294,6 +308,7 @@ public class GameController : MonoBehaviour
 		}
 
         KillMarkedEnemies();
+		UpdateTurnCountText();
         Player.instance.RechargeResources();
         ResetClashes();
 		TurnProgressButton.interactable = true;
@@ -487,18 +502,27 @@ public class GameController : MonoBehaviour
             Instantiate(BloodEffectPrefab, temp.transform.position, Quaternion.identity);
 			temp.currentHex.isOccupiedByEnemy = false;
             Destroy(temp.gameObject);
+
+			killsUntilNextItem--;
+			if (killsUntilNextItem == 0)
+			{
+				pendingLootTurn = true;
+				killsUntilNextItem = killsRequiredForNewItem;
+				Player.instance.ResetInjuries();
+			}
         }
 
-        if (Enemies.Count == 0)
+		turnCount++;
+        if (Enemies.Count == 0 || turnCount == turnLimitForNewWave)
         {
 			currentWave++;
 			if (currentWave % 2 == 0)
 			{
 				lootPanel.IncreaseItemQuality();
 			}
+			turnCount = 1;
+			UpdateTurnCountText();
             WaveManager.instance.SendNewWave();
-			Player.instance.ResetInjuries();
-			pendingLootTurn = true;
         }
     }
 
@@ -563,7 +587,7 @@ public class GameController : MonoBehaviour
 
 			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
 			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
-			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
+			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyVulnerable && isAdjacentToEnemy);
 			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
 			SkewerSkillButton.gameObject.SetActive(isSkewerUnlocked && isAdjacentToEnemy);
 			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
