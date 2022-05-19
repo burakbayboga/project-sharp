@@ -21,13 +21,13 @@ public class LootPanel : MonoBehaviour
 		lootChances[2] += 0.05f;
 	}
 
-	public void Fill()
+	public void Fill(int itemCount)
 	{
 		commonItems = commonItems.OrderBy(r => Random.Range(0f, 1f)).ToList();
 		rareItems = rareItems.OrderBy(r => Random.Range(0f, 1f)).ToList();
 		epicItems = epicItems.OrderBy(r => Random.Range(0f, 1f)).ToList();
 
-		int count = Mathf.Min(3, GetRemainingItemCount());
+		int count = Mathf.Min(itemCount, GetRemainingItemCount());
 
 		for (int i = 0; i < count; i++)
 		{

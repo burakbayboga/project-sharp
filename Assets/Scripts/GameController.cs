@@ -98,7 +98,7 @@ public class GameController : MonoBehaviour
 		TurnProgressButton.interactable = false;
 		buildingCharacter = true;
 		characterBuild = 0;
-		lootPanel.Fill();
+		lootPanel.Fill(2);
 		lootPanel.gameObject.SetActive(true);
 		Inventory.instance.SetInventoryActive(true);
 	}
@@ -270,7 +270,7 @@ public class GameController : MonoBehaviour
 		if (lootPanel.GetRemainingItemCount() > 0)
 		{
 			lootPanel.gameObject.SetActive(true);
-			lootPanel.Fill();
+			lootPanel.Fill(3);
 			TurnProgressButton.interactable = false;
 		}
 		else
@@ -862,7 +862,7 @@ public class GameController : MonoBehaviour
 			}
 			else
 			{
-				lootPanel.Fill();
+				lootPanel.Fill(2);
 			}
 		}
 		else
