@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
     public GameObject SkillsParent;
 
 	public LootPanel lootPanel;
+	public GameObject actionCamera;
+	public GameObject actionCanvas;
     
     public SkillButton SwiftAttackSkillButton;
     public SkillButton HeavyAttackSkillButton;
@@ -382,6 +384,15 @@ public class GameController : MonoBehaviour
 				enemy.animator.Play(enemyAction.clip);
 			}
 
+			//if (enemyAction != Skill.ShootArrow)
+			//{
+				//actionCamera.SetActive(true);
+				//actionCanvas.SetActive(true);
+				//Vector3 actionCameraPos = (enemy.transform.position + Player.instance.transform.position) / 2f;
+				//actionCameraPos.z = -10f;
+				//actionCamera.transform.position = actionCameraPos;
+			//}
+
 
 			Vector3 basePos = (enemy.IsDefensive() || enemyAction == null) ? enemy.transform.position : Player.instance.transform.position;
 			// move creatures for clash
@@ -396,6 +407,9 @@ public class GameController : MonoBehaviour
 
 
 			yield return new WaitForSeconds(1.5f);
+
+			//actionCamera.SetActive(false);
+			//actionCanvas.SetActive(false);
 
 			if (playerReaction == Skill.Hook)
 			{
