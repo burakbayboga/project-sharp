@@ -31,7 +31,8 @@ public enum ItemType
 	resourceBooster = 1,
 	unlocksSkill = 2,
 	armor = 3,
-	rechargeBooster = 4
+	rechargeBooster = 4,
+	infiniteResourcePowerup = 5
 }
 
 public enum ItemRarity

@@ -418,6 +418,21 @@ public class Player : MonoBehaviour
 		{
 			IncreaseResourceRecharge(newItem.resourceModifier);
 		}
+		else if (newItem.itemType == ItemType.infiniteResourcePowerup)
+		{
+			if (newItem.resourceModifier.Focus > 0)
+			{
+				hawkFocusButton.SetActive(true);
+			}
+			else if (newItem.resourceModifier.Strength > 0)
+			{
+				bullStrengthButton.SetActive(true);
+			}
+			else if (newItem.resourceModifier.Stability > 0)
+			{
+				turtleStabilityButton.SetActive(true);
+			}
+		}
 	}
 
 	void UpdateArmorText()
