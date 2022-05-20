@@ -177,7 +177,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6082742533581839185, guid: aa3b47ea4fc84f9499c07108f9953826,
+  m_Sprite: {fileID: -309694720024094932, guid: 77e0c2cbdedf1a74dbdc0faaeffe7b47,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -228,5 +228,4 @@ MonoBehaviour:
   isOccupiedByEnemy: 0
   isOccupiedByPlayer: 0
   affectedBySkillEffect: {fileID: 889831572515536477}
-  type: -1
   isHighlighted: 0

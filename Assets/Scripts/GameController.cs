@@ -83,13 +83,13 @@ public class GameController : MonoBehaviour
 		turnCount = 1;
 		UpdateTurnCountText();
 
-		//GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        //for (int i = 0; i < enemies.Length; i++)
-        //{
-			//Enemies.Add(enemies[i].GetComponent<Enemy>());
-			//Enemies[i].Init(Enemies[i].currentHex);	// wow
-        //}
-		WaveManager.instance.SendNewWave();
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < enemies.Length; i++)
+        {
+			Enemies.Add(enemies[i].GetComponent<Enemy>());
+			Enemies[i].Init(Enemies[i].currentHex);	// wow
+        }
+		//WaveManager.instance.SendNewWave();
         Skill.InitSkills();
 		lootPanel.Init();
 		killsUntilNextItem = killsRequiredForNewItem;
@@ -716,12 +716,15 @@ public class GameController : MonoBehaviour
 	{
 		if (skillType == SkillType.Wrestle)
 		{
-			return;
+			CurrentEnemy.currentHex.SetAffectedBySkill(true);
 		}
-		List<Enemy> enemies = GetAnsweredEnemiesBySkill(Skill.GetSkillForType(skillType));
-		for (int i = 0; i < enemies.Count; i++)
+		else
 		{
-			enemies[i].currentHex.SetAffectedBySkill(true);
+			List<Enemy> enemies = GetAnsweredEnemiesBySkill(Skill.GetSkillForType(skillType));
+			for (int i = 0; i < enemies.Count; i++)
+			{
+				enemies[i].currentHex.SetAffectedBySkill(true);
+			}
 		}
 	}
 
@@ -729,12 +732,15 @@ public class GameController : MonoBehaviour
 	{
 		if (skillType == SkillType.Wrestle)
 		{
-			return;
+			CurrentEnemy.currentHex.SetAffectedBySkill(false);
 		}
-		List<Enemy> enemies = GetAnsweredEnemiesBySkill(Skill.GetSkillForType(skillType));
-		for (int i = 0; i < enemies.Count; i++)
+		else
 		{
-			enemies[i].currentHex.SetAffectedBySkill(false);
+			List<Enemy> enemies = GetAnsweredEnemiesBySkill(Skill.GetSkillForType(skillType));
+			for (int i = 0; i < enemies.Count; i++)
+			{
+				enemies[i].currentHex.SetAffectedBySkill(false);
+			}
 		}
 	}
 

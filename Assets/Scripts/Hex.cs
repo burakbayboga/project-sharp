@@ -5,7 +5,6 @@ using System.Linq;
 
 public class Hex : MonoBehaviour
 {
-	
 	public Hex[] adjacents;
 	public Color highlightColor;
 	public Color selectedColor;
@@ -17,6 +16,7 @@ public class Hex : MonoBehaviour
 	public GameObject affectedBySkillEffect;
 
 	public static Vector3 posOffset = new Vector3(0.04f, 0.09f, 0f);
+	public static float hexOffsetX = 0.8660254f;	//いいだよ
 
 	public bool isOccupied
 	{
