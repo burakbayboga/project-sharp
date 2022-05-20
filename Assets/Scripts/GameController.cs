@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
@@ -391,6 +392,8 @@ public class GameController : MonoBehaviour
 				Player.instance.transform.position = basePos - offset;
 			}
 
+			StartCoroutine(ShakeScreenWithDelay(0.7f));
+
 
 			yield return new WaitForSeconds(1.5f);
 
@@ -409,6 +412,12 @@ public class GameController : MonoBehaviour
 
 			Player.instance.transform.position = Player.instance.currentHex.transform.position + Hex.posOffset;
 		}
+	}
+
+	IEnumerator ShakeScreenWithDelay(float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		Camera.main.DOShakePosition(0.2f, 0.06f, 20, 60f, false);
 	}
 	
 	Hex GetNewHexForShovedEnemy(Enemy enemy)
