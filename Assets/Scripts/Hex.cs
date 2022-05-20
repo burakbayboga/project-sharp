@@ -35,12 +35,12 @@ public class Hex : MonoBehaviour
 	{
 		selfCollider = GetComponent<Collider2D>();
 		rend = GetComponent<SpriteRenderer>();
+		SetAdjacents();
+		SetInitialOccupier();
 	}
 
 	void Start()
 	{
-		SetAdjacents();
-		SetInitialOccupier();
 	}
 
 	void SetInitialOccupier()
@@ -51,8 +51,8 @@ public class Hex : MonoBehaviour
 			collider.transform.position = transform.position + posOffset;
 			if (collider.CompareTag("Player"))
 			{
-				collider.GetComponent<Player>().currentHex = this;
-				isOccupiedByPlayer = true;
+				//collider.GetComponent<Player>().currentHex = this;
+				//isOccupiedByPlayer = true;
 			}
 			else if (collider.CompareTag("Enemy"))
 			{

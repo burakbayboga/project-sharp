@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - hex
   - interactable
+  - start hex
   layers:
   - Default
   - TransparentFX

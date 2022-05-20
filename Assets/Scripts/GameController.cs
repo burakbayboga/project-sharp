@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
 
     public static GameController instance;
 
+	public GameObject level;
+
     public Text TurnStateText;
     public GameObject SkillsParent;
 
@@ -74,6 +76,7 @@ public class GameController : MonoBehaviour
         instance = this;
         
         IsGameOver = false;
+		//WaveManager.instance.SendNewWave();
     }
 
     void Start()
@@ -83,13 +86,18 @@ public class GameController : MonoBehaviour
 		turnCount = 1;
 		UpdateTurnCountText();
 
+		Instantiate(level);
+		GameObject startHexHook = GameObject.FindGameObjectWithTag("start hex");
+		Hex startHex = startHexHook.transform.parent.GetComponent<Hex>();
+		Player.instance.currentHex = startHex;
+		Player.instance.transform.position = startHex.transform.position + Hex.posOffset;
+
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < enemies.Length; i++)
         {
 			Enemies.Add(enemies[i].GetComponent<Enemy>());
 			Enemies[i].Init(Enemies[i].currentHex);	// wow
         }
-		//WaveManager.instance.SendNewWave();
         Skill.InitSkills();
 		lootPanel.Init();
 		killsUntilNextItem = killsRequiredForNewItem;
