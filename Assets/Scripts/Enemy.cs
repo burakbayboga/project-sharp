@@ -135,7 +135,7 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-	protected Hex GetHexCloserToPlayer(bool withLos = false)
+	protected Hex GetHexCloserToPlayer(bool enforceLos = false, bool closest = false)
 	{
 		List<Hex> candidates = new List<Hex>();
 		Hex playerHex = Player.instance.currentHex;
@@ -152,9 +152,14 @@ public class Enemy : MonoBehaviour
 			float traverseDistance = Vector3.Distance(traverse.transform.position, playerHex.transform.position);
 			if (traverseDistance < currentDistance)
 			{
-				if (withLos && !HasLosToPlayer(traverse))
+				if (enforceLos && !HasLosToPlayer(traverse))
 				{
 					continue;
+				}
+				if (closest)
+				{
+					currentDistance = traverseDistance;
+					candidates.Clear();
 				}
 				candidates.Add(traverse);
 			}

@@ -49,7 +49,7 @@ public class Enemy_Brute : Enemy
 			return;
 		}
 
-		Hex newHex = GetHexCloserToPlayer();
+		Hex newHex = GetHexCloserToPlayer(false, true);
 		if (newHex != null)
 		{
 			MoveToHex(newHex);
