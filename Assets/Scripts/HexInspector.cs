@@ -54,6 +54,7 @@ public class HexInspector : Editor
 	{
 		GameObject newHex = PrefabUtility.InstantiatePrefab(Resources.Load("Hex")) as GameObject;
 		newHex.transform.position = pos;
+		newHex.transform.SetAsLastSibling();
 	}
 }
 #endif
