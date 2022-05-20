@@ -206,7 +206,7 @@ public class GameController : MonoBehaviour
 		{
 			Enemies[i].CheckActionValidity();
 		}
-		CurrentEnemy.ForceCancelAction();
+		//CurrentEnemy.ForceCancelAction();
 		UpdateUnansweredEnemyText();
 		OnEmptyClick();
 	}
