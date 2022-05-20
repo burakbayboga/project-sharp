@@ -50,7 +50,7 @@ public class Enemy_Basic : Enemy
 	{
 		if (currentHex.IsAdjacentToPlayer())
 		{
-			if (IsVulnerable && Random.Range(0f, 1f) < 0.25f)
+			if (IsVulnerable && Random.Range(0f, 1f) < 0.15f)
 			{
 				Hex newHex = GetHexFurtherToPlayer();
 				if (newHex != null)
