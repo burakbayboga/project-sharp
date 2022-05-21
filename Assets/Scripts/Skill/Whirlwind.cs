@@ -26,7 +26,7 @@ public class Whirlwind : Skill
 	{
 		Resource itemModifier = GetItemModifier();
 		Resource enemyCountModifier = new Resource();
-		enemyCountModifier.Focus = Player.instance.currentHex.GetAdjacentEnemyCount();
+		enemyCountModifier.Focus = Player.instance.currentHex.GetAdjacentEnemyCount() / 2;
 		Resource totalCost = BaseCost + itemModifier + enemyCountModifier;
 		totalCost.Clamp();
 		return totalCost;
