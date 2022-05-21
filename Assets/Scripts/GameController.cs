@@ -210,6 +210,7 @@ public class GameController : MonoBehaviour
 			EraseClash(Clashes[0]);
 		}
 
+		CurrentEnemy.currentHex.SetAffectedBySkill(false);
 		Hex playerHex = Player.instance.currentHex;
 		Player.instance.MovePlayer(CurrentEnemy.currentHex);
 		CurrentEnemy.MoveToHex(playerHex);
