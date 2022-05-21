@@ -95,7 +95,7 @@ PrefabInstance:
     - target: {fileID: 1216331406151000030, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Enemy_Basic
       objectReference: {fileID: 0}
     - target: {fileID: 1216331406151000030, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
@@ -355,6 +355,7 @@ MonoBehaviour:
   animator: {fileID: 1915080674651816623}
   rend: {fileID: 2682538308453155608}
   color: {r: 0.3137255, g: 0.85882354, b: 0.78431374, a: 1}
+  type: 0
   CurrentActionImage: {fileID: 5981506019015077843}
   CurrentReactionImage: {fileID: 8277882523735212085}
   ExposedWeaknessImages:
@@ -380,5 +381,6 @@ MonoBehaviour:
   - {fileID: -6224410429619551159, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: 5509712231387707372, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: 8407236835019777618, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
+  - {fileID: -1741617980843149576, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   TotalDurability: 0
   currentHex: {fileID: 0}

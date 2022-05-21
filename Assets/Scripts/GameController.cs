@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
 	public SkillButton HookSkillButton;
 	public SkillButton WrestleSkillButton;
 	public SkillButton ShoveSkillButton;
+	public SkillButton HeartshotSkillButton;
 
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
@@ -40,6 +41,7 @@ public class GameController : MonoBehaviour
 	bool isWhirlwindUnlocked;
 	bool isHookUnlocked;
 	bool isWrestleUnlocked;
+	bool isHeartshotUnlocked;
 
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;
@@ -699,6 +701,7 @@ public class GameController : MonoBehaviour
 			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
 			SkewerSkillButton.gameObject.SetActive(isSkewerUnlocked && isAdjacentToEnemy);
 			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
+			HeartshotSkillButton.gameObject.SetActive(isHeartshotUnlocked && !isAdjacentToEnemy);
 			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
 			BlockArrowSkillButton.gameObject.SetActive(isBlockArrowUnlocked && isEnemyShootingArrow);
 			WhirlwindSkillButton.gameObject.SetActive(isWhirlwindUnlocked && isAdjacentToEnemy);
@@ -743,6 +746,7 @@ public class GameController : MonoBehaviour
 		HandleButtonIconsForSkill(Skill.Block, enemyActionType, BlockSkillButton);
 		HandleButtonIconsForSkill(Skill.Counter, enemyActionType, CounterSkillButton);
 		HandleButtonIconsForSkill(Skill.KillingBlow, enemyActionType, KillingBlowSkillButton);
+		HandleButtonIconsForSkill(Skill.Heartshot, enemyActionType, HeartshotSkillButton);
 		HandleButtonIconsForSkill(Skill.DeflectArrow, enemyActionType, DeflectArrowSkillButton);
 		HandleButtonIconsForSkill(Skill.Skewer, enemyActionType, SkewerSkillButton);
 		HandleButtonIconsForSkill(Skill.BlockArrow, enemyActionType, BlockArrowSkillButton);
@@ -933,6 +937,9 @@ public class GameController : MonoBehaviour
 				break;
 			case SkillType.Wrestle:
 				isWrestleUnlocked = true;
+				break;
+			case SkillType.Heartshot:
+				isHeartshotUnlocked = true;
 				break;
 			default:
 				break;

@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
 	SkillButton HookButton;
 	SkillButton WrestleButton;
 	SkillButton ShoveButton;
+	SkillButton HeartshotButton;
 
     int CurrentInjury;
     int MaxInjury;
@@ -134,6 +135,7 @@ public class Player : MonoBehaviour
 		HookButton = GameController.instance.HookSkillButton;
 		WrestleButton = GameController.instance.WrestleSkillButton;
 		ShoveButton = GameController.instance.ShoveSkillButton;
+		HeartshotButton = GameController.instance.HeartshotSkillButton;
     }
 
 	public void SetRendererFlip(bool flip)
@@ -294,6 +296,11 @@ public class Player : MonoBehaviour
                 skill = Skill.KillingBlow;
                 damage = KillingBlowButton.Damage;
                 break;
+			case SkillType.Heartshot:
+				skillCost = HeartshotButton.Cost;
+				skill = Skill.Heartshot;
+				damage = HeartshotButton.Damage;
+				break;
 			case SkillType.DeflectArrow:
 				skillCost = DeflectArrowButton.Cost;
 				skill = Skill.DeflectArrow;

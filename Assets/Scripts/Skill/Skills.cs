@@ -23,6 +23,7 @@ public class Skill
 	public static Hook Hook;
 	public static Wrestle Wrestle;
 	public static Shove Shove;
+	public static Heartshot Heartshot;
 
     //this is called for every enemy action. param:reaction refers to player action
     public static void HandleClash(Enemy enemy, Skill playerReaction)
@@ -38,7 +39,7 @@ public class Skill
 				Player.instance.GetInjury();
 			}
 		}
-		else if (playerReaction == Skill.KillingBlow)
+		else if (playerReaction == Skill.KillingBlow || playerReaction == Skill.Heartshot)
 		{
 			GameController.instance.MarkEnemyForDeath(enemy);
 		}
@@ -102,6 +103,8 @@ public class Skill
 				return Wrestle;
 			case SkillType.Shove:
 				return Shove;
+			case SkillType.Heartshot:
+				return Heartshot;
 			default:
 				return null;
 		}
@@ -123,6 +126,7 @@ public class Skill
 		Hook = new Hook();
 		Wrestle = new Wrestle();
 		Shove = new Shove();
+		Heartshot = new Heartshot();
     }
 }
 
@@ -217,6 +221,7 @@ public enum SkillType
 	Whirlwind = 9,
 	Hook = 10,
 	Shove = 11,
+	Heartshot = 12,
     None = -1,
 	Sidestep = -2,
 	Wrestle = -3
