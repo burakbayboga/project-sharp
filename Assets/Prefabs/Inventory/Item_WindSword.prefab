@@ -194,6 +194,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 102
       objectReference: {fileID: 0}
+    - target: {fileID: 7260127183840140842, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_text
+      value: Wind Sword - <color="purple">Epic</color>
+      objectReference: {fileID: 0}
     - target: {fileID: 7715220213795167232, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}
       propertyPath: m_IsActive
