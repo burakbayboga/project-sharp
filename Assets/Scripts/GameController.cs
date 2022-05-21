@@ -74,6 +74,7 @@ public class GameController : MonoBehaviour
 	bool loadLevelAtTurnEnd;
 	int characterBuild;
 	bool buildingCharacter;
+	bool isLastLevel;
 
 	GameObject loadedLevel;
 
@@ -296,6 +297,7 @@ public class GameController : MonoBehaviour
 		if (loadLevelAtTurnEnd)
 		{
 			loadLevelAtTurnEnd = false;
+			pendingNewLevel = false;
 			StartCoroutine(LoadNextLevel());
 		}
 	}
@@ -309,6 +311,10 @@ public class GameController : MonoBehaviour
 		yield return null;
 		currentLevel++;
 		loadedLevel = Instantiate(levels[currentLevel]);
+		if (currentLevel == levels.Length - 1)
+		{
+			isLastLevel = true;
+		}
 		GameObject startHexHook = GameObject.FindGameObjectWithTag("start hex");
 		Hex startHex = startHexHook.transform.parent.GetComponent<Hex>();
 		Player.instance.currentHex = startHex;
@@ -602,7 +608,11 @@ public class GameController : MonoBehaviour
 			}
 			turnCount = 1;
 			UpdateTurnCountText();
-			if (currentWave == 3)
+			if (currentWave == 2 && isLastLevel)
+			{
+				print("now entering endless waves");
+			}
+			if (currentWave == 2 && !isLastLevel)
 			{
 				if (Enemies.Count == 0)
 				{
