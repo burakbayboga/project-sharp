@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
 
     public static GameController instance;
 
-	public GameObject level;
+	public GameObject[] levels;
 
     public Text TurnStateText;
     public GameObject SkillsParent;
@@ -66,10 +66,16 @@ public class GameController : MonoBehaviour
 
 	public bool isSidestepActive = false;
 
+	int currentLevel = -1;
+
 	bool pendingLootTurn;
 	public int currentWave = 0;
+	bool pendingNewLevel;
+	bool loadLevelAtTurnEnd;
 	int characterBuild;
 	bool buildingCharacter;
+
+	GameObject loadedLevel;
 
     void Awake()
     {
@@ -86,18 +92,8 @@ public class GameController : MonoBehaviour
 		turnCount = 1;
 		UpdateTurnCountText();
 
-		Instantiate(level);
-		GameObject startHexHook = GameObject.FindGameObjectWithTag("start hex");
-		Hex startHex = startHexHook.transform.parent.GetComponent<Hex>();
-		Player.instance.currentHex = startHex;
-		Player.instance.transform.position = startHex.transform.position + Hex.posOffset;
+		StartCoroutine(LoadNextLevel());
 
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < enemies.Length; i++)
-        {
-			Enemies.Add(enemies[i].GetComponent<Enemy>());
-			Enemies[i].Init(Enemies[i].currentHex);	// wow
-        }
         Skill.InitSkills();
 		lootPanel.Init();
 		killsUntilNextItem = killsRequiredForNewItem;
@@ -296,6 +292,38 @@ public class GameController : MonoBehaviour
 	{
 		CurrentTurnState = TurnState.NewTurn;
         TurnStateText.text = CurrentTurnState.ToString();
+
+		if (loadLevelAtTurnEnd)
+		{
+			loadLevelAtTurnEnd = false;
+			StartCoroutine(LoadNextLevel());
+		}
+	}
+
+	IEnumerator LoadNextLevel()
+	{
+		if (loadedLevel != null)
+		{
+			Destroy(loadedLevel);
+		}
+		yield return null;
+		currentLevel++;
+		loadedLevel = Instantiate(levels[currentLevel]);
+		GameObject startHexHook = GameObject.FindGameObjectWithTag("start hex");
+		Hex startHex = startHexHook.transform.parent.GetComponent<Hex>();
+		Player.instance.currentHex = startHex;
+		Player.instance.transform.position = startHex.transform.position + Hex.posOffset;
+		startHex.isOccupiedByPlayer = true;
+
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < enemies.Length; i++)
+        {
+			Enemies.Add(enemies[i].GetComponent<Enemy>());
+			Enemies[i].Init(Enemies[i].currentHex);	// wow
+        }
+		turnCount = 1;
+		UpdateTurnCountText();
+		currentWave = 0;
 	}
 
 	void EnterPlayerAnswerTurn()
@@ -568,14 +596,29 @@ public class GameController : MonoBehaviour
 		turnCount++;
         if (Enemies.Count == 0 || turnCount == turnLimitForNewWave)
         {
-			currentWave++;
 			if (currentWave % 2 == 0)
 			{
 				lootPanel.IncreaseItemQuality();
 			}
 			turnCount = 1;
 			UpdateTurnCountText();
-            WaveManager.instance.SendNewWave();
+			if (currentWave == 3)
+			{
+				if (Enemies.Count == 0)
+				{
+					loadLevelAtTurnEnd = true;
+				}
+				else
+				{
+					pendingNewLevel = true;
+				}
+			}
+
+			if (!pendingNewLevel && !loadLevelAtTurnEnd)
+			{
+				WaveManager.instance.SendNewWave();
+				currentWave++;
+			}
         }
 
 		return killedEnemyCount;
