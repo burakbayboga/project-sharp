@@ -13,6 +13,8 @@ public class SkillButton : MonoBehaviour
 
 	public SkillType skillType;
 
+	public GameObject hoverText;
+
     int CostIconCount;
 
     public Resource Cost { get; private set; }
@@ -90,14 +92,27 @@ public class SkillButton : MonoBehaviour
 		GameController.instance.OnMouseButtonDownOnSkill();
 	}
 
+	void OnDisable()
+	{
+		hoverText.SetActive(false);
+	}
+
 	public void OnMouseButtonEnter()
 	{
-		GameController.instance.OnMouseButtonEnterOnSkill(skillType);
+		hoverText.SetActive(true);
+		if (skillType != SkillType.Sidestep)
+		{
+			GameController.instance.OnMouseButtonEnterOnSkill(skillType);
+		}
 	}
 
 	public void OnMouseButtonExit()
 	{
-		GameController.instance.OnMouseButtonExitOnSkill(skillType);
+		hoverText.SetActive(false);
+		if (skillType != SkillType.Sidestep)
+		{
+			GameController.instance.OnMouseButtonExitOnSkill(skillType);
+		}
 	}
 
 }

@@ -153,6 +153,12 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: heartshot_icon
     m_HashCode: 965466654
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 13
+    m_Scale: 1
+    m_Name: lightningReflexes_icon
+    m_HashCode: 2067694578
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -358,6 +364,22 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: -1741617980843149576, guid: 9f00a6657a2ba044f92d97081b113e02,
+      type: 3}
+  - m_Index: 13
+    m_Metrics:
+      m_Width: 12
+      m_Height: 12
+      m_HorizontalBearingX: -0.44
+      m_HorizontalBearingY: 8.77
+      m_HorizontalAdvance: 12
+    m_GlyphRect:
+      m_X: 529
+      m_Y: 325
+      m_Width: 12
+      m_Height: 12
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -3844054136759453950, guid: 9f00a6657a2ba044f92d97081b113e02,
       type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []

@@ -34,6 +34,7 @@ public class GameController : MonoBehaviour
 	public SkillButton WrestleSkillButton;
 	public SkillButton ShoveSkillButton;
 	public SkillButton HeartshotSkillButton;
+	public SkillButton LightningReflexesSkillButton;
 
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
@@ -42,6 +43,7 @@ public class GameController : MonoBehaviour
 	bool isHookUnlocked;
 	bool isWrestleUnlocked;
 	bool isHeartshotUnlocked;
+	bool isLightningReflexesUnlocked = true;
 
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;
@@ -386,7 +388,8 @@ public class GameController : MonoBehaviour
 	IEnumerator HandleClashAnimations(Clash clash)
 	{
 		if (clash.playerAnswer == Skill.Skewer
-				|| clash.playerAnswer == Skill.Whirlwind)
+				|| clash.playerAnswer == Skill.Whirlwind
+				|| clash.playerAnswer == Skill.LightningReflexes)
 		{
 			// TODO: maybe merge cases?
 			for (int i = 0; i < clash.enemies.Count; i++)
@@ -703,6 +706,7 @@ public class GameController : MonoBehaviour
 			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
 			HeartshotSkillButton.gameObject.SetActive(isHeartshotUnlocked && !isAdjacentToEnemy);
 			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
+			LightningReflexesSkillButton.gameObject.SetActive(isLightningReflexesUnlocked && isEnemyShootingArrow);
 			BlockArrowSkillButton.gameObject.SetActive(isBlockArrowUnlocked && isEnemyShootingArrow);
 			WhirlwindSkillButton.gameObject.SetActive(isWhirlwindUnlocked && isAdjacentToEnemy);
 			HookSkillButton.gameObject.SetActive(isHookUnlocked && !isAdjacentToEnemy && hasLos);
@@ -754,6 +758,7 @@ public class GameController : MonoBehaviour
 		HandleButtonIconsForSkill(Skill.Hook, enemyActionType, HookSkillButton);
 		HandleButtonIconsForSkill(Skill.Wrestle, enemyActionType, WrestleSkillButton);
 		HandleButtonIconsForSkill(Skill.Shove, enemyActionType, ShoveSkillButton);
+		HandleButtonIconsForSkill(Skill.LightningReflexes, enemyActionType, LightningReflexesSkillButton);
     }
 
 	void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
@@ -901,6 +906,16 @@ public class GameController : MonoBehaviour
 		{
 			return Enemies;
 		}
+		else if (skill == Skill.LightningReflexes)
+		{
+			for (int i = 0; i < Enemies.Count; i++)
+			{
+				if (Enemies[i].CurrentAction == Skill.ShootArrow)
+				{
+					answeredEnemies.Add(Enemies[i]);
+				}
+			}
+		}
 		else
 		{
 			answeredEnemies.Add(CurrentEnemy);
@@ -940,6 +955,9 @@ public class GameController : MonoBehaviour
 				break;
 			case SkillType.Heartshot:
 				isHeartshotUnlocked = true;
+				break;
+			case SkillType.LightningReflexes:
+				isLightningReflexesUnlocked = true;
 				break;
 			default:
 				break;

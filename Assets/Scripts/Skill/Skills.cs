@@ -24,6 +24,7 @@ public class Skill
 	public static Wrestle Wrestle;
 	public static Shove Shove;
 	public static Heartshot Heartshot;
+	public static LightningReflexes LightningReflexes;
 
     //this is called for every enemy action. param:reaction refers to player action
     public static void HandleClash(Enemy enemy, Skill playerReaction)
@@ -105,6 +106,8 @@ public class Skill
 				return Shove;
 			case SkillType.Heartshot:
 				return Heartshot;
+			case SkillType.LightningReflexes:
+				return LightningReflexes;
 			default:
 				return null;
 		}
@@ -127,6 +130,7 @@ public class Skill
 		Wrestle = new Wrestle();
 		Shove = new Shove();
 		Heartshot = new Heartshot();
+		LightningReflexes = new LightningReflexes();
     }
 }
 
@@ -222,6 +226,7 @@ public enum SkillType
 	Hook = 10,
 	Shove = 11,
 	Heartshot = 12,
+	LightningReflexes = 13,
     None = -1,
 	Sidestep = -2,
 	Wrestle = -3

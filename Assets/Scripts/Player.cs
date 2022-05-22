@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
 	SkillButton WrestleButton;
 	SkillButton ShoveButton;
 	SkillButton HeartshotButton;
+	SkillButton LightningReflexesButton;
 
     int CurrentInjury;
     int MaxInjury;
@@ -136,6 +137,7 @@ public class Player : MonoBehaviour
 		WrestleButton = GameController.instance.WrestleSkillButton;
 		ShoveButton = GameController.instance.ShoveSkillButton;
 		HeartshotButton = GameController.instance.HeartshotSkillButton;
+		LightningReflexesButton = GameController.instance.LightningReflexesSkillButton;
     }
 
 	public void SetRendererFlip(bool flip)
@@ -340,6 +342,11 @@ public class Player : MonoBehaviour
 				skillCost = ShoveButton.Cost;
 				skill = Skill.Shove;
 				damage = ShoveButton.Damage;
+				break;
+			case SkillType.LightningReflexes:
+				skillCost = LightningReflexesButton.Cost;
+				skill = Skill.LightningReflexes;
+				damage = LightningReflexesButton.Damage;
 				break;
             case SkillType.None:
             default:
