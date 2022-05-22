@@ -11,9 +11,6 @@ public class Item : MonoBehaviour
 	public ItemRarity itemRarity;
 	public int armorGiven;
 
-	public GameObject description;
-	public GameObject shortDescription;
-
 	public bool inInventory;
 
 	public void OnItemClicked()

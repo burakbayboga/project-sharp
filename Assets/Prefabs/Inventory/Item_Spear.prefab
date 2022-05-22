@@ -210,5 +210,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3230059895664381876, guid: 9f00a6657a2ba044f92d97081b113e02,
         type: 3}
+    - target: {fileID: 9217063098243417666, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_text
+      value: 'Unlocks Skill: Skewer (<sprite=10>). Answer multiple enemies in a straight
+        line.'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e5f0c2940a378c40afda1ec39897178, type: 3}

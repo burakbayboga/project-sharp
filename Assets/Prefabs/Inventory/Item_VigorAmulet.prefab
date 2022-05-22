@@ -218,5 +218,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9217063098243417666, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_text
+      value: Increases resource recharge at the end of the turn by the specified
+        amount.
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217063098243417666, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217063098243417666, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24.16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e5f0c2940a378c40afda1ec39897178, type: 3}

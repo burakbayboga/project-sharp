@@ -6,6 +6,7 @@ public class Inventory : MonoBehaviour
 {
 	public static Inventory instance;
 	public GameObject panel;
+	public Transform contentParent;
 
 	void Awake()
 	{
@@ -14,9 +15,8 @@ public class Inventory : MonoBehaviour
 
 	public void PutItemIntoInventory(Item item)
 	{
-		item.description.SetActive(false);
-		item.shortDescription.SetActive(true);
-		item.transform.SetParent(panel.transform, false);
+		item.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
+		item.transform.SetParent(contentParent, false);
 		item.inInventory = true;
 	}
 

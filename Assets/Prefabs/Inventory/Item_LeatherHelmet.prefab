@@ -199,5 +199,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300002, guid: f6390eaafc73fb14eb0d33484d26edd8,
         type: 3}
+    - target: {fileID: 9217063098243417666, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_text
+      value: Increases maximum Focus (<sprite=8>) by the specified amount.
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217063098243417666, guid: 7e5f0c2940a378c40afda1ec39897178,
+        type: 3}
+      propertyPath: m_spriteAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 98aa4be2117051841ad028807b70ecfb,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e5f0c2940a378c40afda1ec39897178, type: 3}
