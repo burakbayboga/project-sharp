@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour
 	bool isHookUnlocked;
 	bool isWrestleUnlocked;
 	bool isHeartshotUnlocked;
-	bool isLightningReflexesUnlocked = true;
+	bool isLightningReflexesUnlocked;
 
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;
