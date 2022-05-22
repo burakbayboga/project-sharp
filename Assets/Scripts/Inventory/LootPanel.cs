@@ -148,7 +148,8 @@ public class LootPanel : MonoBehaviour
 
 	public void Init()
 	{
-		for (int i = 0; i < transform.childCount; i++)
+		// skip first child, it only has text
+		for (int i = 1; i < transform.childCount; i++)
 		{
 			itemPool.Add(transform.GetChild(i).GetComponent<Item>());
 		}
