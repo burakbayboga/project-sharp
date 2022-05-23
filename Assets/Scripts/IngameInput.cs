@@ -28,7 +28,7 @@ public class IngameInput : MonoBehaviour
 
     void Update()
     {
-        if (IsIngameInputActive && !GameController.instance.IsGameOver)
+        if (IsIngameInputActive && !GameController.instance.IsGameOver && !GameController.instance.isTutorialActive)
         {
             if (Input.GetMouseButtonDown(0))
             {

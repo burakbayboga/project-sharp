@@ -9,4 +9,13 @@ public class TutorialController : MonoBehaviour
     {
         SceneManager.LoadScene("game");
     }
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			print("ss");
+			ScreenCapture.CaptureScreenshot("tutorial image");
+		}
+	}
 }

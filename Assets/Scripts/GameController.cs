@@ -19,6 +19,9 @@ public class GameController : MonoBehaviour
 	public LootPanel lootPanel;
 	public GameObject actionCamera;
 	public GameObject actionCanvas;
+	public GameObject tutorialCanvas;
+
+	public bool isTutorialActive;
     
     public SkillButton SwiftAttackSkillButton;
     public SkillButton HeavyAttackSkillButton;
@@ -963,8 +966,18 @@ public class GameController : MonoBehaviour
 
     public void OnHowToPlayClicked()
     {
-        SceneManager.LoadScene("howToPlay");
+        //SceneManager.LoadScene("howToPlay");
+		tutorialCanvas.SetActive(true);
+		TurnProgressButton.interactable = false;
+		isTutorialActive = true;
     }
+
+	public void OnBackToGameClicked()
+	{
+		tutorialCanvas.SetActive(false);
+		TurnProgressButton.interactable = true;
+		isTutorialActive = false;
+	}
 
     public void OnQuitClicked()
     {
