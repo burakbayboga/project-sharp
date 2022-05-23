@@ -8,6 +8,7 @@ public class SkillButton : MonoBehaviour
     public GameObject[] FocusCostIcons;
     public GameObject[] StrengthCostIcons;
     public GameObject[] StabilityCostIcons;
+	public Animator animator;
 
     public GameObject[] DamageIcons;
 
@@ -33,6 +34,11 @@ public class SkillButton : MonoBehaviour
         Damage = damage;
         HandleDamageIcons();
     }
+
+	public void SetIndicatorAnimation(bool active)
+	{
+		animator.Play(active ? "killing blow indicator" : "skill button base");
+	}
 
     void HandleDamageIcons()
     {

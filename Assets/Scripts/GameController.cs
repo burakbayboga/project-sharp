@@ -731,8 +731,6 @@ public class GameController : MonoBehaviour
 			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyVulnerable && isAdjacentToEnemy);
 			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
 			SkewerSkillButton.gameObject.SetActive(isSkewerUnlocked && isAdjacentToEnemy);
-			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
-			HeartshotSkillButton.gameObject.SetActive(isHeartshotUnlocked && !isAdjacentToEnemy);
 			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
 			LightningReflexesSkillButton.gameObject.SetActive(isLightningReflexesUnlocked && isEnemyShootingArrow);
 			BlockArrowSkillButton.gameObject.SetActive(isBlockArrowUnlocked && isEnemyShootingArrow);
@@ -740,6 +738,17 @@ public class GameController : MonoBehaviour
 			HookSkillButton.gameObject.SetActive(isHookUnlocked && !isAdjacentToEnemy && hasLos);
 			WrestleSkillButton.gameObject.SetActive(isWrestleUnlocked && isAdjacentToEnemy && !wrestleUsed);
 			ShoveSkillButton.gameObject.SetActive(isAdjacentToEnemy);
+			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
+			HeartshotSkillButton.gameObject.SetActive(isHeartshotUnlocked && !isAdjacentToEnemy);
+
+			if (KillingBlowSkillButton.gameObject.activeSelf)
+			{
+				KillingBlowSkillButton.SetIndicatorAnimation(isEnemyVulnerable);
+			}
+			if (HeartshotSkillButton.gameObject.activeSelf)
+			{
+				HeartshotSkillButton.SetIndicatorAnimation(isEnemyVulnerable);
+			}
         }
     }
 
