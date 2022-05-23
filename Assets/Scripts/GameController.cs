@@ -88,19 +88,17 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         instance = this;
-        
         IsGameOver = false;
-		//WaveManager.instance.SendNewWave();
     }
 
     void Start()
     {
-        CurrentTurnState = TurnState.NewTurn;
+        CurrentTurnState = TurnState.Loot;
 		UpdateTurnText();
 		turnCount = 1;
 		UpdateTurnCountText();
 
-		StartCoroutine(LoadNextLevel());
+		StartCoroutine(LoadNextLevel(true));
 
         Skill.InitSkills();
 		lootPanel.Init();
@@ -133,8 +131,6 @@ public class GameController : MonoBehaviour
 	{
 		switch (CurrentTurnState)
 		{
-			case TurnState.NewTurn:
-				return "Turn Start";
 			case TurnState.PlayerMovement:
 				return "Player Movement";
 			case TurnState.EnemyMovement:
@@ -276,9 +272,6 @@ public class GameController : MonoBehaviour
     {
         switch (CurrentTurnState)
         {
-			case TurnState.NewTurn:
-				EnterPlayerMoveTurn();
-				break;
 			case TurnState.PlayerMovement:
 				Player.instance.currentHex.RevertAdjacentHighlights();
 				MakeEnemiesMove();
@@ -326,18 +319,19 @@ public class GameController : MonoBehaviour
 
 	void CycleTurn()
 	{
-		CurrentTurnState = TurnState.NewTurn;
-		UpdateTurnText();
-
 		if (loadLevelAtTurnEnd)
 		{
 			loadLevelAtTurnEnd = false;
 			pendingNewLevel = false;
 			StartCoroutine(LoadNextLevel());
+			return;
 		}
+
+		EnterPlayerMoveTurn();
+		UpdateTurnText();
 	}
 
-	IEnumerator LoadNextLevel()
+	IEnumerator LoadNextLevel(bool isFirstLevel = false)
 	{
 		if (loadedLevel != null)
 		{
@@ -365,6 +359,12 @@ public class GameController : MonoBehaviour
 		turnCount = 1;
 		UpdateTurnCountText();
 		currentWave = 0;
+
+		if (!isFirstLevel)
+		{
+			EnterPlayerMoveTurn();
+			UpdateTurnText();
+		}
 	}
 
 	void EnterPlayerAnswerTurn()
@@ -1026,6 +1026,7 @@ public class GameController : MonoBehaviour
 				TurnProgressButton.interactable = true;
 				Inventory.instance.SetInventoryActive(false);
 				buildingCharacter = false;
+				ProgressTurn();
 			}
 			else
 			{
@@ -1057,9 +1058,8 @@ public class Clash
 
 public enum TurnState
 {
-	NewTurn,		// turn start, player resolve
-	EnemyMovement,	// enemies move, auto resolve
 	PlayerMovement,	// player moves, player resolve
+	EnemyMovement,	// enemies move, auto resolve
 	EnemyAction,	// enemy actions appear, auto resolve
 	PlayerAnswer,	// player answers, player resolve
 	Clash,			// handle clash, auto resolve
