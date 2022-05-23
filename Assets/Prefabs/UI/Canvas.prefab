@@ -9025,7 +9025,9 @@ PrefabInstance:
     - target: {fileID: 3305538489497247392, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
       propertyPath: m_Text
-      value: Sidestep
+      value: 'Sidestep
+
+        Move to an adjacent hex'
       objectReference: {fileID: 0}
     - target: {fileID: 3703665373709138460, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -9066,6 +9068,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980324857063342411, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135401304357247543, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -9396,6 +9403,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 201.2638
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 76.0814
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.1900005
       objectReference: {fileID: 0}
     - target: {fileID: 7547355213494397238, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -9837,7 +9864,9 @@ PrefabInstance:
     - target: {fileID: 3305538489497247392, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
       propertyPath: m_Text
-      value: Hook
+      value: 'Hook
+
+        Pull an enemy closer'
       objectReference: {fileID: 0}
     - target: {fileID: 3703665373709138460, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -9878,6 +9907,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980324857063342411, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135401304357247543, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -10193,6 +10227,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 193.4065
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 73.9071
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.19
       objectReference: {fileID: 0}
     - target: {fileID: 7547355213494397238, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -12636,7 +12690,9 @@ PrefabInstance:
     - target: {fileID: 3305538489497247392, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
       propertyPath: m_Text
-      value: Skewer
+      value: 'Skewer
+
+        Answer 2 enemies in a straight line'
       objectReference: {fileID: 0}
     - target: {fileID: 3703665373709138460, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -12677,6 +12733,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980324857063342411, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135401304357247543, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -12992,6 +13053,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 189.7166
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 74.184
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.1900005
       objectReference: {fileID: 0}
     - target: {fileID: 7547355213494397238, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -14620,7 +14701,9 @@ PrefabInstance:
     - target: {fileID: 3305538489497247392, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
       propertyPath: m_Text
-      value: Shove
+      value: 'Shove
+
+        Push an enemy back 2 hexes'
       objectReference: {fileID: 0}
     - target: {fileID: 3703665373709138460, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -14661,6 +14744,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980324857063342411, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135401304357247543, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -14976,6 +15064,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 193.8849
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 75.4949
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.19
       objectReference: {fileID: 0}
     - target: {fileID: 7547355213494397238, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -15412,7 +15520,9 @@ PrefabInstance:
     - target: {fileID: 3305538489497247392, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
       propertyPath: m_Text
-      value: Whirlwind
+      value: 'Whirlwind
+
+        Answer all adjacent enemies'
       objectReference: {fileID: 0}
     - target: {fileID: 3703665373709138460, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -15453,6 +15563,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980324857063342411, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135401304357247543, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -15768,6 +15883,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 192.2971
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 69.4696
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.19
       objectReference: {fileID: 0}
     - target: {fileID: 7547355213494397238, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -16339,7 +16474,9 @@ PrefabInstance:
     - target: {fileID: 3305538489497247392, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
       propertyPath: m_Text
-      value: Wrestle
+      value: 'Wrestle
+
+        Switch positions with an enemy - instant effect'
       objectReference: {fileID: 0}
     - target: {fileID: 3703665373709138460, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -16380,6 +16517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980324857063342411, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135401304357247543, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -16695,6 +16837,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 210.0474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 76.1259
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.1900005
       objectReference: {fileID: 0}
     - target: {fileID: 7547355213494397238, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -17131,7 +17293,9 @@ PrefabInstance:
     - target: {fileID: 3305538489497247392, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
       propertyPath: m_Text
-      value: Lightning Reflexes
+      value: 'Lightning Reflexes
+
+        Answer all ranged attacks'
       objectReference: {fileID: 0}
     - target: {fileID: 3703665373709138460, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -17172,6 +17336,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980324857063342411, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135401304357247543, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
@@ -17482,6 +17651,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 195.2675
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 65.8174
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392585145899998023, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.19
       objectReference: {fileID: 0}
     - target: {fileID: 7547355213494397238, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
