@@ -32,7 +32,7 @@ public class Heartshot : Skill
 			{
 				Resource modifier = new Resource
 				{
-					Focus = 4,
+					Focus = 3,
 					Strength = 0,
 					Stability = 2
 				};
@@ -42,7 +42,7 @@ public class Heartshot : Skill
 			{
 				Resource modifier = new Resource
 				{
-					Focus = 6,
+					Focus = 4,
 					Strength = 0,
 					Stability = 3
 				};
