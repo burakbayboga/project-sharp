@@ -95,7 +95,7 @@ public class GameController : MonoBehaviour
     {
         CurrentTurnState = TurnState.Loot;
 		UpdateTurnText();
-		turnCount = 1;
+		turnCount = turnLimitForNewWave;
 		UpdateTurnCountText();
 
 		StartCoroutine(LoadNextLevel(true));
@@ -356,7 +356,7 @@ public class GameController : MonoBehaviour
 			Enemies.Add(enemies[i].GetComponent<Enemy>());
 			Enemies[i].Init(Enemies[i].currentHex);	// wow
         }
-		turnCount = 1;
+		turnCount = turnLimitForNewWave;
 		UpdateTurnCountText();
 		currentWave = 0;
 
@@ -638,14 +638,14 @@ public class GameController : MonoBehaviour
 			}
         }
 
-		turnCount++;
-        if (Enemies.Count == 0 || turnCount == turnLimitForNewWave)
+		turnCount--;
+        if (Enemies.Count == 0 || turnCount == 0)
         {
 			if (currentWave % 2 == 0)
 			{
 				lootPanel.IncreaseItemQuality();
 			}
-			turnCount = 1;
+			turnCount = turnLimitForNewWave;
 			UpdateTurnCountText();
 			if (currentWave == 2 && isLastLevel)
 			{
