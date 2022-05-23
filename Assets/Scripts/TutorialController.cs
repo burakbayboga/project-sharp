@@ -15,7 +15,7 @@ public class TutorialController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			print("ss");
-			ScreenCapture.CaptureScreenshot("tutorial image");
+			ScreenCapture.CaptureScreenshot("tutorial image.png");
 		}
 	}
 }

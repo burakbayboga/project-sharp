@@ -1143,6 +1143,7 @@ MonoBehaviour:
   actionCamera: {fileID: 1128301899}
   actionCanvas: {fileID: 1148582990}
   tutorialCanvas: {fileID: 893403050}
+  isTutorialActive: 0
   SwiftAttackSkillButton: {fileID: 1025422698}
   HeavyAttackSkillButton: {fileID: 1826313065}
   BlockSkillButton: {fileID: 999440630}
