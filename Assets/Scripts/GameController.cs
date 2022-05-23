@@ -93,7 +93,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         CurrentTurnState = TurnState.NewTurn;
-        TurnStateText.text = CurrentTurnState.ToString();
+		UpdateTurnText();
 		turnCount = 1;
 		UpdateTurnCountText();
 
@@ -119,6 +119,34 @@ public class GameController : MonoBehaviour
 	void UpdateTurnCountText()
 	{
 		turnCountText.text = turnCount.ToString();
+	}
+
+	void UpdateTurnText()
+	{
+		TurnStateText.text = GetTurnText();
+	}
+
+	string GetTurnText()
+	{
+		switch (CurrentTurnState)
+		{
+			case TurnState.NewTurn:
+				return "Turn Start";
+			case TurnState.PlayerMovement:
+				return "Player Movement";
+			case TurnState.EnemyMovement:
+				return "Enemy Movement";
+			case TurnState.EnemyAction:
+				return "Enemy Action";
+			case TurnState.PlayerAnswer:
+				return "Player Answer";
+			case TurnState.Clash:
+				return "Clash";
+			case TurnState.Loot:
+				return "Loot";
+			default:
+				return "TURN STATE ERROR";
+		}
 	}
 
 	void Update()
@@ -162,7 +190,7 @@ public class GameController : MonoBehaviour
 	{
 		// TODO: should enemies even move?
 		CurrentTurnState = TurnState.EnemyMovement;
-        TurnStateText.text = CurrentTurnState.ToString();
+		UpdateTurnText();
 
 		for (int i = 0; i < Enemies.Count; i++)
 		{
@@ -175,7 +203,7 @@ public class GameController : MonoBehaviour
 	void EnterPlayerMoveTurn()
 	{
 		CurrentTurnState = TurnState.PlayerMovement;
-        TurnStateText.text = CurrentTurnState.ToString();
+		UpdateTurnText();
 		Player.instance.currentHex.HighlightValidAdjacents();
 	}
 
@@ -296,7 +324,7 @@ public class GameController : MonoBehaviour
 	void CycleTurn()
 	{
 		CurrentTurnState = TurnState.NewTurn;
-        TurnStateText.text = CurrentTurnState.ToString();
+		UpdateTurnText();
 
 		if (loadLevelAtTurnEnd)
 		{
@@ -341,7 +369,7 @@ public class GameController : MonoBehaviour
 		SidestepSkillButton.gameObject.SetActive(true);
 		HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 		CurrentTurnState = TurnState.PlayerAnswer;
-        TurnStateText.text = CurrentTurnState.ToString();
+		UpdateTurnText();
 
 		
 		UpdateUnansweredEnemyText();
@@ -579,7 +607,7 @@ public class GameController : MonoBehaviour
 			CurrentEnemy.currentHex.UnselectAsTarget();
 		}
 		CurrentTurnState = TurnState.Clash;
-        TurnStateText.text = CurrentTurnState.ToString();
+		UpdateTurnText();
         StartCoroutine(ProcessCombat());
     }
 
@@ -654,7 +682,7 @@ public class GameController : MonoBehaviour
     void EnterEnemyActionTurn()
     {
         CurrentTurnState = TurnState.EnemyAction;
-        TurnStateText.text = CurrentTurnState.ToString();
+		UpdateTurnText();
 
 		for (int i = 0; i < Enemies.Count; i++)
 		{
