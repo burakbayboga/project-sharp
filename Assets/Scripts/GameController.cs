@@ -978,7 +978,7 @@ public class GameController : MonoBehaviour
 	{
 		tutorialCanvas.SetActive(false);
 		isTutorialActive = false;
-		if (!IsGameOver && CurrentTurnState != TurnState.Clash)
+		if (!IsGameOver && (CurrentTurnState == TurnState.PlayerMovement || CurrentTurnState == TurnState.PlayerAnswer))
 		{
 			TurnProgressButton.interactable = true;
 		}
