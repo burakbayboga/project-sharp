@@ -409,11 +409,14 @@ public class GameController : MonoBehaviour
 		{
 			rechargeStyleModifier += 1;
 		}
-		UpdateTurnCountText();
-        Player.instance.RechargeResources(rechargeStyleModifier);
-        ResetClashes();
-		TurnProgressButton.interactable = true;
-        ProgressTurn();
+		if (!IsGameOver)
+		{
+			UpdateTurnCountText();
+			Player.instance.RechargeResources(rechargeStyleModifier);
+			ResetClashes();
+			TurnProgressButton.interactable = true;
+			ProgressTurn();
+		}
     }
 
 	IEnumerator HandleClashAnimations(Clash clash)
@@ -966,7 +969,6 @@ public class GameController : MonoBehaviour
 
     public void OnHowToPlayClicked()
     {
-        //SceneManager.LoadScene("howToPlay");
 		tutorialCanvas.SetActive(true);
 		TurnProgressButton.interactable = false;
 		isTutorialActive = true;
@@ -975,8 +977,11 @@ public class GameController : MonoBehaviour
 	public void OnBackToGameClicked()
 	{
 		tutorialCanvas.SetActive(false);
-		TurnProgressButton.interactable = true;
 		isTutorialActive = false;
+		if (!IsGameOver && CurrentTurnState != TurnState.Clash)
+		{
+			TurnProgressButton.interactable = true;
+		}
 	}
 
     public void OnQuitClicked()
