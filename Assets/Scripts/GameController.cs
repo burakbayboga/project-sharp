@@ -252,14 +252,14 @@ public class GameController : MonoBehaviour
 		OnEmptyClick();
 	}
 
-	// TODO: refactor plzz
 	public bool IsAggressiveEnemyAdjacentToPlayer()
 	{
-		for (int i = 0; i < Enemies.Count; i++)
+		Hex[] adjacents = Player.instance.currentHex.adjacents;
+		for (int i = 0; i < adjacents.Length; i++)
 		{
-			if (Enemies[i].currentHex.IsAdjacentToPlayer()
-					&& Enemies[i].CurrentAction != null
-					&& !Enemies[i].IsDefensive())
+			if (adjacents[i].enemy != null
+					&& adjacents[i].enemy.CurrentAction != null
+					&& !adjacents[i].enemy.IsDefensive())
 			{
 				return true;
 			}
@@ -583,7 +583,7 @@ public class GameController : MonoBehaviour
 		for (int i = 0; i < hits.Length; i++)
 		{
 			Hex candidate = hits[i].collider.GetComponent<Hex>();
-			if (candidate != baseHex && !candidate.isOccupiedByEnemy)
+			if (candidate != baseHex && candidate.enemy == null)
 			{
 				return candidate;
 			}
@@ -626,7 +626,7 @@ public class GameController : MonoBehaviour
             Enemies.Remove(temp);
             EnemiesMarkedForDeath.Remove(temp);
             Instantiate(BloodEffectPrefab, temp.transform.position, Quaternion.identity);
-			temp.currentHex.isOccupiedByEnemy = false;
+			temp.currentHex.enemy = null;
             Destroy(temp.gameObject);
 
 			killsUntilNextItem--;

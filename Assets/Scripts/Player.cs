@@ -71,7 +71,6 @@ public class Player : MonoBehaviour
 	bool injuryBlockedThisTurn = false;
 	public bool sidestepUsed = false;
 	public bool wrestleUsed = false;
-	// TODO: refactor sidestep injury logic
 	bool pendingInjuryFromSidestep = false;
 
 	int hawkFocusRemaining = 0;

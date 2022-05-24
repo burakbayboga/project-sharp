@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
 	public virtual void Init(Hex spawnHex)
 	{
 		currentHex = spawnHex;
-		currentHex.isOccupiedByEnemy = true;
+		currentHex.enemy = this;
 		InitWeaknessIcons();
 	}
 
@@ -93,9 +93,9 @@ public class Enemy : MonoBehaviour
 
 	public void MoveToHex(Hex hex)
 	{
-		currentHex.isOccupiedByEnemy = false;
+		currentHex.enemy = null;
 		transform.position = hex.transform.position + Hex.posOffset;
-		hex.isOccupiedByEnemy = true;
+		hex.enemy = this;
 		currentHex = hex;
 	}
 

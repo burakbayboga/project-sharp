@@ -11,9 +11,9 @@ public class Hex : MonoBehaviour
 	public Color baseColor;
 	public Sprite baseSprite;
 	public Sprite highlightSprite;
-	public bool isOccupiedByEnemy;
 	public bool isOccupiedByPlayer;
 	public GameObject affectedBySkillEffect;
+	public Enemy enemy;
 
 	public static Vector3 posOffset = new Vector3(0.04f, 0.09f, 0f);
 	public static float hexOffsetX = 0.8660254f;	//いいだよ
@@ -22,7 +22,7 @@ public class Hex : MonoBehaviour
 	{
 		get
 		{
-			return isOccupiedByEnemy || isOccupiedByPlayer;
+			return isOccupiedByPlayer || enemy != null;
 		}
 	}
 
@@ -56,8 +56,8 @@ public class Hex : MonoBehaviour
 			}
 			else if (collider.CompareTag("Enemy"))
 			{
-				collider.GetComponent<Enemy>().currentHex = this;
-				isOccupiedByEnemy = true;
+				enemy = collider.GetComponent<Enemy>();
+				enemy.currentHex = this;
 			}
 		}
 	}
@@ -91,7 +91,7 @@ public class Hex : MonoBehaviour
 		int enemyCount = 0;
 		for (int i = 0; i < adjacents.Length; i++)
 		{
-			if (adjacents[i].isOccupiedByEnemy)
+			if (adjacents[i].enemy != null)
 			{
 				enemyCount++;
 			}
