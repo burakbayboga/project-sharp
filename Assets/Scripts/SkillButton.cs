@@ -90,7 +90,7 @@ public class SkillButton : MonoBehaviour
 
 	public void OnSkillClicked()
 	{
-		Player.instance.OnSkillClicked(skillType);
+		Player.instance.OnSkillClicked(Cost, Skill.GetSkillForType(skillType), Damage);
 	}
 
 	public void OnMouseButtonDown()

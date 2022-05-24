@@ -317,7 +317,6 @@ public class Enemy : MonoBehaviour
 
 		if (CurrentAction == null)
 		{
-			// TODO: まじか...
 			return;
 		}
 
