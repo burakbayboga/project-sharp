@@ -142,18 +142,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4204724681710474413}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &124095971 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6901594448101603425, guid: af8f719b04400134fa5773ee3b26e617,
-    type: 3}
-  m_PrefabInstance: {fileID: 6901594448011130242}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf016ece9901acb4ea566cb820488b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &173720663 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4204724681815707898, guid: f25ae309c7e8a97428091c48a05d2aed,
@@ -1138,7 +1126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9ee02d7ac75bd45968defc80a8f7a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTutorial: 0
   levels:
   - {fileID: 6702021566650237030, guid: b7f660750e02f62489a5017e19672c2b, type: 3}
   - {fileID: 4678893072010259340, guid: 8cf52656080179a44a1a2f27dd129831, type: 3}
@@ -1150,6 +1137,7 @@ MonoBehaviour:
   actionCanvas: {fileID: 1148582990}
   tutorialCanvas: {fileID: 893403050}
   isHowToPlayActive: 0
+  isTutorialPanelActive: 0
   SwiftAttackSkillButton: {fileID: 1025422698}
   HeavyAttackSkillButton: {fileID: 1826313065}
   BlockSkillButton: {fileID: 999440630}
@@ -1412,14 +1400,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 362907628, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 124095971}
-    - target: {fileID: 532428734, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 124095971}
     - target: {fileID: 577786222, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1428,10 +1408,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1253265045}
-    - target: {fileID: 2046133422, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 124095971}
     - target: {fileID: 4204724682086003130, guid: f25ae309c7e8a97428091c48a05d2aed,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
