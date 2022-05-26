@@ -265,6 +265,10 @@ public class Player : MonoBehaviour
 
     public void OnSkillClicked(Resource skillCost, Skill skill, int damage)
     {
+		if (GameController.instance.isTutorialPanelActive)
+		{
+			return;
+		}
 		Resource previouslySpent = GameController.instance.GetResourceSpentOnCurrentEnemy(skill);
 		Resource unspentResource = CurrentResource + previouslySpent;
 
@@ -414,7 +418,7 @@ public class Player : MonoBehaviour
 		}
 	}
 
-    void HandleResourceIcons()
+    public void HandleResourceIcons()
     {
 		HandleIconsForResource(hawkFocusRemaining, focusIconsParent, FocusIcons, CurrentResource.Focus, MaxResource.Focus, FocusSprite);
 		HandleIconsForResource(bullStrengthRemaining, strengthIconsParent, StrengthIcons, CurrentResource.Strength, MaxResource.Strength, StrengthSprite);

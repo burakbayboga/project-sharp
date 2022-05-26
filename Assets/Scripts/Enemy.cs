@@ -458,5 +458,6 @@ public enum EnemyType
 {
 	basic,
 	archer,
-	brute
+	brute,
+	tutorial
 }

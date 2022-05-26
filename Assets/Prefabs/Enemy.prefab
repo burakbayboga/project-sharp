@@ -124,6 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 980342083747243824}
   rend: {fileID: 3617285728854271623}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  type: 0
   CurrentActionImage: {fileID: 4903276897544800844}
   CurrentReactionImage: {fileID: 7343565699030082986}
   ExposedWeaknessImages:
@@ -314,7 +316,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &320522350083098555
 MonoBehaviour:

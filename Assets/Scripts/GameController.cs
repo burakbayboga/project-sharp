@@ -21,7 +21,8 @@ public class GameController : MonoBehaviour
 	public GameObject actionCanvas;
 	public GameObject tutorialCanvas;
 
-	public bool isTutorialActive;
+	public bool isHowToPlayActive;
+	public bool isTutorialPanelActive;
     
     public SkillButton SwiftAttackSkillButton;
     public SkillButton HeavyAttackSkillButton;
@@ -53,6 +54,7 @@ public class GameController : MonoBehaviour
 	public Text turnCountText;
 	int turnCount;
 	int turnLimitForNewWave = 10;
+	protected int waveLimitForLevel;
 
 	int killsRequiredForNewItem = 4;
 	int killsUntilNextItem;
@@ -62,10 +64,10 @@ public class GameController : MonoBehaviour
     public GameObject BloodEffectPrefab;
 
     List<Clash> Clashes = new List<Clash>();
-	List<Enemy> Enemies = new List<Enemy>();
-    List<Enemy> EnemiesMarkedForDeath = new List<Enemy>();
+	protected List<Enemy> Enemies = new List<Enemy>();
+    protected List<Enemy> EnemiesMarkedForDeath = new List<Enemy>();
 
-    Enemy CurrentEnemy;
+    protected Enemy CurrentEnemy;
 
     public TurnState CurrentTurnState;
 
@@ -73,7 +75,7 @@ public class GameController : MonoBehaviour
 
 	public bool isSidestepActive = false;
 
-	int currentLevel = -1;
+	protected int currentLevel = -1;
 
 	bool pendingLootTurn;
 	public int currentWave = 0;
@@ -81,7 +83,7 @@ public class GameController : MonoBehaviour
 	bool loadLevelAtTurnEnd;
 	int characterBuild;
 	bool buildingCharacter;
-	bool isLastLevel;
+	protected bool isLastLevel;
 
 	GameObject loadedLevel;
 
@@ -91,8 +93,9 @@ public class GameController : MonoBehaviour
         IsGameOver = false;
     }
 
-    void Start()
+    public virtual void Start()
     {
+		waveLimitForLevel = 2;
         CurrentTurnState = TurnState.Loot;
 		UpdateTurnText();
 		turnCount = turnLimitForNewWave;
@@ -117,12 +120,12 @@ public class GameController : MonoBehaviour
 		Inventory.instance.SetInventoryActive(true);
 	}
 
-	void UpdateTurnCountText()
+	protected virtual void UpdateTurnCountText()
 	{
 		turnCountText.text = turnCount.ToString();
 	}
 
-	void UpdateTurnText()
+	protected void UpdateTurnText()
 	{
 		TurnStateText.text = GetTurnText();
 	}
@@ -180,12 +183,12 @@ public class GameController : MonoBehaviour
 		return count;
 	}
 
-	void UpdateUnansweredEnemyText()
+	protected void UpdateUnansweredEnemyText()
 	{
 		unansweredEnemyText.text = GetUnansweredEnemyCount().ToString() + " Enemies\nNot Answered";
 	}
 
-	void MakeEnemiesMove()
+	protected virtual void MakeEnemiesMove()
 	{
 		// TODO: should enemies even move?
 		CurrentTurnState = TurnState.EnemyMovement;
@@ -199,14 +202,14 @@ public class GameController : MonoBehaviour
 		ProgressTurn();
 	}
 
-	void EnterPlayerMoveTurn()
+	protected virtual void EnterPlayerMoveTurn()
 	{
 		CurrentTurnState = TurnState.PlayerMovement;
 		UpdateTurnText();
 		Player.instance.currentHex.HighlightValidAdjacents();
 	}
 
-	public void OnPlayerMove()
+	public virtual void OnPlayerMove()
 	{
 		if (CurrentTurnState == TurnState.PlayerMovement)
 		{
@@ -270,6 +273,10 @@ public class GameController : MonoBehaviour
 
     void ProgressTurn()
     {
+		if (isTutorialPanelActive)
+		{
+			return;
+		}
         switch (CurrentTurnState)
         {
 			case TurnState.PlayerMovement:
@@ -331,7 +338,7 @@ public class GameController : MonoBehaviour
 		UpdateTurnText();
 	}
 
-	IEnumerator LoadNextLevel(bool isFirstLevel = false)
+	protected virtual IEnumerator LoadNextLevel(bool isFirstLevel = false)
 	{
 		if (loadedLevel != null)
 		{
@@ -367,7 +374,7 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	void EnterPlayerAnswerTurn()
+	protected virtual void EnterPlayerAnswerTurn()
 	{
 		SidestepSkillButton.gameObject.SetActive(true);
 		HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
@@ -379,7 +386,7 @@ public class GameController : MonoBehaviour
 		unansweredEnemyText.gameObject.SetActive(true);
 	}
 
-    IEnumerator ProcessCombat()
+    protected IEnumerator ProcessCombat()
     {
 		for (int i = 0; i < Enemies.Count; i++)
 		{
@@ -602,7 +609,7 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene("game");
     }
 
-    void EndTurn()
+    protected virtual void EndTurn()
     {
 		SidestepSkillButton.gameObject.SetActive(false);
 		Player.instance.currentHex.RevertAdjacentHighlights();
@@ -617,7 +624,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(ProcessCombat());
     }
 
-    int KillMarkedEnemies()
+    protected virtual int KillMarkedEnemies()
     {
 		int killedEnemyCount = EnemiesMarkedForDeath.Count;
         while (EnemiesMarkedForDeath.Count > 0)
@@ -647,11 +654,11 @@ public class GameController : MonoBehaviour
 			}
 			turnCount = turnLimitForNewWave;
 			UpdateTurnCountText();
-			if (currentWave == 2 && isLastLevel)
+			if (currentWave == waveLimitForLevel && isLastLevel)
 			{
 				print("now entering endless waves");
 			}
-			if (currentWave == 2 && !isLastLevel)
+			if (currentWave == waveLimitForLevel && !isLastLevel)
 			{
 				if (Enemies.Count == 0)
 				{
@@ -685,7 +692,7 @@ public class GameController : MonoBehaviour
 		Clashes.Clear();
     }
 
-    void EnterEnemyActionTurn()
+    protected void EnterEnemyActionTurn()
     {
         CurrentTurnState = TurnState.EnemyAction;
 		UpdateTurnText();
@@ -703,7 +710,7 @@ public class GameController : MonoBehaviour
         return CurrentEnemy.IsVulnerable;
     }
 
-    public void OnEnemyClicked(Enemy enemy)
+    public virtual void OnEnemyClicked(Enemy enemy)
     {
         if (CurrentTurnState == TurnState.PlayerAnswer)
         {
@@ -804,7 +811,7 @@ public class GameController : MonoBehaviour
 		HandleButtonIconsForSkill(Skill.LightningReflexes, enemyActionType, LightningReflexesSkillButton);
     }
 
-	void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
+	protected void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton)
 	{
 		Resource cost = skill.GetTotalCost(enemyActionType);
 		int damage = skill.GetDamageAgainstEnemyAction(Skill.GetSkillForType(enemyActionType));
@@ -865,7 +872,7 @@ public class GameController : MonoBehaviour
         TurnProgressButton.interactable = false;
     }
 
-    public void OnEmptyClick()
+    public virtual void OnEmptyClick()
     {
         SkillsParent.SetActive(false);
         if (CurrentEnemy != null)
@@ -884,7 +891,7 @@ public class GameController : MonoBehaviour
 		}
     }
 
-    public void RegisterPlayerAction(Skill reaction, int damage, Resource skillCost)
+    public virtual void RegisterPlayerAction(Skill reaction, int damage, Resource skillCost)
     {
 		List<Enemy> enemies = GetAnsweredEnemiesBySkill(reaction);
 		List<Clash> clashes = GetDistinctClashesFromEnemies(enemies);
@@ -971,13 +978,13 @@ public class GameController : MonoBehaviour
     {
 		tutorialCanvas.SetActive(true);
 		TurnProgressButton.interactable = false;
-		isTutorialActive = true;
+		isHowToPlayActive = true;
     }
 
 	public void OnBackToGameClicked()
 	{
 		tutorialCanvas.SetActive(false);
-		isTutorialActive = false;
+		isHowToPlayActive = false;
 		if (!IsGameOver && (CurrentTurnState == TurnState.PlayerMovement || CurrentTurnState == TurnState.PlayerAnswer))
 		{
 			TurnProgressButton.interactable = true;
