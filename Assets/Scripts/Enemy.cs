@@ -54,42 +54,7 @@ public class Enemy : MonoBehaviour
 		rend.flipX = flip;
 	}
 
-	public virtual void MoveTurn()
-	{
-		if (currentHex.IsAdjacentToPlayer())
-		{
-			return;
-		}
-
-		if (!HasLosToPlayer(currentHex))
-		{
-			// no line of sight to player
-			Hex newHex = GetHexWithLosToPlayer();
-			if (newHex != null)
-			{
-				// go to hex with line of sight to player
-				MoveToHex(newHex);
-			}
-			else
-			{
-				// no adjacent hex with line of sight to player, try to get closer at least
-				newHex = GetHexCloserToPlayer();
-				if (newHex != null)
-				{
-					MoveToHex(newHex);
-				}
-			}
-		}
-		else if (Random.Range(0f, 1f) < 0.5f)
-		{
-			// has line of sight to player, get closer anyway
-			Hex newHex = GetHexCloserToPlayer();
-			if (newHex != null)
-			{
-				MoveToHex(newHex);
-			}
-		}
-	}
+	public virtual void MoveTurn(){ }
 
 	public void MoveToHex(Hex hex)
 	{

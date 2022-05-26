@@ -56,10 +56,19 @@ public class Enemy_Archer : Enemy
 			}
 			else
 			{
-				newHex = GetHexCloserToPlayer(false);
+				newHex = GetHexCloserToPlayer(false, true);
 				if (newHex != null)
 				{
 					MoveToHex(newHex);
+				}
+				else
+				{
+					// PATHFIND
+					newHex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
+					if (newHex != null && !newHex.isOccupied)
+					{
+						MoveToHex(newHex);
+					}
 				}
 			}
 		}
@@ -73,10 +82,19 @@ public class Enemy_Archer : Enemy
 			}
 			else
 			{
-				newHex = GetHexCloserToPlayer();
+				newHex = GetHexCloserToPlayer(false, true);
 				if (newHex != null)
 				{
 					MoveToHex(newHex);
+				}
+				else
+				{
+					// PATHFIND
+					newHex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
+					if (newHex != null && !newHex.isOccupied)
+					{
+						MoveToHex(newHex);
+					}
 				}
 			}
 		}

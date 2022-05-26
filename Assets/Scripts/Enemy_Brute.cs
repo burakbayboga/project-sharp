@@ -44,6 +44,9 @@ public class Enemy_Brute : Enemy
 
 	public override void MoveTurn()
 	{
+		//Hex hex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
+		//hex.HighlightSelf();
+		//return;
 		if (currentHex.IsAdjacentToPlayer())
 		{
 			return;
@@ -53,6 +56,15 @@ public class Enemy_Brute : Enemy
 		if (newHex != null)
 		{
 			MoveToHex(newHex);
+		}
+		else
+		{
+			// PATHFIND
+			newHex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
+			if (newHex != null && !newHex.isOccupied)
+			{
+				MoveToHex(newHex);
+			}
 		}
 	}
 }

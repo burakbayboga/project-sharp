@@ -61,10 +61,19 @@ public class Enemy_Basic : Enemy
 		}
 		else
 		{
-			Hex newHex = GetHexCloserToPlayer();
+			Hex newHex = GetHexCloserToPlayer(false, true);
 			if (newHex != null)
 			{
 				MoveToHex(newHex);
+			}
+			else
+			{
+				// PATHFIND
+				newHex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
+				if (newHex != null && !newHex.isOccupied)
+				{
+					MoveToHex(newHex);
+				}
 			}
 		}
 	}
