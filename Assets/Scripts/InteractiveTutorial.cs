@@ -18,6 +18,7 @@ public class InteractiveTutorial : GameController
 	public GameObject answerPanel_2;
 	public GameObject answerPanel_3;
 	public GameObject answerPanel_4;
+	public GameObject answerPanel_5;
 	public GameObject killPanel;
 	public GameObject noAnswerPanel;
 	public GameObject sidestepPanel;
@@ -31,6 +32,7 @@ public class InteractiveTutorial : GameController
 	bool seenEnemies;
 	bool seenAnswer3;
 	bool seenAnswer4;
+	bool seenAnswer5;
 	bool seenKillPanel;
 	bool allowInjury;
 	bool pendingSidestep;
@@ -93,6 +95,12 @@ public class InteractiveTutorial : GameController
 		isTutorialPanelActive = false;
 	}
 
+	public void OnNextClicked_AnswerPanel_5()
+	{
+		answerPanel_5.SetActive(false);
+		isTutorialPanelActive = false;
+	}
+
 	public void OnNextClicked_KillPanel()
 	{
 		killPanel.SetActive(false);
@@ -147,6 +155,12 @@ public class InteractiveTutorial : GameController
 	public override void RegisterPlayerAction(Skill reaction, int damage, Resource skillCost)
 	{
 		base.RegisterPlayerAction(reaction, damage, skillCost);
+		if (seenAnswer4 && !seenAnswer5)
+		{
+			seenAnswer5 = true;
+			answerPanel_5.SetActive(true);
+			isTutorialPanelActive = true;
+		}
 		if (!seenAnswer4)
 		{
 			seenAnswer4 = true;
