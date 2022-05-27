@@ -483,10 +483,10 @@ public class GameController : MonoBehaviour
 			//}
 
 
-			Vector3 basePos = (enemy.IsDefensive() || enemyAction == null) ? enemy.transform.position : Player.instance.transform.position;
 			// move creatures for clash
-			if (enemyAction != Skill.ShootArrow && playerReaction != Skill.Hook)
+			if (enemyAction != Skill.ShootArrow && playerReaction != Skill.Hook && playerReaction != Skill.Heartshot)
 			{
+				Vector3 basePos = (enemy.IsDefensive() || enemyAction == null) ? enemy.transform.position : Player.instance.transform.position;
 				Vector3 offset = playerShouldFaceLeft ? new Vector3(-0.3f, 0f, 0f) : new Vector3(0.3f, 0f, 0f);
 				enemy.transform.position = basePos + offset;
 				Player.instance.transform.position = basePos - offset;
