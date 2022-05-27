@@ -752,7 +752,7 @@ public class GameController : MonoBehaviour
 			WrestleSkillButton.gameObject.SetActive(isWrestleUnlocked && isAdjacentToEnemy && !wrestleUsed);
 			ShoveSkillButton.gameObject.SetActive(isAdjacentToEnemy);
 			KillingBlowSkillButton.gameObject.SetActive(isAdjacentToEnemy);
-			HeartshotSkillButton.gameObject.SetActive(isHeartshotUnlocked && !isAdjacentToEnemy);
+			HeartshotSkillButton.gameObject.SetActive(isHeartshotUnlocked && !isAdjacentToEnemy && hasLos);
 
 			if (KillingBlowSkillButton.gameObject.activeSelf)
 			{
