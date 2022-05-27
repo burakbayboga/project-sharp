@@ -248,6 +248,12 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 5313132287980655229}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2432054488964113541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7529012551685207800, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5313132287980655229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &988533480272386097 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4903276897544800844, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
@@ -260,6 +266,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6396548386739414813 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1259058961400575328, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5313132287980655229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3194635097656571863 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7343565699030082986, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
@@ -366,6 +378,8 @@ MonoBehaviour:
   rend: {fileID: 8903378551832327418}
   color: {r: 0.015686275, g: 0.4627451, b: 0.91764706, a: 1}
   type: 1
+  actionBg: {fileID: 2432054488964113541}
+  reactionBg: {fileID: 6396548386739414813}
   CurrentActionImage: {fileID: 988533480272386097}
   CurrentReactionImage: {fileID: 3194635097656571863}
   ExposedWeaknessImages:

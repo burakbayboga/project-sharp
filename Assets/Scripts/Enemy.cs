@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
 	public Color color;
 	public EnemyType type;
 
+	public GameObject actionBg;
+	public GameObject reactionBg;
     public Image CurrentActionImage;
     public Image CurrentReactionImage;
     public Image[] ExposedWeaknessImages;
@@ -311,6 +313,8 @@ public class Enemy : MonoBehaviour
 		Color color = CurrentActionImage.color;
 		color.a = 1f;
 		CurrentActionImage.color = color;
+
+		actionBg.SetActive(true);
     }
 
     public void ExposeWeakness(int exposeAmount)
@@ -372,9 +376,13 @@ public class Enemy : MonoBehaviour
         color.a = 0f;
         CurrentReactionImage.color = color;
 
+		reactionBg.SetActive(false);
+
         color = CurrentActionImage.color;
         color.a = 0f;
         CurrentActionImage.color = color;
+
+		actionBg.SetActive(false);
 
         StopPreviousWeaknessCue();
     }
@@ -429,6 +437,8 @@ public class Enemy : MonoBehaviour
             Color color = CurrentReactionImage.color;
             color.a = 0f;
             CurrentReactionImage.color = color;
+
+			reactionBg.SetActive(false);
         }
         else
         {
@@ -436,6 +446,8 @@ public class Enemy : MonoBehaviour
             Color color = CurrentReactionImage.color;
             color.a = 1f;
             CurrentReactionImage.color = color;
+
+			reactionBg.SetActive(true);
         }
     }
 }

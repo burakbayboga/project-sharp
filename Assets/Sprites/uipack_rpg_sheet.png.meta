@@ -14,6 +14,9 @@ TextureImporter:
   - first:
       213: 1948117334319197221
     second: sidestep_icon
+  - first:
+      213: 6866464857702916786
+    second: square
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -165,7 +168,7 @@ TextureImporter:
         width: 44
         height: 21
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,6 +176,27 @@ TextureImporter:
       bones: []
       spriteID: 52c60ecd46a190b10800000000000000
       internalID: 1948117334319197221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: square
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 418
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b2e51278659a4f50800000000000000
+      internalID: 6866464857702916786
       vertices: []
       indices: 
       edges: []
