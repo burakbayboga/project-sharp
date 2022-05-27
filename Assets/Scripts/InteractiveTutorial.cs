@@ -309,6 +309,8 @@ public class InteractiveTutorial : GameController
 		if (EnemiesMarkedForDeath.Count > 0 && isLastLevel)
 		{
 			Instantiate(BloodEffectPrefab, Enemies[0].transform.position, Quaternion.identity);
+			GameObject splatter = Instantiate(splatterPrefabs[Random.Range(0, splatterPrefabs.Length)], Enemies[0].currentHex.transform.position, Quaternion.identity);
+			splatter.transform.SetParent(loadedLevel.transform);
 			Destroy(Enemies[0].gameObject);
 			idleEnemyPanel.SetActive(true);
 			isTutorialPanelActive = true;

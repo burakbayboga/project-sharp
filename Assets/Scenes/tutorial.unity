@@ -6970,6 +6970,12 @@ MonoBehaviour:
   levels:
   - {fileID: 5490572783884248200, guid: e9be4dee84e43094b9c7bfd08606d9c9, type: 3}
   - {fileID: 721656055356768529, guid: 8ddc70c35d300aa409c9215dfe680c72, type: 3}
+  splatterPrefabs:
+  - {fileID: 8400194354094356739, guid: 41220403e1d3f0b46a4ae255987b1466, type: 3}
+  - {fileID: 3083077662185044365, guid: ba4bdeb40c22549439b6727c684dccae, type: 3}
+  - {fileID: 4398702202179784253, guid: b8f376d90f6aa5241b655c2066ad6194, type: 3}
+  - {fileID: 4342126446373869975, guid: 01cf30f20fc769a4c84a84340d52101a, type: 3}
+  - {fileID: 4926414006388216335, guid: 6a98b8643b459244386598ac90b62f7c, type: 3}
   TurnStateText: {fileID: 2105624077}
   SkillsParent: {fileID: 2105624076}
   lootPanel: {fileID: 1047167821}

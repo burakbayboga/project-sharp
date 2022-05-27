@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     public static GameController instance;
 
 	public GameObject[] levels;
+	public GameObject[] splatterPrefabs;
 
     public TextMeshProUGUI TurnStateText;
     public GameObject SkillsParent;
@@ -86,7 +87,7 @@ public class GameController : MonoBehaviour
 	bool buildingCharacter;
 	protected bool isLastLevel;
 
-	GameObject loadedLevel;
+	protected GameObject loadedLevel;
 
     void Awake()
     {
@@ -634,6 +635,8 @@ public class GameController : MonoBehaviour
             Enemies.Remove(temp);
             EnemiesMarkedForDeath.Remove(temp);
             Instantiate(BloodEffectPrefab, temp.transform.position, Quaternion.identity);
+			GameObject splatter = Instantiate(splatterPrefabs[Random.Range(0, splatterPrefabs.Length)], temp.currentHex.transform.position, Quaternion.identity);
+			splatter.transform.SetParent(loadedLevel.transform);
 			temp.currentHex.enemy = null;
             Destroy(temp.gameObject);
 

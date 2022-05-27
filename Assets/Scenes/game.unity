@@ -1118,6 +1118,12 @@ MonoBehaviour:
   - {fileID: 6702021566650237030, guid: b7f660750e02f62489a5017e19672c2b, type: 3}
   - {fileID: 4678893072010259340, guid: 8cf52656080179a44a1a2f27dd129831, type: 3}
   - {fileID: 6373886610226013469, guid: 4d499a4aca65a8646bd82e7db147ae07, type: 3}
+  splatterPrefabs:
+  - {fileID: 8400194354094356739, guid: 41220403e1d3f0b46a4ae255987b1466, type: 3}
+  - {fileID: 3083077662185044365, guid: ba4bdeb40c22549439b6727c684dccae, type: 3}
+  - {fileID: 4398702202179784253, guid: b8f376d90f6aa5241b655c2066ad6194, type: 3}
+  - {fileID: 4342126446373869975, guid: 01cf30f20fc769a4c84a84340d52101a, type: 3}
+  - {fileID: 4926414006388216335, guid: 6a98b8643b459244386598ac90b62f7c, type: 3}
   TurnStateText: {fileID: 1908555957}
   SkillsParent: {fileID: 173720663}
   lootPanel: {fileID: 967769976}
