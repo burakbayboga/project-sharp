@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class GameController : MonoBehaviour
 
 	public GameObject[] levels;
 
-    public Text TurnStateText;
+    public TextMeshProUGUI TurnStateText;
     public GameObject SkillsParent;
 
 	public LootPanel lootPanel;
