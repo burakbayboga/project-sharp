@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
 	public Animator animator;
 	public SpriteRenderer rend;
+	public Animator[] resourceAnimators;
+	int wobbleAnim = Animator.StringToHash("resource wobble");
 
     public Color InactiveResourceColor;
     public Color ActiveResourceColor;
@@ -293,7 +295,31 @@ public class Player : MonoBehaviour
 				HandleResourceIcons();
 			}
         }
+		else
+		{
+			StartCoroutine(WobbleResources(skillCost, unspentResource));
+		}
     }
+
+	IEnumerator WobbleResources(Resource skillCost, Resource unspentResource)
+	{
+		WaitForSeconds delay = new WaitForSeconds(0.05f);
+		if (skillCost.Focus > unspentResource.Focus)
+		{
+			resourceAnimators[0].Play(wobbleAnim);
+			yield return delay;
+		}
+		if (skillCost.Strength > unspentResource.Strength)
+		{
+			resourceAnimators[1].Play(wobbleAnim);
+			yield return delay;
+		}
+		if (skillCost.Stability > unspentResource.Stability)
+		{
+			resourceAnimators[2].Play(wobbleAnim);
+			yield return delay;
+		}
+	}
 
 	public void OnPlayerSidestep(Resource resourceGivenBack)
 	{

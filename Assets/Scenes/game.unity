@@ -1474,6 +1474,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1253265045}
+    - target: {fileID: 4204724681681793656, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4204724682086003130, guid: f25ae309c7e8a97428091c48a05d2aed,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1662,6 +1667,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4204724681710474413}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &4204724681710474436 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1771369224141429368, guid: f25ae309c7e8a97428091c48a05d2aed,
+    type: 3}
+  m_PrefabInstance: {fileID: 4204724681710474413}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4204724681710474439 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1793676472649334181, guid: f25ae309c7e8a97428091c48a05d2aed,
+    type: 3}
+  m_PrefabInstance: {fileID: 4204724681710474413}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4204724681710474442 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7879866821022281697, guid: f25ae309c7e8a97428091c48a05d2aed,
+    type: 3}
+  m_PrefabInstance: {fileID: 4204724681710474413}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6901594448011130242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1794,5 +1817,25 @@ PrefabInstance:
       propertyPath: turtleStabilityIndicator
       value: 
       objectReference: {fileID: 74609587}
+    - target: {fileID: 6901594448101603425, guid: af8f719b04400134fa5773ee3b26e617,
+        type: 3}
+      propertyPath: resourceAnimators.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901594448101603425, guid: af8f719b04400134fa5773ee3b26e617,
+        type: 3}
+      propertyPath: resourceAnimators.Array.data[0]
+      value: 
+      objectReference: {fileID: 4204724681710474442}
+    - target: {fileID: 6901594448101603425, guid: af8f719b04400134fa5773ee3b26e617,
+        type: 3}
+      propertyPath: resourceAnimators.Array.data[1]
+      value: 
+      objectReference: {fileID: 4204724681710474439}
+    - target: {fileID: 6901594448101603425, guid: af8f719b04400134fa5773ee3b26e617,
+        type: 3}
+      propertyPath: resourceAnimators.Array.data[2]
+      value: 
+      objectReference: {fileID: 4204724681710474436}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af8f719b04400134fa5773ee3b26e617, type: 3}

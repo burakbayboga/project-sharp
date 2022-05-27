@@ -2365,6 +2365,26 @@ PrefabInstance:
       propertyPath: turtleStabilityIndicator
       value: 
       objectReference: {fileID: 577513812}
+    - target: {fileID: 6901594448101603425, guid: af8f719b04400134fa5773ee3b26e617,
+        type: 3}
+      propertyPath: resourceAnimators.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901594448101603425, guid: af8f719b04400134fa5773ee3b26e617,
+        type: 3}
+      propertyPath: resourceAnimators.Array.data[0]
+      value: 
+      objectReference: {fileID: 2105624080}
+    - target: {fileID: 6901594448101603425, guid: af8f719b04400134fa5773ee3b26e617,
+        type: 3}
+      propertyPath: resourceAnimators.Array.data[1]
+      value: 
+      objectReference: {fileID: 2105624079}
+    - target: {fileID: 6901594448101603425, guid: af8f719b04400134fa5773ee3b26e617,
+        type: 3}
+      propertyPath: resourceAnimators.Array.data[2]
+      value: 
+      objectReference: {fileID: 2105624078}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af8f719b04400134fa5773ee3b26e617, type: 3}
 --- !u!1 &768013272
@@ -17215,3 +17235,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &2105624078 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1771369224141429368, guid: f25ae309c7e8a97428091c48a05d2aed,
+    type: 3}
+  m_PrefabInstance: {fileID: 2105624072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2105624079 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1793676472649334181, guid: f25ae309c7e8a97428091c48a05d2aed,
+    type: 3}
+  m_PrefabInstance: {fileID: 2105624072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2105624080 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7879866821022281697, guid: f25ae309c7e8a97428091c48a05d2aed,
+    type: 3}
+  m_PrefabInstance: {fileID: 2105624072}
+  m_PrefabAsset: {fileID: 0}
