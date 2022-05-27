@@ -56,12 +56,33 @@ public class Enemy : MonoBehaviour
 
 	public virtual void MoveTurn(){ }
 
-	public void MoveToHex(Hex hex)
+	public void MoveToHex(Hex hex, bool forced = false)
 	{
 		currentHex.enemy = null;
-		transform.position = hex.transform.position + Hex.posOffset;
+		StartCoroutine(Run(hex.transform.position + Hex.posOffset, forced));
 		hex.enemy = this;
 		currentHex = hex;
+	}
+
+	IEnumerator Run(Vector3 target, bool forced)
+	{
+		Vector3 start = transform.position;
+		float startTime = Time.time;
+		float t = 0f;
+		SetRendererFlip(target.x < start.x);
+
+		if (!forced)
+		{
+			animator.Play("run");
+		}
+		while (t < 1f)
+		{
+			t = Mathf.Clamp01((Time.time - startTime) / 0.4f);
+			transform.position = Vector3.Lerp(start, target, t);
+
+			yield return null;
+		}
+		animator.Play("idle");
 	}
 
 	protected Hex GetHexFurtherToPlayer(bool withLos = false)

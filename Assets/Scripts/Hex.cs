@@ -104,7 +104,7 @@ public class Hex : MonoBehaviour
 	{
 		if (isHighlighted)
 		{
-			Player.instance.MovePlayer(this, GameController.instance.CurrentTurnState == TurnState.PlayerAnswer);
+			Player.instance.MovePlayer(this, GameController.instance.CurrentTurnState == TurnState.PlayerAnswer, false);
 			GameController.instance.OnPlayerMove();
 		}
 		else

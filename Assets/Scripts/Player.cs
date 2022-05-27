@@ -306,7 +306,7 @@ public class Player : MonoBehaviour
 		HandleResourceIcons();
 	}
 
-	public void MovePlayer(Hex newHex, bool isSidestep = false)
+	public void MovePlayer(Hex newHex, bool isSidestep = false, bool isWrestle = false)
 	{
 		if (isSidestep && GameController.instance.IsAggressiveEnemyAdjacentToPlayer())
 		{
@@ -315,11 +315,32 @@ public class Player : MonoBehaviour
 
 		currentHex.RevertAdjacentHighlights();
 		currentHex.isOccupiedByPlayer = false;
-		transform.position = newHex.transform.position + Hex.posOffset;
+		StartCoroutine(Run(newHex.transform.position + Hex.posOffset, isWrestle));
 		currentHex = newHex;
 		newHex.isOccupiedByPlayer = true;
 
 		sidestepUsed = isSidestep;
+	}
+
+	IEnumerator Run(Vector3 target, bool isWrestle)
+	{
+		Vector3 start = transform.position;
+		float startTime = Time.time;
+		float t = 0f;
+		SetRendererFlip(target.x < start.x);
+
+		if (!isWrestle)
+		{
+			animator.Play("run");
+		}
+		while (t < 1f)
+		{
+			t = Mathf.Clamp01((Time.time - startTime) / 0.4f);
+			transform.position = Vector3.Lerp(start, target, t);
+
+			yield return null;
+		}
+		animator.Play("idle");
 	}
 
 	public void PickItem(Item newItem)

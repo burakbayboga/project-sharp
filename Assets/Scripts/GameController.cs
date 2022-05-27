@@ -245,8 +245,8 @@ public class GameController : MonoBehaviour
 
 		CurrentEnemy.currentHex.SetAffectedBySkill(false);
 		Hex playerHex = Player.instance.currentHex;
-		Player.instance.MovePlayer(CurrentEnemy.currentHex);
-		CurrentEnemy.MoveToHex(playerHex);
+		Player.instance.MovePlayer(CurrentEnemy.currentHex, false, true);
+		CurrentEnemy.MoveToHex(playerHex, true);
 
 		for (int i = 0; i < Enemies.Count; i++)
 		{
@@ -504,11 +504,11 @@ public class GameController : MonoBehaviour
 
 			if (playerReaction == Skill.Hook)
 			{
-				enemy.MoveToHex(GetNewHexForHookedEnemy(enemy));
+				enemy.MoveToHex(GetNewHexForHookedEnemy(enemy), true);
 			}
 			else if (playerReaction == Skill.Shove)
 			{
-				enemy.MoveToHex(GetNewHexForShovedEnemy(enemy));
+				enemy.MoveToHex(GetNewHexForShovedEnemy(enemy), true);
 			}
 			else
 			{
