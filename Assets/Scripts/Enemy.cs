@@ -7,8 +7,6 @@ public class Enemy : MonoBehaviour
 {
 	public Animator animator;
 	public SpriteRenderer rend;
-	public Color color;
-	public EnemyType type;
 
 	public GameObject actionBg;
 	public GameObject reactionBg;
@@ -30,10 +28,12 @@ public class Enemy : MonoBehaviour
     public int TotalDurability;
 	public Hex currentHex;
 
-    protected int CurrentWeaknessExposed;
+    public int CurrentWeaknessExposed;
 
     int CurrentWeaknessCue;
     public bool IsVulnerable { get; private set; }
+
+	EnemyType enemyType;
 
     Coroutine WeaknessCueCoroutine;
 
@@ -42,10 +42,12 @@ public class Enemy : MonoBehaviour
         CurrentWeaknessExposed = 0;
         CurrentWeaknessCue = 0;
         IsVulnerable = false;
+		enemyType = GetComponent<EnemyType>();
     }
 
-	public virtual void Init(Hex spawnHex)
+	public void Init(Hex spawnHex)
 	{
+		enemyType.Init(this);
 		currentHex = spawnHex;
 		currentHex.enemy = this;
 		InitWeaknessIcons();
@@ -56,7 +58,10 @@ public class Enemy : MonoBehaviour
 		rend.flipX = flip;
 	}
 
-	public virtual void MoveTurn(){ }
+	public void MoveTurn()
+	{
+		enemyType.MoveTurn();
+	}
 
 	public void MoveToHex(Hex hex, bool forced = false)
 	{
@@ -87,7 +92,7 @@ public class Enemy : MonoBehaviour
 		animator.Play("idle");
 	}
 
-	protected Hex GetHexFurtherToPlayer(bool withLos = false)
+	public Hex GetHexFurtherToPlayer(bool withLos = false)
 	{
 		List<Hex> candidates = new List<Hex>();
 		Hex playerHex = Player.instance.currentHex;
@@ -123,7 +128,7 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-	protected Hex GetHexCloserToPlayer(bool enforceLos = false, bool closest = false)
+	public Hex GetHexCloserToPlayer(bool enforceLos = false, bool closest = false)
 	{
 		List<Hex> candidates = new List<Hex>();
 		Hex playerHex = Player.instance.currentHex;
@@ -163,7 +168,7 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-	protected Hex GetHexWithLosToPlayer()
+	public Hex GetHexWithLosToPlayer()
 	{
 		Hex[] adjacents = currentHex.adjacents;
 		List<Hex> candidates = new List<Hex>();
@@ -241,58 +246,6 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-    protected virtual SkillType GetActionType()
-    {
-		if (!currentHex.IsAdjacentToPlayer())
-		{
-			if (HasLosToPlayer(currentHex))
-			{
-				return SkillType.ShootArrow;
-			}
-			else
-			{
-				return SkillType.None;
-			}
-		}
-
-		if (IsVulnerable)
-		{
-			int random = Random.Range(0, 2);
-			if (random == 0)
-			{
-				return SkillType.Block;
-			}
-			else
-			{
-				return SkillType.Counter;
-			}
-		}
-		else if (CurrentWeaknessExposed > 1)
-        {
-            int random = Random.Range(0, 10);
-            if (random < 2)
-            {
-                return SkillType.HeavyAttack;
-            }
-            else if (random < 4)
-            {
-                return SkillType.SwiftAttack;
-            }
-            else if (random < 7)
-            {
-                return SkillType.Block;
-            }
-            else
-            {
-                return SkillType.Counter;
-            }
-        }
-        else
-        {
-            return (SkillType)Random.Range(0, 2);
-        }
-    }
-
 	public bool IsDefensive()
 	{
 		return CurrentAction == Skill.Block || CurrentAction == Skill.Counter;
@@ -300,7 +253,7 @@ public class Enemy : MonoBehaviour
 
     public void PickAction()
     {
-		SkillType action = GetActionType();
+		SkillType action = enemyType.GetActionType();
 		CurrentAction = Skill.GetSkillForType(action);
 
 		if (CurrentAction == null)
@@ -450,12 +403,4 @@ public class Enemy : MonoBehaviour
 			reactionBg.SetActive(true);
         }
     }
-}
-
-public enum EnemyType
-{
-	basic,
-	archer,
-	brute,
-	tutorial
 }

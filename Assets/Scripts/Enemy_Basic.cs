@@ -2,27 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Basic : Enemy
+public class Enemy_Basic : EnemyType
 {
-	public override void Init(Hex spawnHex)
+	public override void Init(Enemy _enemy)
 	{
-		TotalDurability = 3;
-		rend.color = color;	
-		base.Init(spawnHex);
+		enemy = _enemy;
+		enemy.TotalDurability = 3;
 	}
 
-	protected override SkillType GetActionType()
+	public override SkillType GetActionType()
 	{
-		if (!currentHex.IsAdjacentToPlayer())
+		if (!enemy.currentHex.IsAdjacentToPlayer())
 		{
 			return SkillType.None;
 		}
 
-		if (IsVulnerable)
+		if (enemy.IsVulnerable)
 		{
 			return SkillType.Block;
 		}
-		else if (CurrentWeaknessExposed > 2)
+		else if (enemy.CurrentWeaknessExposed > 2)
 		{
 			if (Random.Range(0f, 1f) < 0.4f)
 			{
@@ -48,31 +47,31 @@ public class Enemy_Basic : Enemy
 
 	public override void MoveTurn()
 	{
-		if (currentHex.IsAdjacentToPlayer())
+		if (enemy.currentHex.IsAdjacentToPlayer())
 		{
-			if (IsVulnerable && Random.Range(0f, 1f) < 0.15f)
+			if (enemy.IsVulnerable && Random.Range(0f, 1f) < 0.15f)
 			{
-				Hex newHex = GetHexFurtherToPlayer();
+				Hex newHex = enemy.GetHexFurtherToPlayer();
 				if (newHex != null)
 				{
-					MoveToHex(newHex);
+					enemy.MoveToHex(newHex);
 				}
 			}
 		}
 		else
 		{
-			Hex newHex = GetHexCloserToPlayer(false, true);
+			Hex newHex = enemy.GetHexCloserToPlayer(false, true);
 			if (newHex != null)
 			{
-				MoveToHex(newHex);
+				enemy.MoveToHex(newHex);
 			}
 			else
 			{
 				// PATHFIND
-				newHex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
+				newHex = AStar.GetHexFirstInPath(enemy.currentHex, Player.instance.currentHex);
 				if (newHex != null && !newHex.isOccupied)
 				{
-					MoveToHex(newHex);
+					enemy.MoveToHex(newHex);
 				}
 			}
 		}

@@ -124,10 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 980342083747243824}
   rend: {fileID: 3617285728854271623}
-  color: {r: 0, g: 0, b: 0, a: 0}
-  type: 0
-  actionBg: {fileID: 0}
-  reactionBg: {fileID: 0}
+  actionBg: {fileID: 7529012551685207800}
+  reactionBg: {fileID: 1259058961400575328}
   CurrentActionImage: {fileID: 4903276897544800844}
   CurrentReactionImage: {fileID: 7343565699030082986}
   ExposedWeaknessImages:
@@ -155,6 +153,7 @@ MonoBehaviour:
   - {fileID: 8407236835019777618, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   TotalDurability: 5
   currentHex: {fileID: 0}
+  CurrentWeaknessExposed: 0
 --- !u!212 &3617285728854271623
 SpriteRenderer:
   m_ObjectHideFlags: 0

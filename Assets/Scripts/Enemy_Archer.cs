@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Archer : Enemy
+public class Enemy_Archer : EnemyType
 {
-	public override void Init(Hex spawnHex)
+	public override void Init(Enemy _enemy)
 	{
-		TotalDurability = 2;
-		rend.color = color;
-		base.Init(spawnHex);
+		enemy = _enemy;
+		enemy.TotalDurability = 2;
 	}
 
-	protected override SkillType GetActionType()
+	public override SkillType GetActionType()
 	{
-		if (!currentHex.IsAdjacentToPlayer())
+		if (!enemy.currentHex.IsAdjacentToPlayer())
 		{
-			if (HasLosToPlayer(currentHex))
+			if (enemy.HasLosToPlayer(enemy.currentHex))
 			{
 				return SkillType.ShootArrow;
 			}
@@ -25,7 +24,7 @@ public class Enemy_Archer : Enemy
 			}
 		}
 
-		if (IsVulnerable)
+		if (enemy.IsVulnerable)
 		{
 			return SkillType.Counter;
 		}
@@ -37,63 +36,63 @@ public class Enemy_Archer : Enemy
 
 	public override void MoveTurn()
 	{
-		if (currentHex.IsAdjacentToPlayer() && Random.Range(0f, 1f) < 0.15f)
+		if (enemy.currentHex.IsAdjacentToPlayer() && Random.Range(0f, 1f) < 0.15f)
 		{
 			// try to get away sometimes
-			Hex newHex = GetHexFurtherToPlayer(true);
+			Hex newHex = enemy.GetHexFurtherToPlayer(true);
 			if (newHex != null)
 			{
-				MoveToHex(newHex);
+				enemy.MoveToHex(newHex);
 			}
 		}
-		else if (Vector3.Distance(currentHex.transform.position, Player.instance.currentHex.transform.position) > 3f)
+		else if (Vector3.Distance(enemy.currentHex.transform.position, Player.instance.currentHex.transform.position) > 3f)
 		{
 			// too far, try to get closer with los
-			Hex newHex = GetHexCloserToPlayer(true);
+			Hex newHex = enemy.GetHexCloserToPlayer(true);
 			if (newHex != null)
 			{
-				MoveToHex(newHex);
+				enemy.MoveToHex(newHex);
 			}
 			else
 			{
-				newHex = GetHexCloserToPlayer(false, true);
+				newHex = enemy.GetHexCloserToPlayer(false, true);
 				if (newHex != null)
 				{
-					MoveToHex(newHex);
+					enemy.MoveToHex(newHex);
 				}
 				else
 				{
 					// PATHFIND
-					newHex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
+					newHex = AStar.GetHexFirstInPath(enemy.currentHex, Player.instance.currentHex);
 					if (newHex != null && !newHex.isOccupied)
 					{
-						MoveToHex(newHex);
+						enemy.MoveToHex(newHex);
 					}
 				}
 			}
 		}
-		else if (!HasLosToPlayer(currentHex))
+		else if (!enemy.HasLosToPlayer(enemy.currentHex))
 		{
 			// try to gain los
-			Hex newHex = GetHexWithLosToPlayer();
+			Hex newHex = enemy.GetHexWithLosToPlayer();
 			if (newHex != null)
 			{
-				MoveToHex(newHex);
+				enemy.MoveToHex(newHex);
 			}
 			else
 			{
-				newHex = GetHexCloserToPlayer(false, true);
+				newHex = enemy.GetHexCloserToPlayer(false, true);
 				if (newHex != null)
 				{
-					MoveToHex(newHex);
+					enemy.MoveToHex(newHex);
 				}
 				else
 				{
 					// PATHFIND
-					newHex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
+					newHex = AStar.GetHexFirstInPath(enemy.currentHex, Player.instance.currentHex);
 					if (newHex != null && !newHex.isOccupied)
 					{
-						MoveToHex(newHex);
+						enemy.MoveToHex(newHex);
 					}
 				}
 			}

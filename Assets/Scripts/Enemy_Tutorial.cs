@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Tutorial : Enemy
+public class Enemy_Tutorial : EnemyType
 {
-	public override void Init(Hex spawnHex)
+	public override void Init(Enemy _enemy)
 	{
-		TotalDurability = 2;
-		rend.color = color;	
-		base.Init(spawnHex);
+		enemy = _enemy;
+		enemy.TotalDurability = 2;
 	}
 
-	protected override SkillType GetActionType()
+	public override SkillType GetActionType()
 	{
-		if (!currentHex.IsAdjacentToPlayer())
+		if (!enemy.currentHex.IsAdjacentToPlayer())
 		{
 			return SkillType.None;
 		}
 
-		if (IsVulnerable)
+		if (enemy.IsVulnerable)
 		{
 			return SkillType.Block;
 		}
@@ -37,12 +36,12 @@ public class Enemy_Tutorial : Enemy
 
 	public override void MoveTurn()
 	{
-		if (!currentHex.IsAdjacentToPlayer())
+		if (!enemy.currentHex.IsAdjacentToPlayer())
 		{
-			Hex newHex = GetHexCloserToPlayer();
+			Hex newHex = enemy.GetHexCloserToPlayer();
 			if (newHex != null)
 			{
-				MoveToHex(newHex);
+				enemy.MoveToHex(newHex);
 			}
 		}
 	}

@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Brute : Enemy
+public class Enemy_Brute : EnemyType
 {
-	public override void Init(Hex spawnHex)
+	public override void Init(Enemy _enemy)
 	{
-		TotalDurability = 4;
-		rend.color = color;
-		base.Init(spawnHex);
+		enemy = _enemy;
+		enemy.TotalDurability = 4;
 	}
 
-	protected override SkillType GetActionType()
+	public override SkillType GetActionType()
 	{
-		if (!currentHex.IsAdjacentToPlayer())
+		if (!enemy.currentHex.IsAdjacentToPlayer())
 		{
 			return SkillType.None;
 		}
 
-		if (IsVulnerable)
+		if (enemy.IsVulnerable)
 		{
 			if (Random.Range(0f, 1f) < 0.6f)
 			{
@@ -44,26 +43,23 @@ public class Enemy_Brute : Enemy
 
 	public override void MoveTurn()
 	{
-		//Hex hex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
-		//hex.HighlightSelf();
-		//return;
-		if (currentHex.IsAdjacentToPlayer())
+		if (enemy.currentHex.IsAdjacentToPlayer())
 		{
 			return;
 		}
 
-		Hex newHex = GetHexCloserToPlayer(false, true);
+		Hex newHex = enemy.GetHexCloserToPlayer(false, true);
 		if (newHex != null)
 		{
-			MoveToHex(newHex);
+			enemy.MoveToHex(newHex);
 		}
 		else
 		{
 			// PATHFIND
-			newHex = AStar.GetHexFirstInPath(currentHex, Player.instance.currentHex);
+			newHex = AStar.GetHexFirstInPath(enemy.currentHex, Player.instance.currentHex);
 			if (newHex != null && !newHex.isOccupied)
 			{
-				MoveToHex(newHex);
+				enemy.MoveToHex(newHex);
 			}
 		}
 	}
