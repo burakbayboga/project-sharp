@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
 
     public TextMeshProUGUI TurnStateText;
     public GameObject SkillsParent;
+	public GameObject unansweredEnemiesPanel;
 
 	public LootPanel lootPanel;
 	public GameObject actionCamera;
@@ -50,6 +51,8 @@ public class GameController : MonoBehaviour
 	bool isWrestleUnlocked;
 	bool isHeartshotUnlocked;
 	bool isLightningReflexesUnlocked;
+
+	bool showUnansweredEnemiesPanel;
 
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;
@@ -110,6 +113,8 @@ public class GameController : MonoBehaviour
 		killsUntilNextItem = killsRequiredForNewItem;
 
 		StartCharacterBuild();
+
+		showUnansweredEnemiesPanel = PlayerPrefs.GetInt("showUnansweredPanel", 1) == 1;
     }
 
 	void StartCharacterBuild()
@@ -611,8 +616,36 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene("game");
     }
 
-    protected virtual void EndTurn()
+	public void OnYesClicked_UnansweredEnemiesPanel()
+	{
+		unansweredEnemiesPanel.SetActive(false);
+		EndTurn(true);
+	}
+
+	public void OnYesDontShowAgainClicked_UnansweredEnemiesPanel()
+	{
+		unansweredEnemiesPanel.SetActive(false);
+		showUnansweredEnemiesPanel = false;
+		PlayerPrefs.SetInt("showUnansweredPanel", 0);
+		PlayerPrefs.Save();
+		EndTurn(true);
+	}
+
+	public void OnNoClicked_UnansweredEnemiesPanel()
+	{
+		unansweredEnemiesPanel.SetActive(false);
+		TurnProgressButton.interactable = true;
+	}
+
+    protected virtual void EndTurn(bool forced = false)
     {
+		if (!forced && GetUnansweredEnemyCount() > 0 && showUnansweredEnemiesPanel)
+		{
+			unansweredEnemiesPanel.SetActive(true);
+			TurnProgressButton.interactable = false;
+			return;
+		}
+		SkillsParent.SetActive(false);
 		SidestepSkillButton.gameObject.SetActive(false);
 		Player.instance.currentHex.RevertAdjacentHighlights();
 		unansweredEnemyText.gameObject.SetActive(false);

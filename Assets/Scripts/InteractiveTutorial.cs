@@ -169,7 +169,7 @@ public class InteractiveTutorial : GameController
 		}
 	}
 
-	protected override void EndTurn()
+	protected override void EndTurn(bool forced = false)
 	{
 		if (!allowInjury)
 		{
