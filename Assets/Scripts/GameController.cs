@@ -775,12 +775,13 @@ public class GameController : MonoBehaviour
 			bool isEnemyIdle = CurrentEnemy.CurrentAction == null;
 			bool hasLos = CurrentEnemy.HasLosToPlayer(CurrentEnemy.currentHex);
 			bool wrestleUsed = Player.instance.wrestleUsed;
+			bool canSkewer = GetAnsweredEnemiesBySkill(Skill.Skewer).Contains(CurrentEnemy);
 
 			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
 			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
 			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyVulnerable && isAdjacentToEnemy);
 			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
-			SkewerSkillButton.gameObject.SetActive(isSkewerUnlocked && isAdjacentToEnemy);
+			SkewerSkillButton.gameObject.SetActive(isSkewerUnlocked && canSkewer);
 			DeflectArrowSkillButton.gameObject.SetActive(isEnemyShootingArrow);
 			LightningReflexesSkillButton.gameObject.SetActive(isLightningReflexesUnlocked && isEnemyShootingArrow);
 			BlockArrowSkillButton.gameObject.SetActive(isBlockArrowUnlocked && isEnemyShootingArrow);
