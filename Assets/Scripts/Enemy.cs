@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Enemy : MonoBehaviour
 {
 	public Animator animator;
 	public SpriteRenderer rend;
+	public GameObject tooltip;
+	public TextMeshProUGUI stateText;
+	public TextMeshProUGUI actionText;
+	float yLimit = 1.66f;
+	Vector3 tooltipBasePos;
 
 	public GameObject actionBg;
 	public GameObject reactionBg;
@@ -43,7 +49,28 @@ public class Enemy : MonoBehaviour
         CurrentWeaknessCue = 0;
         IsVulnerable = false;
 		enemyType = GetComponent<EnemyType>();
+		tooltipBasePos = tooltip.transform.localPosition;
     }
+
+	public void OnMouseEnter()
+	{
+		tooltip.SetActive(true);
+		if (transform.position.y > yLimit)
+		{
+			Vector3 pos = tooltipBasePos;
+			pos.y = pos.y + (yLimit - transform.position.y) * 1.66f;	// multiplier: enemy scale is not unit
+			tooltip.transform.localPosition = pos;
+		}
+		else
+		{
+			tooltip.transform.localPosition = tooltipBasePos;
+		}
+	}
+	
+	public void OnMouseExit()
+	{
+		tooltip.SetActive(false);
+	}
 
 	public void Init(Hex spawnHex)
 	{
@@ -224,6 +251,7 @@ public class Enemy : MonoBehaviour
 	{
 		CurrentAction = null;
 		ResetIcons();
+		SetTooltipText();
 	}
 
 	public void CheckActionValidity()
@@ -244,6 +272,8 @@ public class Enemy : MonoBehaviour
 				ResetIcons();
 			}
 		}
+
+		SetTooltipText();
 	}
 
 	public bool IsDefensive()
@@ -251,15 +281,56 @@ public class Enemy : MonoBehaviour
 		return CurrentAction == Skill.Block || CurrentAction == Skill.Counter;
 	}
 
+	void SetTooltipText(bool reset = false)
+	{
+		if (reset)
+		{
+			stateText.text = "";
+			actionText.text = "";
+		}
+		else if (CurrentAction == null)
+		{
+			stateText.text = "<color=green>Idle</color>";
+			actionText.text = "";
+		}
+		else if (CurrentAction == Skill.SwiftAttack)
+		{
+			stateText.text = "<color=red>Attacking</color>";
+			actionText.text = "Swift Attack (<sprite=1>)";
+		}
+		else if (CurrentAction == Skill.HeavyAttack)
+		{
+			stateText.text = "<color=red>Attacking</color>";
+			actionText.text = "Heavy Attack (<sprite=\"roguelikeChar_transparent\" index=0>)";
+		}
+		else if (CurrentAction == Skill.Block)
+		{
+			stateText.text = "<color=blue>Defending</color>";
+			actionText.text = "Block (<sprite=\"roguelikeChar_transparent\" index=1>)";
+		}
+		else if (CurrentAction == Skill.Counter)
+		{
+			stateText.text = "<color=blue>Defending</color>";
+			actionText.text = "Counter (<sprite=\"colored_transparent\" index=2>)";
+		}
+		else if (CurrentAction == Skill.ShootArrow)
+		{
+			stateText.text = "<color=red>Attacking</color>";
+			actionText.text = "Shoot Arrow (<sprite=\"colored_transparent\" index=11>)";
+		}
+	}
+
     public void PickAction()
     {
 		SkillType action = enemyType.GetActionType();
 		CurrentAction = Skill.GetSkillForType(action);
+		SetTooltipText();
 
 		if (CurrentAction == null)
 		{
 			return;
 		}
+
 
 		CurrentActionImage.sprite = skillSprites[(int)action];
 
@@ -322,6 +393,15 @@ public class Enemy : MonoBehaviour
 			ExposedWeaknessImages[i].gameObject.SetActive(!vulnerable);
 		}
     }
+
+	public void ResetEnemy()
+	{
+		ResetIcons();
+		CurrentAction = null;
+		CurrentPlayerReaction = null;
+		CurrentClash = null;
+		SetTooltipText(true);
+	}
 
     public void ResetIcons()
     {

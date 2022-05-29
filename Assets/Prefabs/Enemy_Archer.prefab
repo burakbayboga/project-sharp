@@ -97,6 +97,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2919589343019975324, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
+        type: 3}
+      propertyPath: m_text
+      value: Archer enemy. Prefers shooting arrows from range.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2919589343019975324, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3262674745608006659, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -131,6 +141,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.r
       value: 0.012949424
+      objectReference: {fileID: 0}
+    - target: {fileID: 3919865557566020817, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1.0439
       objectReference: {fileID: 0}
     - target: {fileID: 4903276897544800844, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
@@ -220,6 +235,11 @@ PrefabInstance:
     - target: {fileID: 7802493333076904149, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7856512046402507316, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

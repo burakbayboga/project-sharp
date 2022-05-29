@@ -721,10 +721,7 @@ public class GameController : MonoBehaviour
     {
 		for (int i = 0; i < Enemies.Count; i++)
 		{
-			Enemies[i].ResetIcons();
-			Enemies[i].CurrentAction = null;
-			Enemies[i].CurrentPlayerReaction = null;
-			Enemies[i].CurrentClash = null;
+			Enemies[i].ResetEnemy();
 		}
 		Clashes.Clear();
     }
