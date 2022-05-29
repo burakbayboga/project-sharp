@@ -97,6 +97,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1422551601010790565, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
+        type: 3}
+      propertyPath: m_text
+      value: Brute enemy. Favors heavy attacks. Never runs away.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1422551601010790565, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 2919589343019975324, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
       propertyPath: m_text
@@ -238,6 +248,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7856512046402507316, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8655101655118691750, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
       propertyPath: m_IsActive
       value: 0
