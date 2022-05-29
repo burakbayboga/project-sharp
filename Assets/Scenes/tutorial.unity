@@ -7109,6 +7109,7 @@ MonoBehaviour:
   - {fileID: 4926414006388216335, guid: 6a98b8643b459244386598ac90b62f7c, type: 3}
   TurnStateText: {fileID: 2105624077}
   SkillsParent: {fileID: 2105624076}
+  unansweredEnemiesPanel: {fileID: 0}
   lootPanel: {fileID: 1047167821}
   actionCamera: {fileID: 0}
   actionCanvas: {fileID: 0}
@@ -7819,6 +7820,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 899304354, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -24.48999
+      objectReference: {fileID: 0}
     - target: {fileID: 967769972, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -7826,6 +7831,10 @@ PrefabInstance:
     - target: {fileID: 1146828943, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146828944, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -81.45001
       objectReference: {fileID: 0}
     - target: {fileID: 5491220886787085, guid: f25ae309c7e8a97428091c48a05d2aed, type: 3}
       propertyPath: m_AnchorMax.y
@@ -11768,6 +11777,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3872099021870090076, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -94.600006
+      objectReference: {fileID: 0}
     - target: {fileID: 3874866951792142516, guid: f25ae309c7e8a97428091c48a05d2aed,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -12078,6 +12092,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4204724682086003131, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 193.22998
+      objectReference: {fileID: 0}
     - target: {fileID: 4204724682709242210, guid: f25ae309c7e8a97428091c48a05d2aed,
         type: 3}
       propertyPath: m_Name
@@ -12187,6 +12206,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4204724682709242239, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 992160664}
+    - target: {fileID: 4204724682709242239, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4204724682709242239, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_PlaneDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4204724682709242239, guid: f25ae309c7e8a97428091c48a05d2aed,
         type: 3}
@@ -14072,6 +14106,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5970667765790285935, guid: f25ae309c7e8a97428091c48a05d2aed,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -56.01999
       objectReference: {fileID: 0}
     - target: {fileID: 5995223975139571266, guid: f25ae309c7e8a97428091c48a05d2aed,
         type: 3}
