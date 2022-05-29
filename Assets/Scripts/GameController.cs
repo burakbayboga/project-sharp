@@ -972,7 +972,11 @@ public class GameController : MonoBehaviour
 			{
 				if (hits[i].collider.CompareTag("Enemy"))
 				{
-					answeredEnemies.Add(hits[i].collider.GetComponent<Enemy>());
+					Enemy enemy = hits[i].collider.GetComponent<Enemy>();
+					if (enemy.HasLosToPlayer(enemy.currentHex))
+					{
+						answeredEnemies.Add(enemy);
+					}
 				}
 			}
 		}
