@@ -26,6 +26,7 @@ public class HeavyAttack : Skill
 			case SkillType.SwiftAttack:
 			case SkillType.Block:
 			case SkillType.Counter:
+			case SkillType.Skewer:
 				return 2;
 			case SkillType.None:
 				return 3;
@@ -43,65 +44,59 @@ public class HeavyAttack : Skill
         switch (enemyAction)
         {
             case SkillType.HeavyAttack:
-
                 modifier = new Resource
                 {
                     Focus = 0,
                     Strength = 1,
                     Stability = 0
                 };
-                totalCost = BaseCost + modifier + itemModifier;
-
                 break;
             case SkillType.SwiftAttack:
-
                 modifier = new Resource
                 {
                     Focus = 0,
                     Strength = -1,
                     Stability = 1
                 };
-                totalCost = BaseCost + modifier + itemModifier;
-
                 break;
             case SkillType.Block:
-
                 modifier = new Resource
                 {
                     Focus = 0,
                     Strength = -1,
                     Stability = 0
                 };
-                totalCost = BaseCost + modifier + itemModifier;
-
                 break;
             case SkillType.Counter:
-
                 modifier = new Resource
                 {
                     Focus = 0,
                     Strength = 0,
                     Stability = 1
                 };
-                totalCost = BaseCost + modifier + itemModifier;
-
                 break;
+			case SkillType.Skewer:
+				modifier = new Resource
+				{
+					Focus = 0,
+					Strength = -1,
+					Stability = 1
+				};
+				break;
 			case SkillType.None:
-
 				modifier = new Resource
 				{
 					Focus = 0,
 					Strength = -1,
 					Stability = -1
 				};
-				totalCost = BaseCost + modifier + itemModifier;
-
 				break;
             default:
-                totalCost = new Resource();
+				modifier = new Resource();
                 break;
         }
 		
+		totalCost = BaseCost + modifier + itemModifier;
 		totalCost.Clamp();
         return totalCost;
     }

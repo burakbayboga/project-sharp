@@ -264,6 +264,14 @@ public class Enemy : MonoBehaviour
 				ResetIcons();
 			}
 		}
+		else if (CurrentAction == Skill.Skewer)
+		{
+			if (!HasLosToPlayer(currentHex) || Vector3.Distance(currentHex.transform.position, Player.instance.currentHex.transform.position) > 2f)
+			{
+				CurrentAction = null;
+				ResetIcons();
+			}
+		}
 		else if (CurrentAction != null && !IsDefensive())
 		{
 			if (!currentHex.IsAdjacentToPlayer())
@@ -317,6 +325,11 @@ public class Enemy : MonoBehaviour
 		{
 			stateText.text = "<color=red>Attacking</color>";
 			actionText.text = "Shoot Arrow (<sprite=\"colored_transparent\" index=11>)";
+		}
+		else if (CurrentAction == Skill.Skewer)
+		{
+			stateText.text = "<color=red>Attacking</color>";
+			actionText.text = "Skewer (<sprite=\"colored_transparent\" index=10>)";
 		}
 	}
 

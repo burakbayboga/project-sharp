@@ -39,13 +39,9 @@ public class Hex : MonoBehaviour
 		SetInitialOccupier();
 	}
 
-	void Start()
-	{
-	}
-
 	void SetInitialOccupier()
 	{
-		Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.2f, 1 << 8);
+		Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.3f, 1 << 8);
 		if (collider != null)
 		{
 			collider.transform.position = transform.position + posOffset;

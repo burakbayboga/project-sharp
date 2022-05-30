@@ -30,9 +30,8 @@ public class Counter : Skill
 			case SkillType.HeavyAttack:
 				return 1;
 			case SkillType.SwiftAttack:
+			case SkillType.Skewer:
 				return 2;
-			case SkillType.Block:
-			case SkillType.Counter:
 			default:
 				return 0;
 		}
@@ -47,34 +46,35 @@ public class Counter : Skill
         switch (enemyAction)
         {
             case SkillType.HeavyAttack:
-
                 modifier = new Resource
                 {
                     Focus = 0,
                     Strength = 0,
                     Stability = 0
                 };
-                totalCost = BaseCost + modifier + itemModifier;
-
                 break;
             case SkillType.SwiftAttack:
-
                 modifier = new Resource
                 {
                     Focus = 1,
                     Strength = 0,
                     Stability = 0
                 };
-                totalCost = BaseCost + modifier + itemModifier;
-
                 break;
-            case SkillType.Block:
-            case SkillType.Counter:
+			case SkillType.Skewer:
+				modifier = new Resource
+				{
+					Focus = 2,
+					Strength = 0,
+					Stability = -1
+				};
+				break;
             default:
-                totalCost = new Resource();
+				modifier = new Resource();
                 break;
         }
 
+		totalCost = BaseCost + modifier + itemModifier;
 		totalCost.Clamp();
         return totalCost;
     }

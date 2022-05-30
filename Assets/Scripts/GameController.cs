@@ -491,7 +491,8 @@ public class GameController : MonoBehaviour
 
 
 			// move creatures for clash
-			if (enemyAction != Skill.ShootArrow && playerReaction != Skill.Hook && playerReaction != Skill.Heartshot)
+			if (enemyAction != Skill.ShootArrow && playerReaction != Skill.Hook && playerReaction != Skill.Heartshot
+					&& enemyAction != Skill.Skewer)
 			{
 				Vector3 basePos = (enemy.IsDefensive() || enemyAction == null) ? enemy.transform.position : Player.instance.transform.position;
 				Vector3 offset = playerShouldFaceLeft ? new Vector3(-0.3f, 0f, 0f) : new Vector3(0.3f, 0f, 0f);
@@ -766,6 +767,7 @@ public class GameController : MonoBehaviour
             HandleSkillButtonIcons();
 			
 			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction == Skill.ShootArrow;
+			bool isEnemySkewering = CurrentEnemy.CurrentAction == Skill.Skewer;
 			bool isEnemyDefensive = CurrentEnemy.IsDefensive();
 			bool isEnemyVulnerable = CurrentEnemy.IsVulnerable;
 			bool isAdjacentToEnemy = CurrentEnemy.currentHex.IsAdjacentToPlayer();
@@ -774,8 +776,8 @@ public class GameController : MonoBehaviour
 			bool wrestleUsed = Player.instance.wrestleUsed;
 			bool canSkewer = GetAnsweredEnemiesBySkill(Skill.Skewer).Contains(CurrentEnemy);
 
-			BlockSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
-			CounterSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle);
+			BlockSkillButton.gameObject.SetActive((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering);
+			CounterSkillButton.gameObject.SetActive((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering);
 			SwiftAttackSkillButton.gameObject.SetActive(!isEnemyVulnerable && isAdjacentToEnemy);
 			HeavyAttackSkillButton.gameObject.SetActive(!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy);
 			SkewerSkillButton.gameObject.SetActive(isSkewerUnlocked && canSkewer);
@@ -966,7 +968,7 @@ public class GameController : MonoBehaviour
 		List<Enemy> answeredEnemies = new List<Enemy>();
 		if (skill == Skill.Skewer)
 		{
-			Ray ray = new Ray(Player.instance.transform.position, CurrentEnemy.transform.position - Player.instance.transform.position);
+			Ray ray = new Ray(Player.instance.currentHex.transform.position, CurrentEnemy.currentHex.transform.position - Player.instance.currentHex.transform.position);
 			RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, 2f, 1 << 8);
 			for (int i = 0; i < hits.Length; i++)
 			{

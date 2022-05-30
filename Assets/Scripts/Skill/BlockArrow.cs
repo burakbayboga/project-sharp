@@ -32,15 +32,13 @@ public class BlockArrow : Skill
 					Strength = 0,
 					Stability = 0
 				};
-				totalCost = BaseCost + modifier + itemModifier;
-
 				break;
 			default:
-				totalCost = new Resource();
-
+				modifier = new Resource();
 				break;
 		}
 
+		totalCost = BaseCost + modifier + itemModifier;
 		totalCost.Clamp();
 		return totalCost;
 	}
