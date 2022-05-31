@@ -70,7 +70,7 @@ PrefabInstance:
     - target: {fileID: 1422551601010790565, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
       propertyPath: m_text
-      value: Spear enemy. Can attack from 2 hexes away.
+      value: Enemy wielding a spear. Can attack from 2 hexes away.
       objectReference: {fileID: 0}
     - target: {fileID: 1422551601010790565, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}

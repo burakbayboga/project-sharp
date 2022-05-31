@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillButton : MonoBehaviour
 {
@@ -20,25 +21,48 @@ public class SkillButton : MonoBehaviour
 
     public Resource Cost { get; private set; }
     public int Damage { get; private set; }
+	public bool canUse;
+
+	public GameObject resourcesParent;
+	public RectTransform resourcesRectT;
+	public RectTransform bgRectT;
+	RectTransform rectT;
     
     void Awake()
     {
         CostIconCount = FocusCostIcons.Length;
+		rectT = GetComponent<RectTransform>();
     }
 
-    public void HandleCostAndDamage(Resource cost, int damage)
+	public void SetPosition(Vector3 pos)
+	{
+		rectT.anchoredPosition = pos;
+	}
+
+    public void HandleCostAndDamage(Resource cost, int damage, bool setKillingBlowIndicator = false)
     {
         Cost = cost;
         HandleCostIcons();
 
         Damage = damage;
         HandleDamageIcons();
-    }
 
-	public void SetIndicatorAnimation(bool active)
-	{
-		animator.Play(active ? "killing blow indicator" : "skill button base");
-	}
+		Resource unspent = GameController.instance.GetResourceSpentOnCurrentEnemy(Skill.GetSkillForType(skillType))
+							+ Player.instance.CurrentResource;
+		canUse = Cost <= unspent;
+		if (!canUse)
+		{
+			animator.Play("skill button not enough");
+		}
+		else if (setKillingBlowIndicator)
+		{
+			animator.Play("killing blow indicator");
+		}
+		else
+		{
+			animator.Play("skill button base");
+		}
+    }
 
     void HandleDamageIcons()
     {
@@ -101,11 +125,14 @@ public class SkillButton : MonoBehaviour
 	void OnDisable()
 	{
 		hoverText.SetActive(false);
+		resourcesParent.SetActive(false);
 	}
 
 	public void OnMouseButtonEnter()
 	{
 		hoverText.SetActive(true);
+		transform.SetAsLastSibling();
+		resourcesParent.SetActive(true);
 		if (skillType != SkillType.Sidestep)
 		{
 			GameController.instance.OnMouseButtonEnterOnSkill(skillType);
@@ -115,6 +142,7 @@ public class SkillButton : MonoBehaviour
 	public void OnMouseButtonExit()
 	{
 		hoverText.SetActive(false);
+		resourcesParent.SetActive(false);
 		if (skillType != SkillType.Sidestep)
 		{
 			GameController.instance.OnMouseButtonExitOnSkill(skillType);

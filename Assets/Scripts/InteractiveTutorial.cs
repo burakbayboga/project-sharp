@@ -202,8 +202,10 @@ public class InteractiveTutorial : GameController
 
 	public override void OnEnemyClicked(Enemy enemy)
 	{
+		print("xx");
 		if (CurrentTurnState == TurnState.PlayerAnswer)
 		{
+			print("yy");
 			SidestepSkillButton.gameObject.SetActive(false);
 			if (CurrentEnemy != null)
 			{
@@ -212,11 +214,11 @@ public class InteractiveTutorial : GameController
 			CurrentEnemy = enemy;
 			CurrentEnemy.currentHex.SelectAsTarget();
 			SkillsParent.SetActive(true);
+			Vector3 pos = CurrentEnemy.currentHex.transform.position - Hex.posOffset;
+			pos.z = -1f;
+			SkillsParent.transform.position = pos;
 
 			SkillType enemyActionType = CurrentEnemy.CurrentAction != null ? CurrentEnemy.CurrentAction.Type : SkillType.None;
-			HandleButtonIconsForSkill(Skill.SwiftAttack, enemyActionType, SwiftAttackSkillButton);
-			HandleButtonIconsForSkill(Skill.Block, enemyActionType, BlockSkillButton);
-			HandleButtonIconsForSkill(Skill.KillingBlow, enemyActionType, KillingBlowSkillButton);
 
 			bool isEnemyAdjacent = CurrentEnemy.currentHex.IsAdjacentToPlayer();
 			bool isEnemyVulnerable = CurrentEnemy.IsVulnerable;
@@ -224,14 +226,41 @@ public class InteractiveTutorial : GameController
 			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction == Skill.ShootArrow;
 			bool isEnemyIdle = CurrentEnemy.CurrentAction == null;
 
-			SwiftAttackSkillButton.gameObject.SetActive(isEnemyAdjacent);
-			BlockSkillButton.gameObject.SetActive(isEnemyAdjacent && !isEnemyDefensive && !isEnemyShootingArrow && !isEnemyIdle);
-			KillingBlowSkillButton.gameObject.SetActive(isEnemyVulnerable && isEnemyAdjacent);
+			List<SkillButton> availableSkills = new List<SkillButton>();
+			SkillButton availableKillingBlow = null;
 
-			if (KillingBlowSkillButton.gameObject.activeSelf)
+			if (isEnemyAdjacent && !isEnemyVulnerable)
 			{
-				KillingBlowSkillButton.SetIndicatorAnimation(isEnemyVulnerable);
+				SwiftAttackSkillButton.gameObject.SetActive(true);
+				availableSkills.Add(SwiftAttackSkillButton);
+				HandleButtonIconsForSkill(Skill.SwiftAttack, enemyActionType, SwiftAttackSkillButton);
 			}
+			else
+			{
+				SwiftAttackSkillButton.gameObject.SetActive(false);
+			}
+			if (isEnemyAdjacent && !isEnemyDefensive && !isEnemyShootingArrow && !isEnemyIdle)
+			{
+				BlockSkillButton.gameObject.SetActive(true);
+				availableSkills.Add(BlockSkillButton);
+				HandleButtonIconsForSkill(Skill.Block, enemyActionType, BlockSkillButton);
+			}
+			else
+			{
+				BlockSkillButton.gameObject.SetActive(false);
+			}
+			if (isEnemyVulnerable && isEnemyAdjacent)
+			{
+				KillingBlowSkillButton.gameObject.SetActive(true);
+				availableKillingBlow = KillingBlowSkillButton;
+				HandleButtonIconsForSkill(Skill.KillingBlow, enemyActionType, KillingBlowSkillButton, isEnemyVulnerable);
+			}
+			else
+			{
+				KillingBlowSkillButton.gameObject.SetActive(false);
+			}
+
+			HandleSkillCanvas(availableSkills, availableKillingBlow);
 
 			if (isEnemyVulnerable)
 			{
@@ -266,6 +295,7 @@ public class InteractiveTutorial : GameController
 			injuryPanel.SetActive(true);
 			isTutorialPanelActive = true;
 			sidestepUsed = true;
+			isSidestepActive = false;
 			Player.instance.CurrentResource = new Resource
 			{
 				Focus = 0,
