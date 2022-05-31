@@ -763,7 +763,7 @@ public class GameController : MonoBehaviour
             
             SkillsParent.SetActive(true);
 			Vector3 pos = CurrentEnemy.currentHex.transform.position - Hex.posOffset;
-			pos.z = -1f;
+			pos.z = -6f;
 			SkillsParent.transform.position = pos;
 
 			

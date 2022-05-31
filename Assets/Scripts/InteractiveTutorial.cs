@@ -202,10 +202,8 @@ public class InteractiveTutorial : GameController
 
 	public override void OnEnemyClicked(Enemy enemy)
 	{
-		print("xx");
 		if (CurrentTurnState == TurnState.PlayerAnswer)
 		{
-			print("yy");
 			SidestepSkillButton.gameObject.SetActive(false);
 			if (CurrentEnemy != null)
 			{
@@ -215,7 +213,7 @@ public class InteractiveTutorial : GameController
 			CurrentEnemy.currentHex.SelectAsTarget();
 			SkillsParent.SetActive(true);
 			Vector3 pos = CurrentEnemy.currentHex.transform.position - Hex.posOffset;
-			pos.z = -1f;
+			pos.z = -6f;
 			SkillsParent.transform.position = pos;
 
 			SkillType enemyActionType = CurrentEnemy.CurrentAction != null ? CurrentEnemy.CurrentAction.Type : SkillType.None;
