@@ -44,11 +44,11 @@ public class GameController : MonoBehaviour
 	public SkillButton ResetSkillButton;
 
 	// TODO: skill unlock system
-	bool isSkewerUnlocked = true;
+	bool isSkewerUnlocked;
 	bool isBlockArrowUnlocked;
-	bool isWhirlwindUnlocked = true;
+	bool isWhirlwindUnlocked;
 	bool isHookUnlocked;
-	bool isWrestleUnlocked = true;
+	bool isWrestleUnlocked;
 	bool isHeartshotUnlocked;
 	bool isLightningReflexesUnlocked;
 
@@ -1063,8 +1063,15 @@ public class GameController : MonoBehaviour
 
 		if (CurrentTurnState == TurnState.PlayerAnswer)
 		{
-			SidestepSkillButton.gameObject.SetActive(!Player.instance.sidestepUsed);
-			HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+			if (!Player.instance.sidestepUsed)
+			{
+				SidestepSkillButton.gameObject.SetActive(true);
+				HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+			}
+			else
+			{
+				SidestepSkillButton.gameObject.SetActive(false);
+			}
 			Player.instance.currentHex.RevertAdjacentHighlights();
 			isSidestepActive = false;
 		}

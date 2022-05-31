@@ -326,8 +326,15 @@ public class InteractiveTutorial : GameController
 		{
 			if (CurrentTurnState == TurnState.PlayerAnswer)
 			{
-				SidestepSkillButton.gameObject.SetActive(!Player.instance.sidestepUsed);
-				HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+				if (!Player.instance.sidestepUsed)
+				{
+					SidestepSkillButton.gameObject.SetActive(true);
+					HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+				}
+				else
+				{
+					SidestepSkillButton.gameObject.SetActive(false);
+				}
 				Player.instance.currentHex.RevertAdjacentHighlights();
 				isSidestepActive = false;
 			}

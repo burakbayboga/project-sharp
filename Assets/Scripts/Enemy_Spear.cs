@@ -29,6 +29,20 @@ public class Enemy_Spear : EnemyType
 		}
 	}
 
+	Hex GetSkewerableHex()
+	{
+		for (int i = 0; i < enemy.currentHex.adjacents.Length; i++)
+		{
+			Hex hex = enemy.currentHex.adjacents[i];
+			if (!hex.isOccupied && enemy.HasLosToPlayer(hex) && Vector3.Distance(hex.transform.position, Player.instance.currentHex.transform.position) <= 2f)
+			{
+				return enemy.currentHex.adjacents[i];
+			}
+		}
+
+		return null;
+	}
+
 	public override void MoveTurn()
 	{
 		if (enemy.currentHex.IsAdjacentToPlayer() && Random.Range(0f, 1f) < 0.25f)
@@ -42,18 +56,26 @@ public class Enemy_Spear : EnemyType
 		}
 		else
 		{
-			Hex newHex = enemy.GetHexCloserToPlayer(false, true);
+			Hex newHex = GetSkewerableHex();
 			if (newHex != null)
 			{
 				enemy.MoveToHex(newHex);
 			}
 			else
 			{
-				// PATHFIND
-				newHex = AStar.GetHexFirstInPath(enemy.currentHex, Player.instance.currentHex);
-				if (newHex != null && !newHex.isOccupied)
+				newHex = enemy.GetHexCloserToPlayer(false, true);
+				if (newHex != null)
 				{
 					enemy.MoveToHex(newHex);
+				}
+				else
+				{
+					// PATHFIND
+					newHex = AStar.GetHexFirstInPath(enemy.currentHex, Player.instance.currentHex);
+					if (newHex != null && !newHex.isOccupied)
+					{
+						enemy.MoveToHex(newHex);
+					}
 				}
 			}
 		}
