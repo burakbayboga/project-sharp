@@ -9,6 +9,8 @@ public class LootPanel : MonoBehaviour
 	public List<Item> rareItems = new List<Item>();
 	public List<Item> epicItems = new List<Item>();
 
+	public Item testItem;
+
 	List<Item> currentlyVisible = new List<Item>();
 	List<Item> itemPool = new List<Item>();
 
@@ -49,6 +51,12 @@ public class LootPanel : MonoBehaviour
 			Item lootableItem = GetItemFromPool(rarity);
 			currentlyVisible.Add(lootableItem);
 			lootableItem.gameObject.SetActive(true);
+		}
+
+		if (testItem != null)
+		{
+			currentlyVisible.Add(testItem);
+			testItem.gameObject.SetActive(true);
 		}
 	}
 

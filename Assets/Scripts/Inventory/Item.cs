@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public Resource resourceModifier;
-	public SkillType modifiedSkillType;
+	public List<SkillType> modifiedSkillTypes;
 	public SkillType unlockedSkillType;
 	public ItemType itemType;
 	public ItemRarity itemRarity;

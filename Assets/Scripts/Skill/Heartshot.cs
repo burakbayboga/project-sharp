@@ -24,7 +24,7 @@ public class Heartshot : Skill
 		
 		if (GameController.instance.IsCurrentEnemyVulnerable())
         {
-			totalCost = BaseCost + itemModifier;
+			totalCost = BaseCost;
         }
         else
         {
@@ -46,7 +46,7 @@ public class Heartshot : Skill
 					Strength = 0,
 					Stability = 3
 				};
-				totalCost = BaseCost + modifier + itemModifier;
+				totalCost = BaseCost + modifier;
 			}
         }
 

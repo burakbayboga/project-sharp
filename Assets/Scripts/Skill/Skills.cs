@@ -62,7 +62,7 @@ public class Skill
 		Resource itemModifier = new Resource();
 		for (int i = 0; i < items.Count; i++)
 		{
-			if (items[i].modifiedSkillType == Type)
+			if (items[i].modifiedSkillTypes.Contains(Type))
 			{
 				itemModifier += items[i].resourceModifier;
 			}

@@ -24,7 +24,7 @@ public class KillingBlow : Skill
 		
 		if (GameController.instance.IsCurrentEnemyVulnerable())
         {
-			totalCost = BaseCost + itemModifier;
+			totalCost = BaseCost;
 			if (enemyAction == SkillType.Counter)
 			{
 				totalCost += 1;
@@ -50,7 +50,7 @@ public class KillingBlow : Skill
 					Strength = 3,
 					Stability = 3
 				};
-				totalCost = BaseCost + modifier + itemModifier;
+				totalCost = BaseCost + modifier;
 			}
         }
 
