@@ -475,7 +475,7 @@ public class GameController : MonoBehaviour
 			yield return StartCoroutine(HandleClashAnimations(clash));
 		}
 
-        int killedEnemyCount = KillMarkedEnemies();
+        int killedEnemyCount = KillMarkedEnemies(out bool willSendNewWave);
 		Resource rechargeStyleModifier = new Resource();
 		if (killedEnemyCount > 1)
 		{
@@ -484,7 +484,8 @@ public class GameController : MonoBehaviour
 		if (!IsGameOver)
 		{
 			UpdateTurnCountText();
-			Player.instance.RechargeResources(rechargeStyleModifier);
+			int rechargeMultiplier = willSendNewWave ? (turnCount) : 1;
+			Player.instance.RechargeResources(rechargeStyleModifier, rechargeMultiplier);
 			ResetClashes();
 			TurnProgressButton.interactable = true;
 			ProgressTurn();
@@ -722,8 +723,9 @@ public class GameController : MonoBehaviour
         StartCoroutine(ProcessCombat());
     }
 
-    protected virtual int KillMarkedEnemies()
+    protected virtual int KillMarkedEnemies(out bool willSendNewWave)
     {
+		willSendNewWave = false;
 		int killedEnemyCount = EnemiesMarkedForDeath.Count;
         while (EnemiesMarkedForDeath.Count > 0)
         {
@@ -772,6 +774,7 @@ public class GameController : MonoBehaviour
 
 			if (!pendingNewLevel && !loadLevelAtTurnEnd)
 			{
+				willSendNewWave = true;
 				WaveManager.instance.SendNewWave();
 				currentWave++;
 			}
@@ -990,6 +993,10 @@ public class GameController : MonoBehaviour
 				ChargeSkillButton.gameObject.SetActive(true);
 				availableSkills.Add(ChargeSkillButton);
 				HandleButtonIconsForSkill(Skill.Charge, enemyActionType, ChargeSkillButton);
+			}
+			else
+			{
+				ChargeSkillButton.gameObject.SetActive(false);
 			}
 
 			HandleSkillCanvas(availableSkills, availableKillingBlow);

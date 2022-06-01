@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
 		turtleStabilityIndicator.SetActive(true);
 	}
 
-    public void RechargeResources(Resource styleModifier)
+    public void RechargeResources(Resource styleModifier, int rechargeMultiplier)
     {
         // sad shit
         //CurrentResource += ResourceRecharge;
@@ -168,19 +168,21 @@ public class Player : MonoBehaviour
 			styleModifier += 1;
 		}
 
+		Resource turnRecharge = ResourceRecharge * rechargeMultiplier;
+
 		if (hawkFocusRemaining == 0)
 		{
-			CurrentResource.Focus = Mathf.Clamp(CurrentResource.Focus + ResourceRecharge.Focus + styleModifier.Focus, 0, MaxResource.Focus);
+			CurrentResource.Focus = Mathf.Clamp(CurrentResource.Focus + turnRecharge.Focus + styleModifier.Focus, 0, MaxResource.Focus);
 			hawkFocusIndicator.SetActive(false);
 		}
 		if (bullStrengthRemaining == 0)
 		{
-			CurrentResource.Strength = Mathf.Clamp(CurrentResource.Strength + ResourceRecharge.Strength + styleModifier.Strength, 0, MaxResource.Strength);
+			CurrentResource.Strength = Mathf.Clamp(CurrentResource.Strength + turnRecharge.Strength + styleModifier.Strength, 0, MaxResource.Strength);
 			bullStrengthIndicator.SetActive(false);
 		}
 		if (turtleStabilityRemaining == 0)
 		{
-			CurrentResource.Stability = Mathf.Clamp(CurrentResource.Stability + ResourceRecharge.Stability + styleModifier.Stability, 0, MaxResource.Stability);
+			CurrentResource.Stability = Mathf.Clamp(CurrentResource.Stability + turnRecharge.Stability + styleModifier.Stability, 0, MaxResource.Stability);
 			turtleStabilityIndicator.SetActive(false);
 		}
         

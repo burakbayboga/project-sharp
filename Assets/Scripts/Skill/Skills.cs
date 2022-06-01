@@ -164,6 +164,16 @@ public struct Resource
 		Stability = Mathf.Min(Stability, reference.Stability);
 	}
 
+	public static Resource operator * (Resource a, int b)
+	{
+		return new Resource
+		{
+			Focus = a.Focus * b,
+			Strength = a.Strength * b,
+			Stability = a.Stability * b
+		};
+	}
+
     public static Resource operator + (Resource a, Resource b)
     {
         return new Resource

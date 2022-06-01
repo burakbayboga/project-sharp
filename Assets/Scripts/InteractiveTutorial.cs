@@ -339,8 +339,9 @@ public class InteractiveTutorial : GameController
 		}
 	}
 
-	protected override int KillMarkedEnemies()
+	protected override int KillMarkedEnemies(out bool willSendNewWave)
 	{
+		willSendNewWave = false;
 		if (EnemiesMarkedForDeath.Count > 0 && isLastLevel)
 		{
 			Instantiate(BloodEffectPrefab, Enemies[0].transform.position, Quaternion.identity);
@@ -353,7 +354,7 @@ public class InteractiveTutorial : GameController
 		}
 		else
 		{
-			return base.KillMarkedEnemies();
+			return base.KillMarkedEnemies(out willSendNewWave);
 		}
 	}
 
