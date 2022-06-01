@@ -109,6 +109,13 @@ public class Hex : MonoBehaviour
 		}
 	}
 
+	public bool HasGapBetweenHex(Hex hex)
+	{
+		Ray ray = new Ray(transform.position, hex.transform.position - transform.position);
+		float distance = Vector3.Distance(transform.position, hex.transform.position);
+		return Physics2D.RaycastAll(ray.origin, ray.direction, distance, 1 << 14).Length > 0;
+	}
+
 	public bool IsAdjacentToPlayer()
 	{
 		for (int i = 0; i < adjacents.Length; i++)

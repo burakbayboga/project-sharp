@@ -842,6 +842,7 @@ public class GameController : MonoBehaviour
 			bool wrestleUsed = Player.instance.wrestleUsed;
 			bool canSkewer = GetAnsweredEnemiesBySkill(Skill.Skewer).Contains(CurrentEnemy);
 			bool chargeUsed = Player.instance.chargeUsed;
+			bool gap = Player.instance.currentHex.HasGapBetweenHex(CurrentEnemy.currentHex);
 
 			SkillType enemyActionType = isEnemyIdle ? SkillType.None : CurrentEnemy.CurrentAction.Type;
 
@@ -988,7 +989,7 @@ public class GameController : MonoBehaviour
 			{
 				HeartshotSkillButton.gameObject.SetActive(false);
 			}
-			if (!isAdjacentToEnemy && isChargeUnlocked && !chargeUsed && hasLos)
+			if (!isAdjacentToEnemy && isChargeUnlocked && !chargeUsed && hasLos && !gap)
 			{
 				ChargeSkillButton.gameObject.SetActive(true);
 				availableSkills.Add(ChargeSkillButton);
