@@ -1944,7 +1944,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4107227811387314642, guid: 66b39e6b3a1b18f46ab8e62afe4bb925, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 66b39e6b3a1b18f46ab8e62afe4bb925, type: 3}
 --- !u!1 &90466180 stripped
 GameObject:
@@ -1988,6 +1989,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028dcacdb65c2f34e988e5915e0914f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &90466184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90466180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c08f83ad9e07a4399054e4c1c15744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SwiftAttackSkillButton: {fileID: 90466182}
+  HeavyAttackSkillButton: {fileID: 0}
+  BlockSkillButton: {fileID: 90466181}
+  CounterSkillButton: {fileID: 0}
+  KillingBlowSkillButton: {fileID: 90466183}
+  DeflectArrowSkillButton: {fileID: 0}
+  SkewerSkillButton: {fileID: 0}
+  BlockArrowSkillButton: {fileID: 0}
+  WhirlwindSkillButton: {fileID: 0}
+  HookSkillButton: {fileID: 0}
+  WrestleSkillButton: {fileID: 0}
+  ShoveSkillButton: {fileID: 0}
+  HeartshotSkillButton: {fileID: 0}
+  LightningReflexesSkillButton: {fileID: 0}
+  ResetSkillButton: {fileID: 1871224079}
+  ChargeSkillButton: {fileID: 0}
 --- !u!114 &96817918 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6749806493555307670, guid: f25ae309c7e8a97428091c48a05d2aed,
@@ -8915,23 +8944,15 @@ MonoBehaviour:
   tutorialCanvas: {fileID: 0}
   isHowToPlayActive: 0
   isTutorialPanelActive: 0
-  SwiftAttackSkillButton: {fileID: 90466182}
-  HeavyAttackSkillButton: {fileID: 0}
-  BlockSkillButton: {fileID: 90466181}
-  CounterSkillButton: {fileID: 0}
-  KillingBlowSkillButton: {fileID: 90466183}
-  DeflectArrowSkillButton: {fileID: 0}
-  SkewerSkillButton: {fileID: 0}
-  BlockArrowSkillButton: {fileID: 0}
-  WhirlwindSkillButton: {fileID: 0}
   SidestepSkillButton: {fileID: 695185662}
-  HookSkillButton: {fileID: 0}
-  WrestleSkillButton: {fileID: 0}
-  ShoveSkillButton: {fileID: 0}
-  HeartshotSkillButton: {fileID: 0}
-  LightningReflexesSkillButton: {fileID: 0}
-  ResetSkillButton: {fileID: 1871224079}
-  ChargeSkillButton: {fileID: 0}
+  isSkewerUnlocked: 0
+  isBlockArrowUnlocked: 0
+  isWhirlwindUnlocked: 0
+  isHookUnlocked: 0
+  isWrestleUnlocked: 0
+  isHeartshotUnlocked: 0
+  isLightningReflexesUnlocked: 0
+  isChargeUnlocked: 0
   TurnProgressButton: {fileID: 968424174}
   unansweredEnemyText: {fileID: 96817918}
   turnCountText: {fileID: 0}

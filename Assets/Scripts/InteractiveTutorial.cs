@@ -218,41 +218,7 @@ public class InteractiveTutorial : GameController
 			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction == Skill.ShootArrow;
 			bool isEnemyIdle = CurrentEnemy.CurrentAction == null;
 
-			List<SkillButton> availableSkills = new List<SkillButton>();
-			SkillButton availableKillingBlow = null;
-
-			if (isEnemyAdjacent && !isEnemyVulnerable)
-			{
-				SwiftAttackSkillButton.gameObject.SetActive(true);
-				availableSkills.Add(SwiftAttackSkillButton);
-				HandleButtonIconsForSkill(Skill.SwiftAttack, enemyActionType, SwiftAttackSkillButton);
-			}
-			else
-			{
-				SwiftAttackSkillButton.gameObject.SetActive(false);
-			}
-			if (isEnemyAdjacent && !isEnemyDefensive && !isEnemyShootingArrow && !isEnemyIdle)
-			{
-				BlockSkillButton.gameObject.SetActive(true);
-				availableSkills.Add(BlockSkillButton);
-				HandleButtonIconsForSkill(Skill.Block, enemyActionType, BlockSkillButton);
-			}
-			else
-			{
-				BlockSkillButton.gameObject.SetActive(false);
-			}
-			if (isEnemyVulnerable && isEnemyAdjacent)
-			{
-				KillingBlowSkillButton.gameObject.SetActive(true);
-				availableKillingBlow = KillingBlowSkillButton;
-				HandleButtonIconsForSkill(Skill.KillingBlow, enemyActionType, KillingBlowSkillButton, isEnemyVulnerable);
-			}
-			else
-			{
-				KillingBlowSkillButton.gameObject.SetActive(false);
-			}
-
-			HandleSkillCanvas(availableSkills, availableKillingBlow);
+			((SkillCanvasTutorial)SkillCanvas.instance).HandleSkillsT(isEnemyAdjacent, isEnemyVulnerable, isEnemyDefensive, isEnemyShootingArrow, isEnemyIdle, enemyActionType);
 
 			if (isEnemyVulnerable)
 			{
@@ -321,7 +287,7 @@ public class InteractiveTutorial : GameController
 				if (!Player.instance.sidestepUsed)
 				{
 					SidestepSkillButton.gameObject.SetActive(true);
-					HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+					SkillCanvas.instance.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 				}
 				else
 				{
@@ -380,7 +346,7 @@ public class InteractiveTutorial : GameController
 		if (sidestepUnlocked)
 		{
 			SidestepSkillButton.gameObject.SetActive(!Player.instance.sidestepUsed);
-			HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+			SkillCanvas.instance.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 		}
 
 		if (pendingSidestep)
@@ -390,7 +356,7 @@ public class InteractiveTutorial : GameController
 			isTutorialPanelActive = true;
 			sidestepUnlocked = true;
 			SidestepSkillButton.gameObject.SetActive(!Player.instance.sidestepUsed);
-			HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+			SkillCanvas.instance.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 			pendingEnemyHeal = true;
 		}
 	}
