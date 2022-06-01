@@ -159,6 +159,36 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: lightningReflexes_icon
     m_HashCode: 2067694578
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 14
+    m_Scale: 1
+    m_Name: cross
+    m_HashCode: 116734942
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 15
+    m_Scale: 1
+    m_Name: arrow
+    m_HashCode: 119075993
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 16
+    m_Scale: 1
+    m_Name: bridge
+    m_HashCode: -406004705
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 17
+    m_Scale: 1
+    m_Name: corner
+    m_HashCode: -445956409
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 18
+    m_Scale: 1
+    m_Name: charge_icon
+    m_HashCode: 854929006
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -380,6 +410,86 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: -3844054136759453950, guid: 9f00a6657a2ba044f92d97081b113e02,
+      type: 3}
+  - m_Index: 14
+    m_Metrics:
+      m_Width: 12
+      m_Height: 12
+      m_HorizontalBearingX: -6
+      m_HorizontalBearingY: 6
+      m_HorizontalAdvance: 12
+    m_GlyphRect:
+      m_X: 410
+      m_Y: 104
+      m_Width: 12
+      m_Height: 12
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -2833099442046896826, guid: 9f00a6657a2ba044f92d97081b113e02,
+      type: 3}
+  - m_Index: 15
+    m_Metrics:
+      m_Width: 12
+      m_Height: 15
+      m_HorizontalBearingX: -6
+      m_HorizontalBearingY: 7.5
+      m_HorizontalAdvance: 12
+    m_GlyphRect:
+      m_X: 410
+      m_Y: 323
+      m_Width: 12
+      m_Height: 15
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -6456763422663751450, guid: 9f00a6657a2ba044f92d97081b113e02,
+      type: 3}
+  - m_Index: 16
+    m_Metrics:
+      m_Width: 6
+      m_Height: 16
+      m_HorizontalBearingX: -3
+      m_HorizontalBearingY: 8
+      m_HorizontalAdvance: 6
+    m_GlyphRect:
+      m_X: 430
+      m_Y: 306
+      m_Width: 6
+      m_Height: 16
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: 2026286725791276060, guid: 9f00a6657a2ba044f92d97081b113e02,
+      type: 3}
+  - m_Index: 17
+    m_Metrics:
+      m_Width: 11
+      m_Height: 11
+      m_HorizontalBearingX: -5.5
+      m_HorizontalBearingY: 5.5
+      m_HorizontalAdvance: 11
+    m_GlyphRect:
+      m_X: 481
+      m_Y: 306
+      m_Width: 11
+      m_Height: 11
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -3677450195138853444, guid: 9f00a6657a2ba044f92d97081b113e02,
+      type: 3}
+  - m_Index: 18
+    m_Metrics:
+      m_Width: 14
+      m_Height: 13
+      m_HorizontalBearingX: 0.41
+      m_HorizontalBearingY: 9.62
+      m_HorizontalAdvance: 14
+    m_GlyphRect:
+      m_X: 137
+      m_Y: 155
+      m_Width: 14
+      m_Height: 13
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -257959019630588694, guid: 9f00a6657a2ba044f92d97081b113e02,
       type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []

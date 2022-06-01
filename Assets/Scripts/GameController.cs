@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
 	public SkillButton HeartshotSkillButton;
 	public SkillButton LightningReflexesSkillButton;
 	public SkillButton ResetSkillButton;
+	public SkillButton ChargeSkillButton;
 
 	// TODO: skill unlock system
 	bool isSkewerUnlocked;
@@ -51,6 +52,7 @@ public class GameController : MonoBehaviour
 	bool isWrestleUnlocked;
 	bool isHeartshotUnlocked;
 	bool isLightningReflexesUnlocked;
+	bool isChargeUnlocked;
 
 	bool showUnansweredEnemiesPanel;
 
@@ -73,6 +75,8 @@ public class GameController : MonoBehaviour
     protected List<Enemy> EnemiesMarkedForDeath = new List<Enemy>();
 
     protected Enemy CurrentEnemy;
+
+	Enemy enemyBeingCharged;
 
     public TurnState CurrentTurnState;
 
@@ -239,6 +243,60 @@ public class GameController : MonoBehaviour
 			
 			UpdateUnansweredEnemyText();
 		}
+	}
+
+	Hex GetNewHexForChargingPlayer(Hex targetHex)
+	{
+		Hex traverse = Player.instance.currentHex;
+		float realStartTime = Time.realtimeSinceStartup;
+		while (true)
+		{
+			if (Time.realtimeSinceStartup - realStartTime > 10f)
+			{
+				Debug.LogError("new hex for charging player safety net");
+				break;
+			}
+
+			Hex next;
+			Ray ray = new Ray(traverse.transform.position, targetHex.transform.position - traverse.transform.position);
+			RaycastHit2D[] hits = Physics2D.CircleCastAll(ray.origin, 0.25f, ray.direction, 0.5f, 1 << 9);
+			Hex nextCandidate = GetSuitableHexForCreatureFromHits(hits, traverse);
+			if (nextCandidate != null)
+			{
+				next = nextCandidate;
+				if (next == targetHex)
+				{
+					break;
+				}
+				else
+				{
+					traverse = next;
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		return traverse;
+	}
+
+	public void OnCharge()
+	{
+		while (Clashes.Count > 0)
+		{
+			EraseClash(Clashes[0]);
+		}
+
+		Hex hex = GetNewHexForChargingPlayer(CurrentEnemy.currentHex);
+		Player.instance.MovePlayer(hex);
+		for (int i = 0; i < Enemies.Count; i++)
+		{
+			Enemies[i].CheckActionValidity();
+		}
+		enemyBeingCharged.ForceCancelAction();
+		OnEmptyClick();
 	}
 
 	public void OnWrestle()
@@ -541,7 +599,7 @@ public class GameController : MonoBehaviour
 		{
 			Ray ray = new Ray(traverse.transform.position, direction);
 			RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, 1f, 1 << 9);
-			Hex next = GetSuitableHexForEnemyFromHits(hits, traverse);
+			Hex next = GetSuitableHexForCreatureFromHits(hits, traverse);
 			if (next != null)
 			{
 				traverse = next;
@@ -571,7 +629,7 @@ public class GameController : MonoBehaviour
 			Hex next;
 			Ray ray = new Ray(traverse.transform.position, playerHex.transform.position - traverse.transform.position);
 			RaycastHit2D[] hits = Physics2D.CircleCastAll(ray.origin, 0.25f, ray.direction, 0.5f, 1 << 9);
-			Hex nextCandidate = GetSuitableHexForEnemyFromHits(hits, traverse);
+			Hex nextCandidate = GetSuitableHexForCreatureFromHits(hits, traverse);
 			if (nextCandidate != null)
 			{
 				next = nextCandidate;
@@ -593,7 +651,7 @@ public class GameController : MonoBehaviour
 		return traverse;
 	}
 
-	Hex GetSuitableHexForEnemyFromHits(RaycastHit2D[] hits, Hex baseHex)
+	Hex GetSuitableHexForCreatureFromHits(RaycastHit2D[] hits, Hex baseHex)
 	{
 		for (int i = 0; i < hits.Length; i++)
 		{
@@ -654,6 +712,10 @@ public class GameController : MonoBehaviour
 		if (CurrentEnemy != null)
 		{
 			CurrentEnemy.currentHex.UnselectAsTarget();
+		}
+		if (enemyBeingCharged != null)
+		{
+			enemyBeingCharged.currentHex.SetAffectedBySkill(false);
 		}
 		CurrentTurnState = TurnState.Clash;
 		UpdateTurnText();
@@ -776,6 +838,7 @@ public class GameController : MonoBehaviour
 			bool hasLos = CurrentEnemy.HasLosToPlayer(CurrentEnemy.currentHex);
 			bool wrestleUsed = Player.instance.wrestleUsed;
 			bool canSkewer = GetAnsweredEnemiesBySkill(Skill.Skewer).Contains(CurrentEnemy);
+			bool chargeUsed = Player.instance.chargeUsed;
 
 			SkillType enemyActionType = isEnemyIdle ? SkillType.None : CurrentEnemy.CurrentAction.Type;
 
@@ -922,6 +985,12 @@ public class GameController : MonoBehaviour
 			{
 				HeartshotSkillButton.gameObject.SetActive(false);
 			}
+			if (!isAdjacentToEnemy && isChargeUnlocked && !chargeUsed && hasLos)
+			{
+				ChargeSkillButton.gameObject.SetActive(true);
+				availableSkills.Add(ChargeSkillButton);
+				HandleButtonIconsForSkill(Skill.Charge, enemyActionType, ChargeSkillButton);
+			}
 
 			HandleSkillCanvas(availableSkills, availableKillingBlow);
         }
@@ -1012,11 +1081,34 @@ public class GameController : MonoBehaviour
         IngameInput.instance.IsIngameInputActive = false;
     }
 
+	// 無駄無駄無駄無駄無駄無駄無駄無駄無駄
+	// 無駄~
+	Enemy GetEnemyBeingChargedAt()
+	{
+		Ray ray = new Ray(Player.instance.currentHex.transform.position, CurrentEnemy.currentHex.transform.position - Player.instance.currentHex.transform.position);
+		float distance = Vector3.Distance(Player.instance.currentHex.transform.position, CurrentEnemy.currentHex.transform.position);
+		RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, distance, 1 << 8);
+		hits = hits.OrderBy(h => h.distance).ToArray();
+		if (!hits[0].collider.CompareTag("Player"))
+		{
+			return hits[0].collider.GetComponent<Enemy>();
+		}
+		else
+		{
+			return hits[1].collider.GetComponent<Enemy>();
+		}
+	}
+
 	public void OnMouseButtonEnterOnSkill(SkillType skillType)
 	{
 		if (skillType == SkillType.Wrestle)
 		{
 			CurrentEnemy.currentHex.SetAffectedBySkill(true);
+		}
+		else if (skillType == SkillType.Charge)
+		{
+			enemyBeingCharged = GetEnemyBeingChargedAt();
+			enemyBeingCharged.currentHex.SetAffectedBySkill(true);
 		}
 		else
 		{
@@ -1033,6 +1125,10 @@ public class GameController : MonoBehaviour
 		if (skillType == SkillType.Wrestle)
 		{
 			CurrentEnemy.currentHex.SetAffectedBySkill(false);
+		}
+		else if (skillType == SkillType.Charge)
+		{
+			enemyBeingCharged.currentHex.SetAffectedBySkill(false);
 		}
 		else
 		{
@@ -1060,6 +1156,11 @@ public class GameController : MonoBehaviour
 			CurrentEnemy.currentHex.SetAffectedBySkill(false);
         }
         CurrentEnemy = null;
+		if (enemyBeingCharged != null)
+		{
+			enemyBeingCharged.currentHex.SetAffectedBySkill(false);
+		}
+		enemyBeingCharged = null;
 
 		if (CurrentTurnState == TurnState.PlayerAnswer)
 		{
@@ -1211,6 +1312,9 @@ public class GameController : MonoBehaviour
 				break;
 			case SkillType.LightningReflexes:
 				isLightningReflexesUnlocked = true;
+				break;
+			case SkillType.Charge:
+				isChargeUnlocked = true;
 				break;
 			default:
 				break;

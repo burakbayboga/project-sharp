@@ -56,6 +56,9 @@ TextureImporter:
   - first:
       213: 2026286725791276060
     second: bridge
+  - first:
+      213: -257959019630588694
+    second: charge_icon
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -501,7 +504,7 @@ TextureImporter:
         width: 11
         height: 11
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -522,7 +525,7 @@ TextureImporter:
         width: 6
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -530,6 +533,27 @@ TextureImporter:
       bones: []
       spriteID: c1cd0e79a01de1c10800000000000000
       internalID: 2026286725791276060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: charge_icon
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 155
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aec8f4c63ab8b6cf0800000000000000
+      internalID: -257959019630588694
       vertices: []
       indices: 
       edges: []

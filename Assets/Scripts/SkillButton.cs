@@ -10,6 +10,7 @@ public class SkillButton : MonoBehaviour
     public GameObject[] StrengthCostIcons;
     public GameObject[] StabilityCostIcons;
 	public Animator animator;
+	public GameObject resourcesParent;
 
     public GameObject[] DamageIcons;
 
@@ -23,9 +24,6 @@ public class SkillButton : MonoBehaviour
     public int Damage { get; private set; }
 	public bool canUse;
 
-	public GameObject resourcesParent;
-	public RectTransform resourcesRectT;
-	public RectTransform bgRectT;
 	RectTransform rectT;
     
     void Awake()

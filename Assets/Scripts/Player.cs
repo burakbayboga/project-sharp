@@ -51,28 +51,13 @@ public class Player : MonoBehaviour
 
 	public Hex currentHex;
 
-    SkillButton HeavyAttackButton;
-    SkillButton SwiftAttackButton;
-    SkillButton BlockButton;
-    SkillButton CounterButton;
-    SkillButton KillingBlowButton;
-	SkillButton DeflectArrowButton;
-	SkillButton SkewerButton;
-	SkillButton BlockArrowButton;
-	SkillButton WhirlwindButton;
-	SkillButton SidestepButton;
-	SkillButton HookButton;
-	SkillButton WrestleButton;
-	SkillButton ShoveButton;
-	SkillButton HeartshotButton;
-	SkillButton LightningReflexesButton;
-
     int CurrentInjury;
     int MaxInjury;
 	int totalArmor = 0;
 	bool injuryBlockedThisTurn = false;
 	public bool sidestepUsed = false;
 	public bool wrestleUsed = false;
+	public bool chargeUsed = false;
 	bool pendingInjuryFromSidestep = false;
 
 	int hawkFocusRemaining = 0;
@@ -121,25 +106,6 @@ public class Player : MonoBehaviour
 			StabilityIcons.Add(icon);
 		}
 	}
-
-    void Start()
-    {
-        HeavyAttackButton = GameController.instance.HeavyAttackSkillButton;
-        SwiftAttackButton = GameController.instance.SwiftAttackSkillButton;
-        BlockButton = GameController.instance.BlockSkillButton;
-        CounterButton = GameController.instance.CounterSkillButton;
-        KillingBlowButton = GameController.instance.KillingBlowSkillButton;
-		DeflectArrowButton = GameController.instance.DeflectArrowSkillButton;
-		SkewerButton = GameController.instance.SkewerSkillButton;
-		BlockArrowButton = GameController.instance.BlockArrowSkillButton;
-		WhirlwindButton = GameController.instance.WhirlwindSkillButton;
-		SidestepButton = GameController.instance.SidestepSkillButton;
-		HookButton = GameController.instance.HookSkillButton;
-		WrestleButton = GameController.instance.WrestleSkillButton;
-		ShoveButton = GameController.instance.ShoveSkillButton;
-		HeartshotButton = GameController.instance.HeartshotSkillButton;
-		LightningReflexesButton = GameController.instance.LightningReflexesSkillButton;
-    }
 
 	public void SetRendererFlip(bool flip)
 	{
@@ -227,6 +193,7 @@ public class Player : MonoBehaviour
 		}
 		sidestepUsed = false;
 		wrestleUsed = false;
+		chargeUsed = false;
 		pendingInjuryFromSidestep = false;
     }
 
@@ -288,6 +255,13 @@ public class Player : MonoBehaviour
 				GameController.instance.OnWrestle();
 				wrestleUsed = true;
 			}
+			else if (skill == Skill.Charge)
+			{
+				CurrentResource = unspentResource - skillCost;
+				HandleResourceIcons();
+				GameController.instance.OnCharge();
+				chargeUsed = true;
+			}
 			else
 			{
 				CurrentResource = unspentResource - skillCost;
@@ -323,7 +297,7 @@ public class Player : MonoBehaviour
 
 	public void OnPlayerSidestep(Resource resourceGivenBack)
 	{
-		CurrentResource = CurrentResource + resourceGivenBack - SidestepButton.Cost;
+		CurrentResource = CurrentResource + resourceGivenBack - GameController.instance.SidestepSkillButton.Cost;
 		if (pendingInjuryFromSidestep)
 		{
 			GetInjury();

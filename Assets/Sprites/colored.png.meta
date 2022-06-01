@@ -74,6 +74,9 @@ TextureImporter:
   - first:
       213: -76382776144924731
     second: item_allSeeingCrown_icon
+  - first:
+      213: 5013296845695817527
+    second: item_chargeBoots_icon
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -645,7 +648,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -653,6 +656,27 @@ TextureImporter:
       bones: []
       spriteID: 5cf6ce01542a0fef0800000000000000
       internalID: -76382776144924731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: item_chargeBoots_icon
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73719496beec29540800000000000000
+      internalID: 5013296845695817527
       vertices: []
       indices: 
       edges: []

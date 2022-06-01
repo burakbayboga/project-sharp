@@ -536,6 +536,7 @@ MonoBehaviour:
   - {fileID: 7024271668637309623}
   - {fileID: 3703665373709138459}
   animator: {fileID: 7764036721483226430}
+  resourcesParent: {fileID: 5433023405408505889}
   DamageIcons:
   - {fileID: 3256058982915759483}
   - {fileID: 3885820548135044775}
@@ -544,9 +545,7 @@ MonoBehaviour:
   - {fileID: 8233903593085808895}
   skillType: 0
   hoverText: {fileID: 3980324857063342411}
-  resourcesParent: {fileID: 5433023405408505889}
-  resourcesRectT: {fileID: 5433023405408505888}
-  bgRectT: {fileID: 0}
+  canUse: 0
 --- !u!95 &7764036721483226430
 Animator:
   serializedVersion: 3
