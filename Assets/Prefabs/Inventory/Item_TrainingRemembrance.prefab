@@ -182,7 +182,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Reduces the cost of Killing Blow (<sprite=1>) and Heartshot (<sprite=12>)
-        skills against <color=blue>Idle</color> enemies by the specified amount.
+        skills against <color=green>Idle</color> enemies by the specified amount.
       objectReference: {fileID: 0}
     - target: {fileID: 9217063098243417666, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}

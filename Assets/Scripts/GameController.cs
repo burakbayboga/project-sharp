@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
 	public Text unansweredEnemyText;
 	public Text turnCountText;
 	int turnCount;
-	int turnLimitForNewWave = 10;
+	int turnLimitForNewWave = 8;
 	protected int waveLimitForLevel;
 
 	int killsRequiredForNewItem = 4;
