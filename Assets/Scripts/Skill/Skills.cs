@@ -43,7 +43,7 @@ public class Skill
 		}
 		else if (playerReaction == Skill.KillingBlow || playerReaction == Skill.Heartshot)
 		{
-			GameController.instance.MarkEnemyForDeath(enemy);
+			EnemyManager.instance.MarkEnemyForDeath(enemy);
 		}
 		else
 		{

@@ -157,8 +157,6 @@ public class Player : MonoBehaviour
 
     public void RechargeResources(Resource styleModifier, int rechargeMultiplier)
     {
-        // sad shit
-        //CurrentResource += ResourceRecharge;
 		hawkFocusRemaining = Mathf.Max(hawkFocusRemaining - 1, 0);
 		bullStrengthRemaining = Mathf.Max(bullStrengthRemaining - 1, 0);
 		turtleStabilityRemaining = Mathf.Max(turtleStabilityRemaining - 1, 0);
@@ -310,7 +308,7 @@ public class Player : MonoBehaviour
 
 	public void MovePlayer(Hex newHex, bool isSidestep = false, bool isWrestle = false)
 	{
-		if (isSidestep && GameController.instance.IsAggressiveEnemyAdjacentToPlayer())
+		if (isSidestep && IsAggressiveEnemyAdjacentToPlayer())
 		{
 			//pendingInjuryFromSidestep = true;
 		}
@@ -322,6 +320,22 @@ public class Player : MonoBehaviour
 		newHex.isOccupiedByPlayer = true;
 
 		sidestepUsed = isSidestep;
+	}
+
+	bool IsAggressiveEnemyAdjacentToPlayer()
+	{
+		Hex[] adjacents = Player.instance.currentHex.adjacents;
+		for (int i = 0; i < adjacents.Length; i++)
+		{
+			if (adjacents[i].enemy != null
+					&& adjacents[i].enemy.CurrentAction != null
+					&& !adjacents[i].enemy.IsDefensive())
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	IEnumerator Run(Vector3 target, bool isWrestle)

@@ -12,13 +12,12 @@ public class GameController : MonoBehaviour
     public static GameController instance;
 
 	public GameObject[] levels;
-	public GameObject[] splatterPrefabs;
 
     public TextMeshProUGUI TurnStateText;
     public GameObject SkillsParent;
 	public GameObject unansweredEnemiesPanel;
+	public LootPanel LootPanel;
 
-	public LootPanel lootPanel;
 	public GameObject actionCamera;
 	public GameObject actionCanvas;
 	public GameObject tutorialCanvas;
@@ -60,19 +59,15 @@ public class GameController : MonoBehaviour
 	public Text unansweredEnemyText;
 	public Text turnCountText;
 	int turnCount;
-	int turnLimitForNewWave = 8;
-	protected int waveLimitForLevel;
+	public int turnLimitForNewWave;
+	public int waveLimitForLevel;
 
-	int killsRequiredForNewItem = 4;
+	public int killsRequiredForNewItem;
 	int killsUntilNextItem;
 
     public GameObject DeathPanel;
 
-    public GameObject BloodEffectPrefab;
-
     List<Clash> Clashes = new List<Clash>();
-	protected List<Enemy> Enemies = new List<Enemy>();
-    protected List<Enemy> EnemiesMarkedForDeath = new List<Enemy>();
 
     protected Enemy CurrentEnemy;
 
@@ -94,7 +89,7 @@ public class GameController : MonoBehaviour
 	bool buildingCharacter;
 	protected bool isLastLevel;
 
-	protected GameObject loadedLevel;
+	public GameObject loadedLevel;
 
     void Awake()
     {
@@ -104,7 +99,6 @@ public class GameController : MonoBehaviour
 
     public virtual void Start()
     {
-		waveLimitForLevel = 2;
         CurrentTurnState = TurnState.Loot;
 		UpdateTurnText();
 		turnCount = turnLimitForNewWave;
@@ -113,7 +107,7 @@ public class GameController : MonoBehaviour
 		StartCoroutine(LoadNextLevel(true));
 
         Skill.InitSkills();
-		lootPanel.Init();
+		LootPanel.Init();
 		killsUntilNextItem = killsRequiredForNewItem;
 
 		StartCharacterBuild();
@@ -126,17 +120,17 @@ public class GameController : MonoBehaviour
 		TurnProgressButton.interactable = false;
 		buildingCharacter = true;
 		characterBuild = 0;
-		lootPanel.Fill(2);
-		lootPanel.gameObject.SetActive(true);
+		LootPanel.Fill(2);
+		LootPanel.gameObject.SetActive(true);
 		Inventory.instance.SetInventoryActive(true);
 	}
 
-	protected virtual void UpdateTurnCountText()
+	public virtual void UpdateTurnCountText()
 	{
 		turnCountText.text = turnCount.ToString();
 	}
 
-	protected void UpdateTurnText()
+	public void UpdateTurnText()
 	{
 		TurnStateText.text = GetTurnText();
 	}
@@ -174,42 +168,16 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	public void RegisterNewEnemies(List<Enemy> newEnemies)
+	public void UpdateUnansweredEnemyText()
 	{
-		Enemies.AddRange(newEnemies);
-		UpdateUnansweredEnemyText();
-	}
-
-	int GetUnansweredEnemyCount()
-	{
-		int count = 0;
-		for (int i = 0; i < Enemies.Count; i++)
-		{
-			if (Enemies[i].CurrentAction != null && Enemies[i].CurrentPlayerReaction == null)
-			{
-				count++;
-			}
-		}
-
-		return count;
-	}
-
-	protected void UpdateUnansweredEnemyText()
-	{
-		unansweredEnemyText.text = GetUnansweredEnemyCount().ToString() + " Enemies\nNot Answered";
+		unansweredEnemyText.text = EnemyManager.instance.GetUnansweredEnemyCount().ToString() + " Enemies\nNot Answered";
 	}
 
 	protected virtual void MakeEnemiesMove()
 	{
-		// TODO: should enemies even move?
 		CurrentTurnState = TurnState.EnemyMovement;
 		UpdateTurnText();
-
-		for (int i = 0; i < Enemies.Count; i++)
-		{
-			Enemies[i].MoveTurn();
-		}
-        
+		EnemyManager.instance.MoveEnemies();
 		ProgressTurn();
 	}
 
@@ -236,50 +204,9 @@ public class GameController : MonoBehaviour
 			}
 			isSidestepActive = false;
 			SidestepSkillButton.gameObject.SetActive(false);
-			for (int i = 0; i < Enemies.Count; i++)
-			{
-				Enemies[i].CheckActionValidity();
-			}
-			
+			EnemyManager.instance.CheckEnemyActionsValidity();		
 			UpdateUnansweredEnemyText();
 		}
-	}
-
-	Hex GetNewHexForChargingPlayer(Hex targetHex)
-	{
-		Hex traverse = Player.instance.currentHex;
-		float realStartTime = Time.realtimeSinceStartup;
-		while (true)
-		{
-			if (Time.realtimeSinceStartup - realStartTime > 10f)
-			{
-				Debug.LogError("new hex for charging player safety net");
-				break;
-			}
-
-			Hex next;
-			Ray ray = new Ray(traverse.transform.position, targetHex.transform.position - traverse.transform.position);
-			RaycastHit2D[] hits = Physics2D.CircleCastAll(ray.origin, 0.25f, ray.direction, 0.5f, 1 << 9);
-			Hex nextCandidate = GetSuitableHexForCreatureFromHits(hits, traverse);
-			if (nextCandidate != null)
-			{
-				next = nextCandidate;
-				if (next == targetHex)
-				{
-					break;
-				}
-				else
-				{
-					traverse = next;
-				}
-			}
-			else
-			{
-				break;
-			}
-		}
-
-		return traverse;
 	}
 
 	public void OnCharge()
@@ -289,12 +216,9 @@ public class GameController : MonoBehaviour
 			EraseClash(Clashes[0]);
 		}
 
-		Hex hex = GetNewHexForChargingPlayer(CurrentEnemy.currentHex);
+		Hex hex = HexHelper.GetNewHexForChargingPlayer(CurrentEnemy.currentHex);
 		Player.instance.MovePlayer(hex);
-		for (int i = 0; i < Enemies.Count; i++)
-		{
-			Enemies[i].CheckActionValidity();
-		}
+		EnemyManager.instance.CheckEnemyActionsValidity();
 		enemyBeingCharged.ForceCancelAction();
 		OnEmptyClick();
 	}
@@ -311,29 +235,10 @@ public class GameController : MonoBehaviour
 		Player.instance.MovePlayer(CurrentEnemy.currentHex, false, true);
 		CurrentEnemy.MoveToHex(playerHex, true);
 
-		for (int i = 0; i < Enemies.Count; i++)
-		{
-			Enemies[i].CheckActionValidity();
-		}
+		EnemyManager.instance.CheckEnemyActionsValidity();
 		//CurrentEnemy.ForceCancelAction();
 		UpdateUnansweredEnemyText();
 		OnEmptyClick();
-	}
-
-	public bool IsAggressiveEnemyAdjacentToPlayer()
-	{
-		Hex[] adjacents = Player.instance.currentHex.adjacents;
-		for (int i = 0; i < adjacents.Length; i++)
-		{
-			if (adjacents[i].enemy != null
-					&& adjacents[i].enemy.CurrentAction != null
-					&& !adjacents[i].enemy.IsDefensive())
-			{
-				return true;
-			}
-		}
-
-		return false;
 	}
 
     void ProgressTurn()
@@ -377,10 +282,10 @@ public class GameController : MonoBehaviour
 	{
 		pendingLootTurn = false;
 		CurrentTurnState = TurnState.Loot;
-		if (lootPanel.GetRemainingItemCount() > 0)
+		if (LootPanel.GetRemainingItemCount() > 0)
 		{
-			lootPanel.gameObject.SetActive(true);
-			lootPanel.Fill(3);
+			LootPanel.gameObject.SetActive(true);
+			LootPanel.Fill(3);
 			TurnProgressButton.interactable = false;
 		}
 		else
@@ -422,12 +327,8 @@ public class GameController : MonoBehaviour
 		Player.instance.transform.position = startHex.transform.position + Hex.posOffset;
 		startHex.isOccupiedByPlayer = true;
 
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < enemies.Length; i++)
-        {
-			Enemies.Add(enemies[i].GetComponent<Enemy>());
-			Enemies[i].Init(Enemies[i].currentHex);	// wow
-        }
+		EnemyManager.instance.RegisterFirstEnemies();
+
 		turnCount = turnLimitForNewWave;
 		UpdateTurnCountText();
 		currentWave = 0;
@@ -453,9 +354,9 @@ public class GameController : MonoBehaviour
 
     protected IEnumerator ProcessCombat()
     {
-		for (int i = 0; i < Enemies.Count; i++)
+		for (int i = 0; i < EnemyManager.instance.Enemies.Count; i++)
 		{
-			Enemy enemy = Enemies[i];
+			Enemy enemy = EnemyManager.instance.Enemies[i];
 			if (enemy.CurrentClash == null && (enemy.CurrentAction != null || enemy.CurrentPlayerReaction != null))
 			{
 				Clash newClash = new Clash(new List<Enemy>{ enemy }, null, new Resource());
@@ -475,7 +376,7 @@ public class GameController : MonoBehaviour
 			yield return StartCoroutine(HandleClashAnimations(clash));
 		}
 
-        int killedEnemyCount = KillMarkedEnemies(out bool willSendNewWave);
+        int killedEnemyCount = EnemyManager.instance.KillMarkedEnemies(out bool willSendNewWave, ref pendingLootTurn, ref killsUntilNextItem, ref pendingNewLevel, ref turnCount, ref currentWave, ref isLastLevel, ref loadLevelAtTurnEnd);
 		Resource rechargeStyleModifier = new Resource();
 		if (killedEnemyCount > 1)
 		{
@@ -569,11 +470,11 @@ public class GameController : MonoBehaviour
 
 			if (playerReaction == Skill.Hook)
 			{
-				enemy.MoveToHex(GetNewHexForHookedEnemy(enemy), true);
+				enemy.MoveToHex(HexHelper.GetNewHexForHookedEnemy(enemy), true);
 			}
 			else if (playerReaction == Skill.Shove)
 			{
-				enemy.MoveToHex(GetNewHexForShovedEnemy(enemy), true);
+				enemy.MoveToHex(HexHelper.GetNewHexForShovedEnemy(enemy), true);
 			}
 			else
 			{
@@ -589,87 +490,6 @@ public class GameController : MonoBehaviour
 		yield return new WaitForSeconds(delay);
 		Camera.main.DOShakePosition(0.2f, 0.06f, 20, 60f, false);
 	}
-	
-	Hex GetNewHexForShovedEnemy(Enemy enemy)
-	{
-		Hex traverse = enemy.currentHex;
-		Hex playerHex = Player.instance.currentHex;
-		Vector3 direction = traverse.transform.position - playerHex.transform.position;
-
-		for (int i = 0; i < 2; i++)
-		{
-			Ray ray = new Ray(traverse.transform.position, direction);
-			RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, 1f, 1 << 9);
-			Hex next = GetSuitableHexForCreatureFromHits(hits, traverse);
-			if (next != null)
-			{
-				traverse = next;
-			}
-			else
-			{
-				break;
-			}
-		}
-
-		return traverse;
-	}
-
-	Hex GetNewHexForHookedEnemy(Enemy enemy)
-	{
-		Hex traverse = enemy.currentHex;
-		Hex playerHex = Player.instance.currentHex;
-		float realStartTime = Time.realtimeSinceStartup;
-		while (true)
-		{
-			if (Time.realtimeSinceStartup - realStartTime > 10f)
-			{
-				Debug.LogError("new hex for hooked enemy safety net");
-				// safety net
-				break;
-			}
-			Hex next;
-			Ray ray = new Ray(traverse.transform.position, playerHex.transform.position - traverse.transform.position);
-			RaycastHit2D[] hits = Physics2D.CircleCastAll(ray.origin, 0.25f, ray.direction, 0.5f, 1 << 9);
-			Hex nextCandidate = GetSuitableHexForCreatureFromHits(hits, traverse);
-			if (nextCandidate != null)
-			{
-				next = nextCandidate;
-				if (next.isOccupiedByPlayer)
-				{
-					break;
-				}
-				else
-				{
-					traverse = next;
-				}
-			}
-			else
-			{
-				break;
-			}
-		}
-
-		return traverse;
-	}
-
-	Hex GetSuitableHexForCreatureFromHits(RaycastHit2D[] hits, Hex baseHex)
-	{
-		for (int i = 0; i < hits.Length; i++)
-		{
-			Hex candidate = hits[i].collider.GetComponent<Hex>();
-			if (candidate != baseHex && candidate.enemy == null)
-			{
-				return candidate;
-			}
-		}
-
-		return null;
-	}
-
-    public void MarkEnemyForDeath(Enemy enemy)
-    {
-        EnemiesMarkedForDeath.Add(enemy);
-    }
 
     public void OnPlayAgainClicked()
     {
@@ -699,7 +519,7 @@ public class GameController : MonoBehaviour
 
     protected virtual void EndTurn(bool forced = false)
     {
-		if (!forced && GetUnansweredEnemyCount() > 0 && showUnansweredEnemiesPanel)
+		if (!forced && EnemyManager.instance.GetUnansweredEnemyCount() > 0 && showUnansweredEnemiesPanel)
 		{
 			unansweredEnemiesPanel.SetActive(true);
 			TurnProgressButton.interactable = false;
@@ -723,72 +543,9 @@ public class GameController : MonoBehaviour
         StartCoroutine(ProcessCombat());
     }
 
-    protected virtual int KillMarkedEnemies(out bool willSendNewWave)
-    {
-		willSendNewWave = false;
-		int killedEnemyCount = EnemiesMarkedForDeath.Count;
-        while (EnemiesMarkedForDeath.Count > 0)
-        {
-            Enemy temp = EnemiesMarkedForDeath[0];
-            Enemies.Remove(temp);
-            EnemiesMarkedForDeath.Remove(temp);
-            Instantiate(BloodEffectPrefab, temp.transform.position, Quaternion.identity);
-			GameObject splatter = Instantiate(splatterPrefabs[Random.Range(0, splatterPrefabs.Length)], temp.currentHex.transform.position, Quaternion.identity);
-			splatter.transform.SetParent(loadedLevel.transform);
-			temp.currentHex.enemy = null;
-            Destroy(temp.gameObject);
-
-			killsUntilNextItem--;
-			if (killsUntilNextItem == 0)
-			{
-				pendingLootTurn = true;
-				killsUntilNextItem = killsRequiredForNewItem;
-				Player.instance.ResetInjuries();
-			}
-        }
-
-		turnCount--;
-        if (Enemies.Count == 0 || turnCount == 0)
-        {
-			if (currentWave % 2 == 0)
-			{
-				lootPanel.IncreaseItemQuality();
-			}
-			turnCount = turnLimitForNewWave;
-			UpdateTurnCountText();
-			if (currentWave == waveLimitForLevel && isLastLevel)
-			{
-				print("now entering endless waves");
-			}
-			if (currentWave == waveLimitForLevel && !isLastLevel)
-			{
-				if (Enemies.Count == 0)
-				{
-					loadLevelAtTurnEnd = true;
-				}
-				else
-				{
-					pendingNewLevel = true;
-				}
-			}
-
-			if (!pendingNewLevel && !loadLevelAtTurnEnd)
-			{
-				willSendNewWave = true;
-				WaveManager.instance.SendNewWave();
-				currentWave++;
-			}
-        }
-
-		return killedEnemyCount;
-    }
-
     void ResetClashes()
     {
-		for (int i = 0; i < Enemies.Count; i++)
-		{
-			Enemies[i].ResetEnemy();
-		}
+		EnemyManager.instance.ResetEnemies();
 		Clashes.Clear();
     }
 
@@ -796,12 +553,7 @@ public class GameController : MonoBehaviour
     {
         CurrentTurnState = TurnState.EnemyAction;
 		UpdateTurnText();
-
-		for (int i = 0; i < Enemies.Count; i++)
-		{
-			Enemies[i].PickAction();
-		}
-
+		EnemyManager.instance.PickActionForEnemies();
 		ProgressTurn();
     }
 
@@ -1254,15 +1006,16 @@ public class GameController : MonoBehaviour
 		}
 		else if (skill == Skill.Sidestep || skill == Skill.Wrestle)
 		{
-			return Enemies;
+			return EnemyManager.instance.Enemies;
 		}
 		else if (skill == Skill.LightningReflexes)
 		{
-			for (int i = 0; i < Enemies.Count; i++)
+			for (int i = 0; i < EnemyManager.instance.Enemies.Count; i++)
 			{
-				if (Enemies[i].CurrentAction == Skill.ShootArrow)
+				Enemy enemy = EnemyManager.instance.Enemies[i];
+				if (enemy.CurrentAction == Skill.ShootArrow)
 				{
-					answeredEnemies.Add(Enemies[i]);
+					answeredEnemies.Add(enemy);
 				}
 			}
 		}
@@ -1331,13 +1084,13 @@ public class GameController : MonoBehaviour
 
 	public void OnItemClicked(Item item)
 	{
-		lootPanel.OnItemPicked(item);
+		LootPanel.OnItemPicked(item);
 		if (buildingCharacter)
 		{
 			characterBuild++;
 			if (characterBuild == 3)
 			{
-				lootPanel.gameObject.SetActive(false);
+				LootPanel.gameObject.SetActive(false);
 				TurnProgressButton.interactable = true;
 				Inventory.instance.SetInventoryActive(false);
 				buildingCharacter = false;
@@ -1345,13 +1098,13 @@ public class GameController : MonoBehaviour
 			}
 			else
 			{
-				lootPanel.Fill(2);
+				LootPanel.Fill(2);
 			}
 		}
 		else
 		{
 			TurnProgressButton.interactable = true;
-			lootPanel.gameObject.SetActive(false);
+			LootPanel.gameObject.SetActive(false);
 			ProgressTurn();
 		}
 	}

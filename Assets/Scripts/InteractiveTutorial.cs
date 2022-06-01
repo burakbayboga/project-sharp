@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class InteractiveTutorial : GameController
 {
-
 	public Text playerMoveText;
 	public Text enemiesText;
 	public Text answerText;
@@ -28,7 +27,6 @@ public class InteractiveTutorial : GameController
 	public GameObject readyToPlayPanel;
 	public GameObject losPanel;
 
-
 	bool seenEnemies;
 	bool seenAnswer3;
 	bool seenAnswer4;
@@ -43,9 +41,7 @@ public class InteractiveTutorial : GameController
 
 	public override void Start()
 	{
-		waveLimitForLevel = 0;
 		Skill.InitSkills();
-		lootPanel.Init();
 		
 		StartCoroutine(LoadNextLevel(true));
 		playerMoveText.color = Color.green;
@@ -173,16 +169,14 @@ public class InteractiveTutorial : GameController
 	{
 		if (!allowInjury)
 		{
-			for (int i = 0; i < Enemies.Count; i++)
+			if (EnemyManager.instance.GetUnansweredEnemyCount() > 0)
 			{
-				if (Enemies[i].CurrentAction != null && Enemies[i].CurrentPlayerReaction == null)
-				{
-					noAnswerPanel.SetActive(true);
-					isTutorialPanelActive = true;
-					return;
-				}
+				noAnswerPanel.SetActive(true);
+				isTutorialPanelActive = true;
+				return;
 			}
 		}
+
 		Player.instance.currentHex.RevertAdjacentHighlights();
 		unansweredEnemyText.gameObject.SetActive(false);
 		TurnProgressButton.interactable = false;
@@ -339,25 +333,6 @@ public class InteractiveTutorial : GameController
 		}
 	}
 
-	protected override int KillMarkedEnemies(out bool willSendNewWave)
-	{
-		willSendNewWave = false;
-		if (EnemiesMarkedForDeath.Count > 0 && isLastLevel)
-		{
-			Instantiate(BloodEffectPrefab, Enemies[0].transform.position, Quaternion.identity);
-			GameObject splatter = Instantiate(splatterPrefabs[Random.Range(0, splatterPrefabs.Length)], Enemies[0].currentHex.transform.position, Quaternion.identity);
-			splatter.transform.SetParent(loadedLevel.transform);
-			Destroy(Enemies[0].gameObject);
-			idleEnemyPanel.SetActive(true);
-			isTutorialPanelActive = true;
-			return 1;
-		}
-		else
-		{
-			return base.KillMarkedEnemies(out willSendNewWave);
-		}
-	}
-
 	protected override IEnumerator LoadNextLevel(bool isFirstLevel = false)
 	{
 		yield return StartCoroutine(base.LoadNextLevel(isFirstLevel));
@@ -420,6 +395,6 @@ public class InteractiveTutorial : GameController
 		}
 	}
 
-	protected override void UpdateTurnCountText(){  }
+	public override void UpdateTurnCountText(){  }
 
 }

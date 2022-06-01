@@ -29,7 +29,7 @@ public class WaveManager : MonoBehaviour
 			hexes.Remove(spawnHex);
         }
 
-		GameController.instance.RegisterNewEnemies(newEnemies);
+		EnemyManager.instance.RegisterNewEnemies(newEnemies);
     }
 
 	int GetEnemyCount()
