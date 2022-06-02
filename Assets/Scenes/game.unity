@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c69f2c501eba14cbcbf4a936de3e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsIngameInputActive: 0
+  clickingButton: 0
 --- !u!4 &401819477
 Transform:
   m_ObjectHideFlags: 0
@@ -1078,6 +1078,7 @@ MonoBehaviour:
   tutorialCanvas: {fileID: 893403050}
   isHowToPlayActive: 0
   isTutorialPanelActive: 0
+  isIngameInputActive: 0
   SidestepSkillButton: {fileID: 904473945}
   isSkewerUnlocked: 0
   isBlockArrowUnlocked: 0
@@ -1090,7 +1091,7 @@ MonoBehaviour:
   TurnProgressButton: {fileID: 1961063634}
   unansweredEnemyText: {fileID: 2091764979}
   turnCountText: {fileID: 1146828946}
-  turnLimitForNewWave: 8
+  turnLimitForNewWave: 6
   waveLimitForLevel: 2
   killsRequiredForNewItem: 4
   DeathPanel: {fileID: 1020101577}
