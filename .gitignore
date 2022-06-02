@@ -11,6 +11,7 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 Logs/
+UserSettings/
 
 *.swp
 
