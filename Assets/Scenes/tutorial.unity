@@ -180,10 +180,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The little blue icon on the bottom right of enemies shows your current
-    answer. Looks like this <sprite=1 color=#2400FFFF> or <sprite="colored_transparent"
-    index=1 color=#2400FFFF>.
+  m_text: 'The little blue icon on the bottom right of enemies shows that the enemy
+    has been answered with a skill. Looks like this <sprite=1 color=#2400FFFF> or
+    <sprite="colored_transparent" index=1 color=#2400FFFF>.
 
+
+    You can answer
+    each enemy only once per turn.
 
 '
   m_isRightToLeft: 0
@@ -2015,7 +2018,6 @@ MonoBehaviour:
   ShoveSkillButton: {fileID: 0}
   HeartshotSkillButton: {fileID: 0}
   LightningReflexesSkillButton: {fileID: 0}
-  ResetSkillButton: {fileID: 1871224079}
   ChargeSkillButton: {fileID: 0}
 --- !u!114 &96817918 stripped
 MonoBehaviour:
@@ -2395,8 +2397,8 @@ MonoBehaviour:
     an enemy exposes enough weakness, it becomes vulnerable (<sprite=2>).
 
 
-    When
-    you answer all the enemies, pass the turn (<sprite=6>) and let''s see action.'
+    Now
+    that you have answered the enemy, you can pass the turn (<sprite=6>).'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3353,9 +3355,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Now click on all attacking enemies to choose a skill and "answer" them.
-
-'
+  m_text: Now click on the enemy to choose a skill and "answer" them.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3431,85 +3431,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495993431}
-  m_CullTransparentMesh: 1
---- !u!1 &533331348
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 533331349}
-  - component: {fileID: 533331351}
-  - component: {fileID: 533331350}
-  m_Layer: 5
-  m_Name: clash
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &533331349
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533331348}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1226396649}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1050, y: 43.23}
-  m_SizeDelta: {x: 185.4963, y: 116.0496}
-  m_Pivot: {x: 0, y: 0}
---- !u!114 &533331350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533331348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 116
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Clash
---- !u!222 &533331351
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533331348}
   m_CullTransparentMesh: 1
 --- !u!1 &567294790
 GameObject:
@@ -3792,7 +3713,11 @@ MonoBehaviour:
 
     You
     can also use Kiling Blow on enemies that are not vulnerable, but it costs a lot
-    more.'
+    more.
+
+
+    Killed enemies don''t disappear instantly, they die when you pass
+    the turn.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4262,7 +4187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c69f2c501eba14cbcbf4a936de3e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsIngameInputActive: 0
+  clickingButton: 0
 --- !u!4 &775086478
 Transform:
   m_ObjectHideFlags: 0
@@ -5638,82 +5563,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   m_MaxRayIntersections: 1
---- !u!1 &1053231027
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1053231028}
-  - component: {fileID: 1053231030}
-  - component: {fileID: 1053231029}
-  m_Layer: 5
-  m_Name: arrow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1053231028
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1053231027}
-  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1226396649}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 150}
-  m_SizeDelta: {x: 77.6909, y: 80.8778}
-  m_Pivot: {x: 0, y: 0}
---- !u!114 &1053231029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1053231027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: -6456763422663751450, guid: 9f00a6657a2ba044f92d97081b113e02,
-    type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1053231030
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1053231027}
-  m_CullTransparentMesh: 1
 --- !u!1 &1065438690 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6011617532516933552, guid: f25ae309c7e8a97428091c48a05d2aed,
@@ -6193,10 +6042,8 @@ RectTransform:
   - {fileID: 479910171}
   - {fileID: 803362697}
   - {fileID: 2057760898}
-  - {fileID: 533331349}
   - {fileID: 1500926166}
   - {fileID: 1410679238}
-  - {fileID: 1053231028}
   m_Father: {fileID: 1867277516}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6339,9 +6186,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "You can also move a second time during your answer turn using the Sidestep
-    (<sprite=\"uipack_rpg_sheet\" index=2>) skill, but it has a cost. \n\nSkills
-    that change your position are activated instantly, without passing the turn.\n"
+  m_text: 'You can also move a second time during your answer turn using the Sidestep
+    (<sprite="uipack_rpg_sheet" index=2>) skill, but it has a cost and you can only
+    use it once per turn.
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6720,7 +6569,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1226396649}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6900,9 +6749,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Lastly, if you can catch an enemy while it''s idle (through repositioning
-    and clever use of skills), skills will cost less and expose more weakness of
-    the enemy.
+  m_text: 'Lastly, if you can catch an enemy while it''s <color=green>idle</color>
+    (by repositioning yourself and clever use of skills), skills will cost less and
+    expose more weakness of the enemy.
 
 '
   m_isRightToLeft: 0
@@ -7144,7 +6993,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1226396649}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8824,18 +8673,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1871224079 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2052883292218897752, guid: 66b39e6b3a1b18f46ab8e62afe4bb925,
-    type: 3}
-  m_PrefabInstance: {fileID: 90466179}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 028dcacdb65c2f34e988e5915e0914f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1875593119
 GameObject:
   m_ObjectHideFlags: 0
@@ -8956,6 +8793,7 @@ MonoBehaviour:
   tutorialCanvas: {fileID: 0}
   isHowToPlayActive: 0
   isTutorialPanelActive: 0
+  isIngameInputActive: 0
   SidestepSkillButton: {fileID: 695185662}
   isSkewerUnlocked: 0
   isBlockArrowUnlocked: 0
@@ -8980,7 +8818,6 @@ MonoBehaviour:
   playerMoveText: {fileID: 479910172}
   enemiesText: {fileID: 803362698}
   answerText: {fileID: 2057760899}
-  clashText: {fileID: 533331350}
   movePanel: {fileID: 1425225939}
   enemiesPanel: {fileID: 1599881204}
   answerPanel_1: {fileID: 461001839}

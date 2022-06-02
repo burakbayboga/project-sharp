@@ -263,7 +263,7 @@ public class Player : MonoBehaviour
 			else
 			{
 				CurrentResource = CurrentResource- skillCost;
-				GameController.instance.RegisterPlayerAction(skill, damage, skillCost);
+				GameController.instance.RegisterPlayerAction(skill, damage);
 				HandleResourceIcons();
 			}
         }

@@ -677,7 +677,7 @@ public class GameController : MonoBehaviour
 		}
     }
 
-    public virtual void RegisterPlayerAction(Skill reaction, int damage, Resource skillCost)
+    public virtual void RegisterPlayerAction(Skill reaction, int damage)
     {
 		List<Enemy> enemies = GetAnsweredEnemiesBySkill(reaction);
 

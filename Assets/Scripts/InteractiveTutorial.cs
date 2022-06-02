@@ -9,7 +9,6 @@ public class InteractiveTutorial : GameController
 	public Text playerMoveText;
 	public Text enemiesText;
 	public Text answerText;
-	public Text clashText;
 
 	public GameObject movePanel;
 	public GameObject enemiesPanel;
@@ -38,6 +37,9 @@ public class InteractiveTutorial : GameController
 	bool sidestepUsed;
 	bool seenEnemyHeal;
 	bool pendingEnemyHeal;
+
+	Skill registerPlayerAction_Skill;
+	int registerPlayerAction_Damage;
 
 	public override void Start()
 	{
@@ -89,12 +91,14 @@ public class InteractiveTutorial : GameController
 	{
 		answerPanel_4.SetActive(false);
 		isTutorialPanelActive = false;
+		base.RegisterPlayerAction(registerPlayerAction_Skill, registerPlayerAction_Damage);
 	}
 
 	public void OnNextClicked_AnswerPanel_5()
 	{
 		answerPanel_5.SetActive(false);
 		isTutorialPanelActive = false;
+		base.RegisterPlayerAction(registerPlayerAction_Skill, registerPlayerAction_Damage);
 	}
 
 	public void OnNextClicked_KillPanel()
@@ -148,20 +152,25 @@ public class InteractiveTutorial : GameController
 		isTutorialPanelActive = false;
 	}
 
-	public override void RegisterPlayerAction(Skill reaction, int damage, Resource skillCost)
+	public override void RegisterPlayerAction(Skill reaction, int damage)
 	{
-		base.RegisterPlayerAction(reaction, damage, skillCost);
+		registerPlayerAction_Skill = reaction;
+		registerPlayerAction_Damage = damage;
 		if (seenAnswer4 && !seenAnswer5)
 		{
 			seenAnswer5 = true;
 			answerPanel_5.SetActive(true);
 			isTutorialPanelActive = true;
 		}
-		if (!seenAnswer4)
+		else if (!seenAnswer4)
 		{
 			seenAnswer4 = true;
 			answerPanel_4.SetActive(true);
 			isTutorialPanelActive = true;
+		}
+		else
+		{
+			base.RegisterPlayerAction(reaction, damage);
 		}
 	}
 
@@ -188,9 +197,7 @@ public class InteractiveTutorial : GameController
         StartCoroutine(ProcessCombat());
 
 		answerText.color = Color.white;
-		clashText.color = Color.green;
 		SidestepSkillButton.gameObject.SetActive(false);
-
 	}
 
 	public override void OnEnemyClicked(Enemy enemy)
@@ -220,7 +227,7 @@ public class InteractiveTutorial : GameController
 
 			((SkillCanvasTutorial)SkillCanvas.instance).HandleSkillsT(isEnemyAdjacent, isEnemyVulnerable, isEnemyDefensive, isEnemyShootingArrow, isEnemyIdle, enemyActionType, sidestepUsed, isEnemyAnswered);
 
-			if (isEnemyVulnerable)
+			if (isEnemyVulnerable && !isEnemyAnswered)
 			{
 				if (!seenKillPanel)
 				{
@@ -243,7 +250,6 @@ public class InteractiveTutorial : GameController
 	{
 		base.EnterPlayerMoveTurn();
 		playerMoveText.color = Color.green;
-		clashText.color = Color.white;
 	}
 
 	public override void OnPlayerMove()

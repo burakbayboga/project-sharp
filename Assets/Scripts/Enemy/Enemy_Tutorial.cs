@@ -23,14 +23,7 @@ public class Enemy_Tutorial : EnemyType
 		}
 		else
 		{
-			if (Random.Range(0f, 1f) < 0.8f)
-			{
-				return SkillType.SwiftAttack;
-			}
-			else
-			{
-				return SkillType.HeavyAttack;
-			}
+			return SkillType.SwiftAttack;
 		}
 	}
 
