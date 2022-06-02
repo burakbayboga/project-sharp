@@ -2006,7 +2006,7 @@ MonoBehaviour:
   BlockSkillButton: {fileID: 90466181}
   CounterSkillButton: {fileID: 0}
   KillingBlowSkillButton: {fileID: 90466183}
-  DeflectArrowSkillButton: {fileID: 0}
+  DeflectArrowSkillButton: {fileID: 1100193227}
   SkewerSkillButton: {fileID: 0}
   BlockArrowSkillButton: {fileID: 0}
   WhirlwindSkillButton: {fileID: 0}
@@ -5932,6 +5932,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075667996}
   m_CullTransparentMesh: 1
+--- !u!114 &1100193227 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2052883292831322823, guid: 66b39e6b3a1b18f46ab8e62afe4bb925,
+    type: 3}
+  m_PrefabInstance: {fileID: 90466179}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 028dcacdb65c2f34e988e5915e0914f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1162448002
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkillCanvasTutorial : SkillCanvas
 {
 
-	public void HandleSkillsT(bool isEnemyAdjacent, bool isEnemyVulnerable, bool isEnemyDefensive, bool isEnemyShootingArrow, bool isEnemyIdle, SkillType enemyActionType)
+	public void HandleSkillsT(bool isEnemyAdjacent, bool isEnemyVulnerable, bool isEnemyDefensive, bool isEnemyShootingArrow, bool isEnemyIdle, SkillType enemyActionType, bool sidestepUsed)
 	{
 		List<SkillButton> availableSkills = new List<SkillButton>();
 		SkillButton availableKillingBlow = null;
@@ -29,6 +29,16 @@ public class SkillCanvasTutorial : SkillCanvas
 		else
 		{
 			BlockSkillButton.gameObject.SetActive(false);
+		}
+		if (isEnemyShootingArrow && sidestepUsed)
+		{
+			DeflectArrowSkillButton.gameObject.SetActive(true);
+			availableSkills.Add(DeflectArrowSkillButton);
+			HandleButtonIconsForSkill(Skill.DeflectArrow, enemyActionType, DeflectArrowSkillButton);
+		}
+		else
+		{
+			DeflectArrowSkillButton.gameObject.SetActive(false);
 		}
 		if (isEnemyVulnerable && isEnemyAdjacent)
 		{

@@ -218,7 +218,7 @@ public class InteractiveTutorial : GameController
 			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction == Skill.ShootArrow;
 			bool isEnemyIdle = CurrentEnemy.CurrentAction == null;
 
-			((SkillCanvasTutorial)SkillCanvas.instance).HandleSkillsT(isEnemyAdjacent, isEnemyVulnerable, isEnemyDefensive, isEnemyShootingArrow, isEnemyIdle, enemyActionType);
+			((SkillCanvasTutorial)SkillCanvas.instance).HandleSkillsT(isEnemyAdjacent, isEnemyVulnerable, isEnemyDefensive, isEnemyShootingArrow, isEnemyIdle, enemyActionType, sidestepUsed);
 
 			if (isEnemyVulnerable)
 			{
@@ -341,6 +341,7 @@ public class InteractiveTutorial : GameController
 			enemyHealPanel.SetActive(true);
 			isTutorialPanelActive = true;
 			seenEnemyHeal = true;
+			allowInjury = false;
 		}
 
 		if (sidestepUnlocked)
