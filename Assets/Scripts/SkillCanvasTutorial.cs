@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkillCanvasTutorial : SkillCanvas
 {
 
-	public void HandleSkillsT(bool isEnemyAdjacent, bool isEnemyVulnerable, bool isEnemyDefensive, bool isEnemyShootingArrow, bool isEnemyIdle, SkillType enemyActionType, bool sidestepUsed, bool isEnemyAnswered)
+	public void HandleSkillsT(bool isEnemyAdjacent, bool isEnemyVulnerable, bool isEnemyDefensive, bool isEnemyShootingArrow, bool isEnemyIdle, SkillType enemyActionType, bool sidestepUsed, bool isEnemyAnswered, bool isChargeAllowed)
 	{
 		List<SkillButton> availableSkills = new List<SkillButton>();
 		SkillButton availableKillingBlow = null;
@@ -30,7 +30,7 @@ public class SkillCanvasTutorial : SkillCanvas
 		{
 			BlockSkillButton.gameObject.SetActive(false);
 		}
-		if (!isEnemyAnswered && isEnemyShootingArrow && sidestepUsed)
+		if (!isEnemyAnswered && isEnemyShootingArrow && sidestepUsed && !isChargeAllowed)
 		{
 			DeflectArrowSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(DeflectArrowSkillButton);
@@ -39,6 +39,16 @@ public class SkillCanvasTutorial : SkillCanvas
 		else
 		{
 			DeflectArrowSkillButton.gameObject.SetActive(false);
+		}
+		if (!isEnemyAdjacent && isChargeAllowed && !Player.instance.chargeUsed)
+		{
+			ChargeSkillButton.gameObject.SetActive(true);
+			availableSkills.Add(ChargeSkillButton);
+			HandleButtonIconsForSkill(Skill.Charge, enemyActionType, ChargeSkillButton);
+		}
+		else
+		{
+			ChargeSkillButton.gameObject.SetActive(false);
 		}
 		if (!isEnemyAnswered && isEnemyVulnerable && isEnemyAdjacent)
 		{

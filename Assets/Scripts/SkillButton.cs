@@ -56,7 +56,14 @@ public class SkillButton : MonoBehaviour
 		}
 		else
 		{
-			animator.Play("skill button base");
+			if (skillType == SkillType.Sidestep || skillType == SkillType.Wrestle || skillType == SkillType.Charge)
+			{
+				animator.Play("skill button base purple");
+			}
+			else
+			{
+				animator.Play("skill button base");
+			}
 		}
     }
 

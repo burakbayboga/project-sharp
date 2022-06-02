@@ -13,7 +13,7 @@ public class EnemyManagerTutorial : EnemyManager
 			GameObject splatter = Instantiate(splatterPrefabs[Random.Range(0, splatterPrefabs.Length)], Enemies[0].currentHex.transform.position, Quaternion.identity);
 			splatter.transform.SetParent(GameController.instance.loadedLevel.transform);
 			Destroy(Enemies[0].gameObject);
-			((InteractiveTutorial)GameController.instance).idleEnemyPanel.SetActive(true);
+			((InteractiveTutorial)GameController.instance).readyToPlayPanel.SetActive(true);
 			((InteractiveTutorial)GameController.instance).isTutorialPanelActive = true;
 			return 1;
 		}

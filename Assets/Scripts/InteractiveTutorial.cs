@@ -25,6 +25,7 @@ public class InteractiveTutorial : GameController
 	public GameObject idleEnemyPanel;
 	public GameObject readyToPlayPanel;
 	public GameObject losPanel;
+	public GameObject chargePanel;
 
 	bool seenEnemies;
 	bool seenAnswer3;
@@ -37,6 +38,8 @@ public class InteractiveTutorial : GameController
 	bool sidestepUsed;
 	bool seenEnemyHeal;
 	bool pendingEnemyHeal;
+	bool seenCharge;
+	bool seenHighDamage;
 
 	Skill registerPlayerAction_Skill;
 	int registerPlayerAction_Damage;
@@ -134,7 +137,8 @@ public class InteractiveTutorial : GameController
 	public void OnNextClicked_IdleEnemyPanel()
 	{
 		idleEnemyPanel.SetActive(false);
-		readyToPlayPanel.SetActive(true);
+		isTutorialPanelActive = false;
+		TurnProgressButton.interactable = true;
 	}
 
 	public void OnNextClicked_ReadyToPlayPanel()
@@ -150,6 +154,13 @@ public class InteractiveTutorial : GameController
 	{
 		losPanel.SetActive(false);
 		isTutorialPanelActive = false;
+	}
+
+	public void OnNextClicked_ChargePanel()
+	{
+		chargePanel.SetActive(false);
+		isTutorialPanelActive = false;
+		TurnProgressButton.interactable = false;
 	}
 
 	public override void RegisterPlayerAction(Skill reaction, int damage)
@@ -224,8 +235,9 @@ public class InteractiveTutorial : GameController
 			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction == Skill.ShootArrow;
 			bool isEnemyIdle = CurrentEnemy.CurrentAction == null;
 			bool isEnemyAnswered = CurrentEnemy.answeredThisTurn;
+			bool isChargeAllowed = currentLevel == 2;
 
-			((SkillCanvasTutorial)SkillCanvas.instance).HandleSkillsT(isEnemyAdjacent, isEnemyVulnerable, isEnemyDefensive, isEnemyShootingArrow, isEnemyIdle, enemyActionType, sidestepUsed, isEnemyAnswered);
+			((SkillCanvasTutorial)SkillCanvas.instance).HandleSkillsT(isEnemyAdjacent, isEnemyVulnerable, isEnemyDefensive, isEnemyShootingArrow, isEnemyIdle, enemyActionType, sidestepUsed, isEnemyAnswered, isChargeAllowed);
 
 			if (isEnemyVulnerable && !isEnemyAnswered)
 			{
@@ -242,6 +254,20 @@ public class InteractiveTutorial : GameController
 				answerPanel_3.SetActive(true);
 				isTutorialPanelActive = true;
 				seenAnswer3 = true;
+			}
+
+			if (seenCharge && currentLevel == 2 && !seenHighDamage)
+			{
+				idleEnemyPanel.SetActive(true);
+				isTutorialPanelActive = true;
+				seenHighDamage = true;
+			}
+
+			if (!seenCharge && currentLevel == 2)
+			{
+				chargePanel.SetActive(true);
+				isTutorialPanelActive = true;
+				seenCharge = true;
 			}
 		}
 	}

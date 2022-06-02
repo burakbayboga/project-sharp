@@ -192,6 +192,7 @@ public class GameController : MonoBehaviour
 		Player.instance.MovePlayer(hex);
 		EnemyManager.instance.CheckEnemyActionsValidity();
 		enemyBeingCharged.ForceCancelAction();
+		UpdateUnansweredEnemyText();
 		OnEmptyClick();
 	}
 
