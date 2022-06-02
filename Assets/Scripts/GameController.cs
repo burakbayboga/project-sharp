@@ -52,8 +52,6 @@ public class GameController : MonoBehaviour
 
     public GameObject DeathPanel;
 
-    List<Clash> Clashes = new List<Clash>();
-
     protected Enemy CurrentEnemy;
 
 	Enemy enemyBeingCharged;
@@ -133,8 +131,6 @@ public class GameController : MonoBehaviour
 				return "Enemy Action";
 			case TurnState.PlayerAnswer:
 				return "Player Answer";
-			case TurnState.Clash:
-				return "Clash";
 			case TurnState.Loot:
 				return "Loot";
 			default:
@@ -183,10 +179,6 @@ public class GameController : MonoBehaviour
 		else if (CurrentTurnState == TurnState.PlayerAnswer)
 		{
 			Player.instance.OnPlayerSidestep();
-			while (Clashes.Count > 0)
-			{
-				EraseClash(Clashes[0]);
-			}
 			isSidestepActive = false;
 			SidestepSkillButton.gameObject.SetActive(false);
 			EnemyManager.instance.CheckEnemyActionsValidity();		
@@ -196,11 +188,6 @@ public class GameController : MonoBehaviour
 
 	public void OnCharge()
 	{
-		while (Clashes.Count > 0)
-		{
-			EraseClash(Clashes[0]);
-		}
-
 		Hex hex = HexHelper.GetNewHexForChargingPlayer(CurrentEnemy.currentHex);
 		Player.instance.MovePlayer(hex);
 		EnemyManager.instance.CheckEnemyActionsValidity();
@@ -210,11 +197,6 @@ public class GameController : MonoBehaviour
 
 	public void OnWrestle()
 	{
-		while (Clashes.Count > 0)
-		{
-			EraseClash(Clashes[0]);
-		}
-
 		CurrentEnemy.currentHex.SetAffectedBySkill(false);
 		Hex playerHex = Player.instance.currentHex;
 		Player.instance.MovePlayer(CurrentEnemy.currentHex, false, true);
@@ -246,16 +228,6 @@ public class GameController : MonoBehaviour
 				break;
 			case TurnState.PlayerAnswer:
 				EndTurn();
-				break;
-			case TurnState.Clash:
-				if (pendingLootTurn)
-				{
-					EnterLootTurn();
-				}
-				else
-				{
-					CycleTurn();
-				}
 				break;
 			case TurnState.Loot:
 				CycleTurn();
@@ -342,23 +314,11 @@ public class GameController : MonoBehaviour
 		for (int i = 0; i < EnemyManager.instance.Enemies.Count; i++)
 		{
 			Enemy enemy = EnemyManager.instance.Enemies[i];
-			if (enemy.CurrentClash == null && (enemy.CurrentAction != null || enemy.CurrentPlayerReaction != null))
+			if (!enemy.answeredThisTurn && enemy.CurrentAction != null)
 			{
-				Clash newClash = new Clash(new List<Enemy>{ enemy }, null, new Resource());
-				enemy.CurrentClash = newClash;
-				Clashes.Insert(0, newClash);
+				Skill.HandleClash(enemy, null);
+				yield return StartCoroutine(HandleClashAnimations(new List<Enemy>{ enemy }, null));
 			}
-		}
-
-		for (int i = 0; i < Clashes.Count; i++)
-		{
-			Clash clash = Clashes[i];
-			for (int j = 0; j < clash.enemies.Count; j++)
-			{
-				Enemy enemy = clash.enemies[j];
-				Skill.HandleClash(enemy, clash.playerAnswer);
-			}
-			yield return StartCoroutine(HandleClashAnimations(clash));
 		}
 
         int killedEnemyCount = EnemyManager.instance.KillMarkedEnemies(out bool willSendNewWave, ref pendingLootTurn, ref killsUntilNextItem, ref pendingNewLevel, ref turnCount, ref currentWave, ref isLastLevel, ref loadLevelAtTurnEnd);
@@ -372,28 +332,35 @@ public class GameController : MonoBehaviour
 			UpdateTurnCountText();
 			int rechargeMultiplier = willSendNewWave ? (turnCount) : 1;
 			Player.instance.RechargeResources(rechargeStyleModifier, rechargeMultiplier);
-			ResetClashes();
+			EnemyManager.instance.ResetEnemies();
 			TurnProgressButton.interactable = true;
-			ProgressTurn();
+			if (pendingLootTurn)
+			{
+				EnterLootTurn();
+			}
+			else
+			{
+				CycleTurn();
+			}
 		}
     }
 
-	IEnumerator HandleClashAnimations(Clash clash)
+	IEnumerator HandleClashAnimations(List<Enemy> enemies, Skill playerAnswer)
 	{
 		isIngameInputActive = false;
 		TurnProgressButton.interactable = false;
-		if (clash.playerAnswer == Skill.Skewer
-				|| clash.playerAnswer == Skill.Whirlwind
-				|| clash.playerAnswer == Skill.LightningReflexes)
+		if (playerAnswer == Skill.Skewer
+				|| playerAnswer == Skill.Whirlwind
+				|| playerAnswer == Skill.LightningReflexes)
 		{
 			// TODO: maybe merge cases?
-			for (int i = 0; i < clash.enemies.Count; i++)
+			for (int i = 0; i < enemies.Count; i++)
 			{
-				Enemy enemy = clash.enemies[i];
+				Enemy enemy = enemies[i];
 				bool playerShouldFaceLeft = enemy.transform.position.x < Player.instance.transform.position.x;
 				Player.instance.SetRendererFlip(playerShouldFaceLeft);
 				enemy.SetRendererFlip(!playerShouldFaceLeft);
-				Player.instance.animator.Play(clash.playerAnswer.clip);
+				Player.instance.animator.Play(playerAnswer.clip);
 				if (enemy.CurrentAction != null)
 				{
 					enemy.animator.Play(enemy.CurrentAction.clip);
@@ -409,15 +376,14 @@ public class GameController : MonoBehaviour
 		}
 		else
 		{
-			Enemy enemy = clash.enemies[0];
+			Enemy enemy = enemies[0];
 			Skill enemyAction = enemy.CurrentAction;
-			Skill playerReaction = clash.playerAnswer;
 
 			bool playerShouldFaceLeft = enemy.transform.position.x < Player.instance.transform.position.x;
 			Player.instance.SetRendererFlip(playerShouldFaceLeft);
 			enemy.SetRendererFlip(!playerShouldFaceLeft);
 
-			if (enemy.IsDefensive() && playerReaction == null)
+			if (enemy.IsDefensive() && playerAnswer == null)
 			{
 				isIngameInputActive = true;
 				if (!IsGameOver)
@@ -427,9 +393,9 @@ public class GameController : MonoBehaviour
 				yield break;
 			}
 
-			if (playerReaction != null)
+			if (playerAnswer != null)
 			{
-				Player.instance.animator.Play(playerReaction.clip);
+				Player.instance.animator.Play(playerAnswer.clip);
 			}
 
 			if (enemyAction != null)
@@ -448,7 +414,7 @@ public class GameController : MonoBehaviour
 
 
 			// move creatures for clash
-			if (enemyAction != Skill.ShootArrow && playerReaction != Skill.Hook && playerReaction != Skill.Heartshot
+			if (enemyAction != Skill.ShootArrow && playerAnswer != Skill.Hook && playerAnswer != Skill.Heartshot
 					&& enemyAction != Skill.Skewer)
 			{
 				Vector3 basePos = (enemy.IsDefensive() || enemyAction == null) ? enemy.transform.position : Player.instance.transform.position;
@@ -465,11 +431,11 @@ public class GameController : MonoBehaviour
 			//actionCamera.SetActive(false);
 			//actionCanvas.SetActive(false);
 
-			if (playerReaction == Skill.Hook)
+			if (playerAnswer == Skill.Hook)
 			{
 				enemy.MoveToHex(HexHelper.GetNewHexForHookedEnemy(enemy), true);
 			}
-			else if (playerReaction == Skill.Shove)
+			else if (playerAnswer == Skill.Shove)
 			{
 				enemy.MoveToHex(HexHelper.GetNewHexForShovedEnemy(enemy), true);
 			}
@@ -541,15 +507,8 @@ public class GameController : MonoBehaviour
 		{
 			enemyBeingCharged.currentHex.SetAffectedBySkill(false);
 		}
-		CurrentTurnState = TurnState.Clash;
 		UpdateTurnText();
         StartCoroutine(ProcessCombat());
-    }
-
-    void ResetClashes()
-    {
-		EnemyManager.instance.ResetEnemies();
-		Clashes.Clear();
     }
 
     protected void EnterEnemyActionTurn()
@@ -605,20 +564,6 @@ public class GameController : MonoBehaviour
 			SkillCanvas.instance.HandleSkills(isEnemyShootingArrow, isEnemySkewering, isEnemyDefensive, isEnemyVulnerable, isAdjacentToEnemy, isEnemyIdle, hasLos, wrestleUsed, canSkewer, chargeUsed, gap, enemyActionType, isEnemyAnswered);
         }
     }
-
-	List<Clash> GetDistinctClashesFromEnemies(List<Enemy> enemies)
-	{
-		List<Clash> clashes = new List<Clash>();
-		for (int i = 0; i < enemies.Count; i++)
-		{
-			if (enemies[i].CurrentClash != null && !clashes.Contains(enemies[i].CurrentClash))
-			{
-				clashes.Add(enemies[i].CurrentClash);
-			}
-		}
-
-		return clashes;
-	}
 
     public void OnPlayerClicked()
     {
@@ -735,39 +680,20 @@ public class GameController : MonoBehaviour
     public virtual void RegisterPlayerAction(Skill reaction, int damage, Resource skillCost)
     {
 		List<Enemy> enemies = GetAnsweredEnemiesBySkill(reaction);
-		List<Clash> clashes = GetDistinctClashesFromEnemies(enemies);
-
-		for (int i = 0; i < clashes.Count; i++)
-		{
-			EraseClash(clashes[i]);
-		}
 
 		if (reaction != null)
 		{
-			Clash newClash = new Clash(enemies, reaction, skillCost);
 			for (int i = 0; i < enemies.Count; i++)
 			{
 				Skill.HandleClash(enemies[i], reaction);
 				enemies[i].SetPlayerReaction(reaction, damage);
-				enemies[i].CurrentClash = newClash;
 				enemies[i].answeredThisTurn = true;
 			}
-			StartCoroutine(HandleClashAnimations(newClash));
+			StartCoroutine(HandleClashAnimations(enemies, reaction));
 		}
 		UpdateUnansweredEnemyText();
 		OnEmptyClick();
     }
-
-	void EraseClash(Clash clash)
-	{
-		UpdateUnansweredEnemyText();
-		for (int i = 0; i < clash.enemies.Count; i++)
-		{
-			clash.enemies[i].SetPlayerReaction(null, 0);
-			clash.enemies[i].CurrentClash = null;
-		}
-		Clashes.Remove(clash);
-	}
 
 	List<Enemy> GetAnsweredEnemiesBySkill(Skill skill)
 	{
@@ -909,26 +835,11 @@ public class GameController : MonoBehaviour
 	}
 }
 
-public class Clash
-{
-	public Clash(List<Enemy> _enemies, Skill _playerAnswer, Resource _resourceSpent)
-	{
-		enemies = _enemies;
-		playerAnswer = _playerAnswer;
-		resourceSpent = _resourceSpent;
-	}
-
-	public List<Enemy> enemies;
-    public Skill playerAnswer;
-	public Resource resourceSpent;
-}
-
 public enum TurnState
 {
 	PlayerMovement,	// player moves, player resolve
 	EnemyMovement,	// enemies move, auto resolve
 	EnemyAction,	// enemy actions appear, auto resolve
 	PlayerAnswer,	// player answers, player resolve
-	Clash,			// handle clash, auto resolve
 	Loot			// new items. resolved when item is picked. this state is only reached after wave is cleared
 }

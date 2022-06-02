@@ -184,7 +184,6 @@ public class InteractiveTutorial : GameController
 		{
 			CurrentEnemy.currentHex.UnselectAsTarget();
 		}
-		CurrentTurnState = TurnState.Clash;
 		UpdateTurnText();
         StartCoroutine(ProcessCombat());
 

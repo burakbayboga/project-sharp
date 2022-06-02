@@ -317,7 +317,10 @@ public class Player : MonoBehaviour
 		currentHex = newHex;
 		newHex.isOccupiedByPlayer = true;
 
-		sidestepUsed = isSidestep;
+		if (isSidestep)
+		{
+			sidestepUsed = true;
+		}
 	}
 
 	bool IsAggressiveEnemyAdjacentToPlayer()

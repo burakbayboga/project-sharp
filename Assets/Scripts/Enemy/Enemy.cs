@@ -29,7 +29,6 @@ public class Enemy : MonoBehaviour
 
     public Skill CurrentAction;
 	public Skill CurrentPlayerReaction;
-	public Clash CurrentClash;
 	public bool answeredThisTurn;
 
     public int TotalDurability;
@@ -421,7 +420,6 @@ public class Enemy : MonoBehaviour
 		ResetIcons();
 		CurrentAction = null;
 		CurrentPlayerReaction = null;
-		CurrentClash = null;
 		answeredThisTurn = false;
 		SetTooltipText(true);
 	}
