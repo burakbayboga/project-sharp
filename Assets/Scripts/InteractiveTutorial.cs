@@ -287,7 +287,7 @@ public class InteractiveTutorial : GameController
 				if (!Player.instance.sidestepUsed)
 				{
 					SidestepSkillButton.gameObject.SetActive(true);
-					SkillCanvas.instance.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+					SkillCanvas.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 				}
 				else
 				{
@@ -347,7 +347,7 @@ public class InteractiveTutorial : GameController
 		if (sidestepUnlocked)
 		{
 			SidestepSkillButton.gameObject.SetActive(!Player.instance.sidestepUsed);
-			SkillCanvas.instance.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+			SkillCanvas.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 		}
 
 		if (pendingSidestep)
@@ -357,7 +357,7 @@ public class InteractiveTutorial : GameController
 			isTutorialPanelActive = true;
 			sidestepUnlocked = true;
 			SidestepSkillButton.gameObject.SetActive(!Player.instance.sidestepUsed);
-			SkillCanvas.instance.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+			SkillCanvas.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 			pendingEnemyHeal = true;
 		}
 	}

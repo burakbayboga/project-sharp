@@ -27,6 +27,7 @@ public class SkillCanvas : MonoBehaviour
 	void Awake()
 	{
 		instance = this;
+		gameObject.SetActive(false);
 	}
 
 	public void HandleSkills(bool isEnemyShootingArrow, bool isEnemySkewering, bool isEnemyDefensive, bool isEnemyVulnerable, bool isAdjacentToEnemy, bool isEnemyIdle, bool hasLos, bool wrestleUsed, bool canSkewer, bool chargeUsed, bool gap, SkillType enemyActionType)
@@ -224,7 +225,7 @@ public class SkillCanvas : MonoBehaviour
 		}
 	}
 
-	public void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton, bool setKillingBlowIndicator = false)
+	public static void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton, bool setKillingBlowIndicator = false)
 	{
 		Resource cost = skill.GetTotalCost(enemyActionType);
 		int damage = skill.GetDamageAgainstEnemyAction(Skill.GetSkillForType(enemyActionType));

@@ -327,7 +327,7 @@ public class GameController : MonoBehaviour
 	protected virtual void EnterPlayerAnswerTurn()
 	{
 		SidestepSkillButton.gameObject.SetActive(true);
-		SkillCanvas.instance.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+		SkillCanvas.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 		CurrentTurnState = TurnState.PlayerAnswer;
 		UpdateTurnText();
 
@@ -715,7 +715,7 @@ public class GameController : MonoBehaviour
 			if (!Player.instance.sidestepUsed)
 			{
 				SidestepSkillButton.gameObject.SetActive(true);
-				SkillCanvas.instance.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+				SkillCanvas.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
 			}
 			else
 			{
