@@ -45,9 +45,7 @@ public class SkillButton : MonoBehaviour
         Damage = damage;
         HandleDamageIcons();
 
-		Resource unspent = GameController.instance.GetResourceSpentOnCurrentEnemy(Skill.GetSkillForType(skillType))
-							+ Player.instance.CurrentResource;
-		canUse = Cost <= unspent;
+		canUse = Cost <= Player.instance.CurrentResource;
 		if (!canUse)
 		{
 			animator.Play("skill button not enough");

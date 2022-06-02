@@ -217,8 +217,9 @@ public class InteractiveTutorial : GameController
 			bool isEnemyDefensive = CurrentEnemy.IsDefensive();
 			bool isEnemyShootingArrow = CurrentEnemy.CurrentAction == Skill.ShootArrow;
 			bool isEnemyIdle = CurrentEnemy.CurrentAction == null;
+			bool isEnemyAnswered = CurrentEnemy.answeredThisTurn;
 
-			((SkillCanvasTutorial)SkillCanvas.instance).HandleSkillsT(isEnemyAdjacent, isEnemyVulnerable, isEnemyDefensive, isEnemyShootingArrow, isEnemyIdle, enemyActionType, sidestepUsed);
+			((SkillCanvasTutorial)SkillCanvas.instance).HandleSkillsT(isEnemyAdjacent, isEnemyVulnerable, isEnemyDefensive, isEnemyShootingArrow, isEnemyIdle, enemyActionType, sidestepUsed, isEnemyAnswered);
 
 			if (isEnemyVulnerable)
 			{

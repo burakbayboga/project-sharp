@@ -20,7 +20,6 @@ public class SkillCanvas : MonoBehaviour
 	public SkillButton ShoveSkillButton;
 	public SkillButton HeartshotSkillButton;
 	public SkillButton LightningReflexesSkillButton;
-	public SkillButton ResetSkillButton;
 	public SkillButton ChargeSkillButton;
 
 
@@ -30,12 +29,12 @@ public class SkillCanvas : MonoBehaviour
 		gameObject.SetActive(false);
 	}
 
-	public void HandleSkills(bool isEnemyShootingArrow, bool isEnemySkewering, bool isEnemyDefensive, bool isEnemyVulnerable, bool isAdjacentToEnemy, bool isEnemyIdle, bool hasLos, bool wrestleUsed, bool canSkewer, bool chargeUsed, bool gap, SkillType enemyActionType)
+	public void HandleSkills(bool isEnemyShootingArrow, bool isEnemySkewering, bool isEnemyDefensive, bool isEnemyVulnerable, bool isAdjacentToEnemy, bool isEnemyIdle, bool hasLos, bool wrestleUsed, bool canSkewer, bool chargeUsed, bool gap, SkillType enemyActionType, bool isEnemyAnswered)
 	{
 		List<SkillButton> availableSkills = new List<SkillButton>();
 		SkillButton availableKillingBlow = null;
 
-		if ((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering)
+		if (!isEnemyAnswered && ((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering))
 		{
 			BlockSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(BlockSkillButton);
@@ -45,7 +44,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			BlockSkillButton.gameObject.SetActive(false);
 		}
-		if ((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering)
+		if (!isEnemyAnswered && ((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering))
 		{
 			CounterSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(CounterSkillButton);
@@ -55,7 +54,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			CounterSkillButton.gameObject.SetActive(false);
 		}
-		if (!isEnemyVulnerable && isAdjacentToEnemy)
+		if (!isEnemyAnswered && !isEnemyVulnerable && isAdjacentToEnemy)
 		{
 			SwiftAttackSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(SwiftAttackSkillButton);
@@ -65,7 +64,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			SwiftAttackSkillButton.gameObject.SetActive(false);
 		}
-		if (!isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy)
+		if (!isEnemyAnswered && !isEnemyShootingArrow && !isEnemyVulnerable && isAdjacentToEnemy)
 		{
 			HeavyAttackSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(HeavyAttackSkillButton);
@@ -75,7 +74,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			HeavyAttackSkillButton.gameObject.SetActive(false);
 		}
-		if (GameController.instance.isSkewerUnlocked && canSkewer)
+		if (!isEnemyAnswered && GameController.instance.isSkewerUnlocked && canSkewer)
 		{
 			SkewerSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(SkewerSkillButton);
@@ -85,7 +84,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			SkewerSkillButton.gameObject.SetActive(false);
 		}
-		if (isEnemyShootingArrow)
+		if (!isEnemyAnswered && isEnemyShootingArrow)
 		{
 			DeflectArrowSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(DeflectArrowSkillButton);
@@ -95,7 +94,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			DeflectArrowSkillButton.gameObject.SetActive(false);
 		}
-		if (GameController.instance.isLightningReflexesUnlocked && isEnemyShootingArrow)
+		if (!isEnemyAnswered && GameController.instance.isLightningReflexesUnlocked && isEnemyShootingArrow)
 		{
 			LightningReflexesSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(LightningReflexesSkillButton);
@@ -105,7 +104,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			LightningReflexesSkillButton.gameObject.SetActive(false);
 		}
-		if (GameController.instance.isBlockArrowUnlocked && isEnemyShootingArrow)
+		if (!isEnemyAnswered && GameController.instance.isBlockArrowUnlocked && isEnemyShootingArrow)
 		{
 			BlockArrowSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(BlockArrowSkillButton);
@@ -115,7 +114,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			BlockArrowSkillButton.gameObject.SetActive(false);
 		}
-		if (GameController.instance.isWhirlwindUnlocked && isAdjacentToEnemy)
+		if (!isEnemyAnswered && GameController.instance.isWhirlwindUnlocked && isAdjacentToEnemy)
 		{
 			WhirlwindSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(WhirlwindSkillButton);
@@ -125,7 +124,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			WhirlwindSkillButton.gameObject.SetActive(false);
 		}
-		if (GameController.instance.isHookUnlocked && !isAdjacentToEnemy && hasLos)
+		if (!isEnemyAnswered && GameController.instance.isHookUnlocked && !isAdjacentToEnemy && hasLos)
 		{
 			HookSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(HookSkillButton);
@@ -134,6 +133,36 @@ public class SkillCanvas : MonoBehaviour
 		else
 		{
 			HookSkillButton.gameObject.SetActive(false);
+		}
+		if (!isEnemyAnswered && isAdjacentToEnemy)
+		{
+			ShoveSkillButton.gameObject.SetActive(true);
+			availableSkills.Add(ShoveSkillButton);
+			HandleButtonIconsForSkill(Skill.Shove, enemyActionType, ShoveSkillButton);
+		}
+		else
+		{
+			ShoveSkillButton.gameObject.SetActive(false);
+		}
+		if (!isEnemyAnswered && isAdjacentToEnemy)
+		{
+			KillingBlowSkillButton.gameObject.SetActive(true);
+			availableKillingBlow = KillingBlowSkillButton;
+			HandleButtonIconsForSkill(Skill.KillingBlow, enemyActionType, KillingBlowSkillButton, isEnemyVulnerable);
+		}
+		else
+		{
+			KillingBlowSkillButton.gameObject.SetActive(false);
+		}
+		if (!isEnemyAnswered && GameController.instance.isHeartshotUnlocked && !isAdjacentToEnemy && hasLos)
+		{
+			HeartshotSkillButton.gameObject.SetActive(true);
+			availableKillingBlow = HeartshotSkillButton;
+			HandleButtonIconsForSkill(Skill.Heartshot, enemyActionType, HeartshotSkillButton, isEnemyVulnerable);
+		}
+		else
+		{
+			HeartshotSkillButton.gameObject.SetActive(false);
 		}
 		if (GameController.instance.isWrestleUnlocked && isAdjacentToEnemy && !wrestleUsed)
 		{
@@ -144,36 +173,6 @@ public class SkillCanvas : MonoBehaviour
 		else
 		{
 			WrestleSkillButton.gameObject.SetActive(false);
-		}
-		if (isAdjacentToEnemy)
-		{
-			ShoveSkillButton.gameObject.SetActive(true);
-			availableSkills.Add(ShoveSkillButton);
-			HandleButtonIconsForSkill(Skill.Shove, enemyActionType, ShoveSkillButton);
-		}
-		else
-		{
-			ShoveSkillButton.gameObject.SetActive(false);
-		}
-		if (isAdjacentToEnemy)
-		{
-			KillingBlowSkillButton.gameObject.SetActive(true);
-			availableKillingBlow = KillingBlowSkillButton;
-			HandleButtonIconsForSkill(Skill.KillingBlow, enemyActionType, KillingBlowSkillButton, isEnemyVulnerable);
-		}
-		else
-		{
-			KillingBlowSkillButton.gameObject.SetActive(false);
-		}
-		if (GameController.instance.isHeartshotUnlocked && !isAdjacentToEnemy && hasLos)
-		{
-			HeartshotSkillButton.gameObject.SetActive(true);
-			availableKillingBlow = HeartshotSkillButton;
-			HandleButtonIconsForSkill(Skill.Heartshot, enemyActionType, HeartshotSkillButton, isEnemyVulnerable);
-		}
-		else
-		{
-			HeartshotSkillButton.gameObject.SetActive(false);
 		}
 		if (!isAdjacentToEnemy && GameController.instance.isChargeUnlocked && !chargeUsed && hasLos && !gap)
 		{
@@ -207,7 +206,6 @@ public class SkillCanvas : MonoBehaviour
 			//}
 			theta -= increment;
 		}
-		ResetSkillButton.SetPosition(new Vector3(Mathf.Cos(theta), Mathf.Sin(theta), 0f) * radius);
 		if (availableKillingBlow != null)
 		{
 			//float angle = 90f * Mathf.Deg2Rad + increment;

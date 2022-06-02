@@ -45,12 +45,7 @@ public class Hex : MonoBehaviour
 		if (collider != null)
 		{
 			collider.transform.position = transform.position + posOffset;
-			if (collider.CompareTag("Player"))
-			{
-				//collider.GetComponent<Player>().currentHex = this;
-				//isOccupiedByPlayer = true;
-			}
-			else if (collider.CompareTag("Enemy"))
+			if (collider.CompareTag("Enemy"))
 			{
 				enemy = collider.GetComponent<Enemy>();
 				enemy.currentHex = this;

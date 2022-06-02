@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
 
 	public bool isHowToPlayActive;
 	public bool isTutorialPanelActive;
+	public bool isIngameInputActive;
     
 	public SkillButton SidestepSkillButton;
 
@@ -79,6 +80,7 @@ public class GameController : MonoBehaviour
     {
         instance = this;
         IsGameOver = false;
+		isIngameInputActive = true;
     }
 
     public virtual void Start()
@@ -180,8 +182,7 @@ public class GameController : MonoBehaviour
 		}
 		else if (CurrentTurnState == TurnState.PlayerAnswer)
 		{
-			Resource resourceGivenBack = GetResourceSpentOnCurrentEnemy(Skill.Sidestep);
-			Player.instance.OnPlayerSidestep(resourceGivenBack);
+			Player.instance.OnPlayerSidestep();
 			while (Clashes.Count > 0)
 			{
 				EraseClash(Clashes[0]);
@@ -379,6 +380,8 @@ public class GameController : MonoBehaviour
 
 	IEnumerator HandleClashAnimations(Clash clash)
 	{
+		isIngameInputActive = false;
+		TurnProgressButton.interactable = false;
 		if (clash.playerAnswer == Skill.Skewer
 				|| clash.playerAnswer == Skill.Whirlwind
 				|| clash.playerAnswer == Skill.LightningReflexes)
@@ -398,6 +401,11 @@ public class GameController : MonoBehaviour
 			}
 
 			yield return new WaitForSeconds(1.5f);
+			isIngameInputActive = true;
+			if (!IsGameOver)
+			{
+				TurnProgressButton.interactable = true;
+			}
 		}
 		else
 		{
@@ -411,6 +419,11 @@ public class GameController : MonoBehaviour
 
 			if (enemy.IsDefensive() && playerReaction == null)
 			{
+				isIngameInputActive = true;
+				if (!IsGameOver)
+				{
+					TurnProgressButton.interactable = true;
+				}
 				yield break;
 			}
 
@@ -466,6 +479,12 @@ public class GameController : MonoBehaviour
 			}
 
 			Player.instance.transform.position = Player.instance.currentHex.transform.position + Hex.posOffset;
+
+			isIngameInputActive = true;
+			if (!IsGameOver)
+			{
+				TurnProgressButton.interactable = true;
+			}
 		}
 	}
 
@@ -579,25 +598,12 @@ public class GameController : MonoBehaviour
 			bool canSkewer = GetAnsweredEnemiesBySkill(Skill.Skewer).Contains(CurrentEnemy);
 			bool chargeUsed = Player.instance.chargeUsed;
 			bool gap = Player.instance.currentHex.HasGapBetweenHex(CurrentEnemy.currentHex);
+			bool isEnemyAnswered = CurrentEnemy.answeredThisTurn;
 
 			SkillType enemyActionType = isEnemyIdle ? SkillType.None : CurrentEnemy.CurrentAction.Type;
 
-			SkillCanvas.instance.HandleSkills(isEnemyShootingArrow, isEnemySkewering, isEnemyDefensive, isEnemyVulnerable, isAdjacentToEnemy, isEnemyIdle, hasLos, wrestleUsed, canSkewer, chargeUsed, gap, enemyActionType);
+			SkillCanvas.instance.HandleSkills(isEnemyShootingArrow, isEnemySkewering, isEnemyDefensive, isEnemyVulnerable, isAdjacentToEnemy, isEnemyIdle, hasLos, wrestleUsed, canSkewer, chargeUsed, gap, enemyActionType, isEnemyAnswered);
         }
-    }
-
-
-	// TODO: fix redundancy
-    public Resource GetResourceSpentOnCurrentEnemy(Skill newSkill)
-    {
-		List<Enemy> answeredEnemies = GetAnsweredEnemiesBySkill(newSkill);
-		List<Clash> affectedClashes = GetDistinctClashesFromEnemies(answeredEnemies);
-		Resource totalSpent = new Resource();
-		for (int i = 0; i < affectedClashes.Count; i++)
-		{
-			totalSpent += affectedClashes[i].resourceSpent;
-		}
-		return totalSpent;
     }
 
 	List<Clash> GetDistinctClashesFromEnemies(List<Enemy> enemies)
@@ -626,7 +632,7 @@ public class GameController : MonoBehaviour
 
     public void OnMouseButtonDownOnSkill()
     {
-        IngameInput.instance.IsIngameInputActive = false;
+        IngameInput.instance.clickingButton = true;
     }
 
 	// 無駄無駄無駄無駄無駄無駄無駄無駄無駄
@@ -741,14 +747,15 @@ public class GameController : MonoBehaviour
 			Clash newClash = new Clash(enemies, reaction, skillCost);
 			for (int i = 0; i < enemies.Count; i++)
 			{
+				Skill.HandleClash(enemies[i], reaction);
 				enemies[i].SetPlayerReaction(reaction, damage);
 				enemies[i].CurrentClash = newClash;
+				enemies[i].answeredThisTurn = true;
 			}
-			Clashes.Add(newClash);
-
+			StartCoroutine(HandleClashAnimations(newClash));
 		}
 		UpdateUnansweredEnemyText();
-		OnEnemyClicked(CurrentEnemy);
+		OnEmptyClick();
     }
 
 	void EraseClash(Clash clash)
@@ -774,7 +781,7 @@ public class GameController : MonoBehaviour
 				if (hits[i].collider.CompareTag("Enemy"))
 				{
 					Enemy enemy = hits[i].collider.GetComponent<Enemy>();
-					if (enemy.HasLosToPlayer(enemy.currentHex))
+					if (!enemy.answeredThisTurn && enemy.HasLosToPlayer(enemy.currentHex))
 					{
 						answeredEnemies.Add(enemy);
 					}
@@ -788,7 +795,11 @@ public class GameController : MonoBehaviour
 			{
 				if (colliders[i].CompareTag("Enemy"))
 				{
-					answeredEnemies.Add(colliders[i].GetComponent<Enemy>());
+					Enemy enemy = colliders[i].GetComponent<Enemy>();
+					if (!enemy.answeredThisTurn)
+					{
+						answeredEnemies.Add(enemy);
+					}
 				}
 			}
 		}
@@ -801,7 +812,7 @@ public class GameController : MonoBehaviour
 			for (int i = 0; i < EnemyManager.instance.Enemies.Count; i++)
 			{
 				Enemy enemy = EnemyManager.instance.Enemies[i];
-				if (enemy.CurrentAction == Skill.ShootArrow)
+				if (!enemy.answeredThisTurn && enemy.CurrentAction == Skill.ShootArrow)
 				{
 					answeredEnemies.Add(enemy);
 				}

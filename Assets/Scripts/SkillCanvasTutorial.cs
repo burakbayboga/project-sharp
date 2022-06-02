@@ -5,12 +5,12 @@ using UnityEngine;
 public class SkillCanvasTutorial : SkillCanvas
 {
 
-	public void HandleSkillsT(bool isEnemyAdjacent, bool isEnemyVulnerable, bool isEnemyDefensive, bool isEnemyShootingArrow, bool isEnemyIdle, SkillType enemyActionType, bool sidestepUsed)
+	public void HandleSkillsT(bool isEnemyAdjacent, bool isEnemyVulnerable, bool isEnemyDefensive, bool isEnemyShootingArrow, bool isEnemyIdle, SkillType enemyActionType, bool sidestepUsed, bool isEnemyAnswered)
 	{
 		List<SkillButton> availableSkills = new List<SkillButton>();
 		SkillButton availableKillingBlow = null;
 
-		if (isEnemyAdjacent && !isEnemyVulnerable)
+		if (!isEnemyAnswered && isEnemyAdjacent && !isEnemyVulnerable)
 		{
 			SwiftAttackSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(SwiftAttackSkillButton);
@@ -20,7 +20,7 @@ public class SkillCanvasTutorial : SkillCanvas
 		{
 			SwiftAttackSkillButton.gameObject.SetActive(false);
 		}
-		if (isEnemyAdjacent && !isEnemyDefensive && !isEnemyShootingArrow && !isEnemyIdle)
+		if (!isEnemyAnswered && isEnemyAdjacent && !isEnemyDefensive && !isEnemyShootingArrow && !isEnemyIdle)
 		{
 			BlockSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(BlockSkillButton);
@@ -30,7 +30,7 @@ public class SkillCanvasTutorial : SkillCanvas
 		{
 			BlockSkillButton.gameObject.SetActive(false);
 		}
-		if (isEnemyShootingArrow && sidestepUsed)
+		if (!isEnemyAnswered && isEnemyShootingArrow && sidestepUsed)
 		{
 			DeflectArrowSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(DeflectArrowSkillButton);
@@ -40,7 +40,7 @@ public class SkillCanvasTutorial : SkillCanvas
 		{
 			DeflectArrowSkillButton.gameObject.SetActive(false);
 		}
-		if (isEnemyVulnerable && isEnemyAdjacent)
+		if (!isEnemyAnswered && isEnemyVulnerable && isEnemyAdjacent)
 		{
 			KillingBlowSkillButton.gameObject.SetActive(true);
 			availableKillingBlow = KillingBlowSkillButton;

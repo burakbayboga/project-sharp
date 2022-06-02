@@ -7,7 +7,7 @@ public class IngameInput : MonoBehaviour
 
     public static IngameInput instance;
 
-    public bool IsIngameInputActive;
+    public bool clickingButton;
 
     Camera MainCamera;
     int creatureLayermask;
@@ -18,7 +18,7 @@ public class IngameInput : MonoBehaviour
         instance = this;
         creatureLayermask = 1 << 8;
 		hexLayermask = 1 << 9;
-        IsIngameInputActive = true;
+        clickingButton = false;
     }
 
     void Start()
@@ -28,9 +28,9 @@ public class IngameInput : MonoBehaviour
 
     void Update()
     {
-        if (IsIngameInputActive && !GameController.instance.IsGameOver && !GameController.instance.isHowToPlayActive && !GameController.instance.isTutorialPanelActive)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
+            if (GameController.instance.isIngameInputActive && !clickingButton && !GameController.instance.IsGameOver && !GameController.instance.isHowToPlayActive && !GameController.instance.isTutorialPanelActive)
             {
 				int layermask = 1 << 20;
 				if (GameController.instance.CurrentTurnState == TurnState.PlayerMovement)
@@ -75,7 +75,7 @@ public class IngameInput : MonoBehaviour
 
     void LateUpdate()
     {
-        IsIngameInputActive = true;
+        clickingButton = false;
     }
 
 

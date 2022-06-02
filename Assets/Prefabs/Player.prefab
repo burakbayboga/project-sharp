@@ -198,6 +198,7 @@ MonoBehaviour:
   currentHex: {fileID: 0}
   sidestepUsed: 0
   wrestleUsed: 0
+  chargeUsed: 0
 --- !u!212 &3505319535106679005
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1232,7 +1233,7 @@ PrefabInstance:
     - target: {fileID: 7764036721483226430, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8328278722927392579, guid: 36bad5039a92407458e9ed7d7c5a1ccf,
         type: 3}

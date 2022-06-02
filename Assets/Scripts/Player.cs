@@ -234,14 +234,12 @@ public class Player : MonoBehaviour
 
     public void OnSkillClicked(Resource skillCost, Skill skill, int damage)
     {
-		if (GameController.instance.isTutorialPanelActive)
+		if (GameController.instance.isTutorialPanelActive || !GameController.instance.isIngameInputActive)
 		{
 			return;
 		}
-		Resource previouslySpent = GameController.instance.GetResourceSpentOnCurrentEnemy(skill);
-		Resource unspentResource = CurrentResource + previouslySpent;
 
-        if (skillCost <= unspentResource)
+        if (skillCost <= CurrentResource)
         {
 			if (skill == Skill.Sidestep)
 			{
@@ -250,54 +248,54 @@ public class Player : MonoBehaviour
 			}
 			else if (skill == Skill.Wrestle)
 			{
-				CurrentResource = unspentResource - skillCost;
+				CurrentResource = CurrentResource - skillCost;
 				HandleResourceIcons();
 				GameController.instance.OnWrestle();
 				wrestleUsed = true;
 			}
 			else if (skill == Skill.Charge)
 			{
-				CurrentResource = unspentResource - skillCost;
+				CurrentResource = CurrentResource- skillCost;
 				HandleResourceIcons();
 				GameController.instance.OnCharge();
 				chargeUsed = true;
 			}
 			else
 			{
-				CurrentResource = unspentResource - skillCost;
+				CurrentResource = CurrentResource- skillCost;
 				GameController.instance.RegisterPlayerAction(skill, damage, skillCost);
 				HandleResourceIcons();
 			}
         }
 		else
 		{
-			StartCoroutine(WobbleResources(skillCost, unspentResource));
+			StartCoroutine(WobbleResources(skillCost));
 		}
     }
 
-	IEnumerator WobbleResources(Resource skillCost, Resource unspentResource)
+	IEnumerator WobbleResources(Resource skillCost)
 	{
 		WaitForSeconds delay = new WaitForSeconds(0.05f);
-		if (skillCost.Focus > unspentResource.Focus)
+		if (skillCost.Focus > CurrentResource.Focus)
 		{
 			resourceAnimators[0].Play(wobbleAnim);
 			yield return delay;
 		}
-		if (skillCost.Strength > unspentResource.Strength)
+		if (skillCost.Strength > CurrentResource.Strength)
 		{
 			resourceAnimators[1].Play(wobbleAnim);
 			yield return delay;
 		}
-		if (skillCost.Stability > unspentResource.Stability)
+		if (skillCost.Stability > CurrentResource.Stability)
 		{
 			resourceAnimators[2].Play(wobbleAnim);
 			yield return delay;
 		}
 	}
 
-	public void OnPlayerSidestep(Resource resourceGivenBack)
+	public void OnPlayerSidestep()
 	{
-		CurrentResource = CurrentResource + resourceGivenBack - GameController.instance.SidestepSkillButton.Cost;
+		CurrentResource = CurrentResource - GameController.instance.SidestepSkillButton.Cost;
 		if (pendingInjuryFromSidestep)
 		{
 			GetInjury();

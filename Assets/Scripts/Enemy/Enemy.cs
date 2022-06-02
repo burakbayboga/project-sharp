@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     public Skill CurrentAction;
 	public Skill CurrentPlayerReaction;
 	public Clash CurrentClash;
+	public bool answeredThisTurn;
 
     public int TotalDurability;
 	public Hex currentHex;
@@ -249,6 +250,10 @@ public class Enemy : MonoBehaviour
 	
 	public void ForceCancelAction()
 	{
+		if (answeredThisTurn)
+		{
+			return;
+		}
 		CurrentAction = null;
 		ResetIcons();
 		SetTooltipText();
@@ -256,6 +261,10 @@ public class Enemy : MonoBehaviour
 
 	public void CheckActionValidity()
 	{
+		if (answeredThisTurn)
+		{
+			return;
+		}
 		if (CurrentAction == Skill.ShootArrow)
 		{
 			if (!HasLosToPlayer(currentHex))
@@ -413,6 +422,7 @@ public class Enemy : MonoBehaviour
 		CurrentAction = null;
 		CurrentPlayerReaction = null;
 		CurrentClash = null;
+		answeredThisTurn = false;
 		SetTooltipText(true);
 	}
 
@@ -464,6 +474,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator WeaknessCue()
     {
+		yield break;
         while (true)
         {
             for (int i = CurrentWeaknessExposed; i < CurrentWeaknessExposed + CurrentWeaknessCue; i++)
