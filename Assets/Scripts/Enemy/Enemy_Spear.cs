@@ -12,7 +12,7 @@ public class Enemy_Spear : EnemyType
 
 	public override SkillType GetActionType()
 	{
-		if (enemy.HasLosToPlayer(enemy.currentHex) && Vector3.Distance(enemy.currentHex.transform.position, Player.instance.currentHex.transform.position) <= 2f)
+		if (enemy.HasLosToPlayer(enemy.currentHex) && Vector3.Distance(enemy.currentHex.transform.position, Player.instance.currentHex.transform.position) <= 2.2f)
 		{
 			if (enemy.currentHex.IsAdjacentToPlayer() && enemy.IsVulnerable)
 			{
