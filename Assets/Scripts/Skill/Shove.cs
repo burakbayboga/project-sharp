@@ -17,11 +17,6 @@ public class Shove : Skill
 		clip = Animator.StringToHash("counter");
 	}
 
-	public override int GetDamageAgainstEnemyAction(Skill enemyAction)
-	{
-		return 1;
-	}
-
 	public override Resource GetTotalCost(SkillType enemyAction)
 	{
 		Resource itemModifier = GetItemModifier();
