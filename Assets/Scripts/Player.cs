@@ -205,6 +205,7 @@ public class Player : MonoBehaviour
 			armorIndicator.SetActive(false);
 		}
 		sidestepUsed = false;
+		jumpUsed = false;
 		wrestleUsed = false;
 		chargeUsed = false;
 		pendingInjuryFromSidestep = false;
