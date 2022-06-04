@@ -225,7 +225,7 @@ MonoBehaviour:
     type: 3}
   highlightSprite: {fileID: -309694720024094932, guid: 77e0c2cbdedf1a74dbdc0faaeffe7b47,
     type: 3}
-  isOccupiedByEnemy: 0
   isOccupiedByPlayer: 0
   affectedBySkillEffect: {fileID: 889831572515536477}
+  enemy: {fileID: 0}
   isHighlighted: 0
