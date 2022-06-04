@@ -258,22 +258,14 @@ public class Player : MonoBehaviour
 			{
 				if (GameController.instance.isJumpActive)
 				{
-					List<Hex> highlighted = currentHex.GetAdjacentsWithRange(2);
-					for (int i = 0; i < highlighted.Count; i++)
-					{
-						highlighted[i].RevertHighlight();
-					}
+					currentHex.RevertHightlightValidAdjacentsWithRange(2);
 				}
 				currentHex.HighlightValidAdjacents();
 				GameController.instance.isSidestepActive = true;
 			}
 			else if (skill == Skill.Jump)
 			{
-				List<Hex> candidates = currentHex.GetAdjacentsWithRange(2);
-				for (int i = 0; i < candidates.Count; i++)
-				{
-					candidates[i].HighlightSelf();
-				}
+				currentHex.HighlightValidAdjacentsWithRange(2);
 				GameController.instance.isJumpActive = true;
 			}
 			else if (skill == Skill.Wrestle)
@@ -349,11 +341,7 @@ public class Player : MonoBehaviour
 
 		if (isJump)
 		{
-			List<Hex> highlighted = currentHex.GetAdjacentsWithRange(2);
-			for (int i = 0; i < highlighted.Count; i++)
-			{
-				highlighted[i].RevertHighlight();
-			}
+			currentHex.RevertHightlightValidAdjacentsWithRange(2);
 		}
 
 		currentHex.RevertAdjacentHighlights();

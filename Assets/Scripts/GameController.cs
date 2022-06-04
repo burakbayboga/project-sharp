@@ -722,11 +722,7 @@ public class GameController : MonoBehaviour
 			isSidestepActive = false;
 			if (isJumpActive)
 			{
-				List<Hex> highlighted = Player.instance.currentHex.GetAdjacentsWithRange(2);
-				for (int i = 0; i < highlighted.Count; i++)
-				{
-					highlighted[i].RevertHighlight();
-				}
+				Player.instance.currentHex.RevertHightlightValidAdjacentsWithRange(2);
 				isJumpActive = false;
 			}
 		}

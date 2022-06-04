@@ -77,6 +77,24 @@ public class Hex : MonoBehaviour
 		return hexes;
 	}
 
+	public void HighlightValidAdjacentsWithRange(int range)
+	{
+		List<Hex> hexes = GetAdjacentsWithRange(range);
+		for (int i = 0; i < hexes.Count; i++)
+		{
+			hexes[i].HighlightSelf();
+		}
+	}
+
+	public void RevertHightlightValidAdjacentsWithRange(int range)
+	{
+		List<Hex> hexes = GetAdjacentsWithRange(range);
+		for (int i = 0; i < hexes.Count; i++)
+		{
+			hexes[i].RevertHighlight();
+		}
+	}
+
 	public int GetAdjacentEnemyCount()
 	{
 		int enemyCount = 0;
