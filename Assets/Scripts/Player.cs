@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
 	int totalArmor = 0;
 	bool injuryBlockedThisTurn = false;
 	public bool sidestepUsed = false;
+	public bool jumpUsed = false;
 	public bool wrestleUsed = false;
 	public bool chargeUsed = false;
 	bool pendingInjuryFromSidestep = false;
@@ -255,8 +256,25 @@ public class Player : MonoBehaviour
         {
 			if (skill == Skill.Sidestep)
 			{
+				if (GameController.instance.isJumpActive)
+				{
+					List<Hex> highlighted = currentHex.GetAdjacentsWithRange(2);
+					for (int i = 0; i < highlighted.Count; i++)
+					{
+						highlighted[i].RevertHighlight();
+					}
+				}
 				currentHex.HighlightValidAdjacents();
 				GameController.instance.isSidestepActive = true;
+			}
+			else if (skill == Skill.Jump)
+			{
+				List<Hex> candidates = currentHex.GetAdjacentsWithRange(2);
+				for (int i = 0; i < candidates.Count; i++)
+				{
+					candidates[i].HighlightSelf();
+				}
+				GameController.instance.isJumpActive = true;
 			}
 			else if (skill == Skill.Wrestle)
 			{
@@ -316,11 +334,26 @@ public class Player : MonoBehaviour
 		HandleResourceIcons();
 	}
 
-	public void MovePlayer(Hex newHex, bool isSidestep = false, bool isWrestle = false)
+	public void OnPlayerJump()
+	{
+		CurrentResource = CurrentResource - GameController.instance.JumpSkillButton.Cost;
+		HandleResourceIcons();
+	}
+
+	public void MovePlayer(Hex newHex, bool isSidestep = false, bool isWrestle = false, bool isJump = false)
 	{
 		if (isSidestep && IsAggressiveEnemyAdjacentToPlayer())
 		{
 			//pendingInjuryFromSidestep = true;
+		}
+
+		if (isJump)
+		{
+			List<Hex> highlighted = currentHex.GetAdjacentsWithRange(2);
+			for (int i = 0; i < highlighted.Count; i++)
+			{
+				highlighted[i].RevertHighlight();
+			}
 		}
 
 		currentHex.RevertAdjacentHighlights();
@@ -332,6 +365,10 @@ public class Player : MonoBehaviour
 		if (isSidestep)
 		{
 			sidestepUsed = true;
+		}
+		else if (isJump)
+		{
+			jumpUsed = true;
 		}
 	}
 

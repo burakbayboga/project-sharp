@@ -80,6 +80,9 @@ TextureImporter:
   - first:
       213: 8328029711872801443
     second: item_trainingRemembrance_icon
+  - first:
+      213: 7175689106845610366
+    second: item_floatingCloak_icon
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -693,7 +696,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -701,6 +704,27 @@ TextureImporter:
       bones: []
       spriteID: 3aab31f26ea139370800000000000000
       internalID: 8328029711872801443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: item_floatingCloak_icon
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e713c28693b259360800000000000000
+      internalID: 7175689106845610366
       vertices: []
       indices: 
       edges: []

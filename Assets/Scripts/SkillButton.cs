@@ -56,7 +56,7 @@ public class SkillButton : MonoBehaviour
 		}
 		else
 		{
-			if (skillType == SkillType.Sidestep || skillType == SkillType.Wrestle || skillType == SkillType.Charge)
+			if (skillType == SkillType.Sidestep || skillType == SkillType.Wrestle || skillType == SkillType.Charge || skillType == SkillType.Jump)
 			{
 				animator.Play("skill button base purple");
 			}
@@ -136,7 +136,7 @@ public class SkillButton : MonoBehaviour
 		hoverText.SetActive(true);
 		transform.SetAsLastSibling();
 		resourcesParent.SetActive(true);
-		if (skillType != SkillType.Sidestep)
+		if (skillType != SkillType.Sidestep && skillType != SkillType.Jump)
 		{
 			GameController.instance.OnMouseButtonEnterOnSkill(skillType);
 		}
@@ -146,7 +146,7 @@ public class SkillButton : MonoBehaviour
 	{
 		hoverText.SetActive(false);
 		resourcesParent.SetActive(false);
-		if (skillType != SkillType.Sidestep)
+		if (skillType != SkillType.Sidestep && skillType != SkillType.Jump)
 		{
 			GameController.instance.OnMouseButtonExitOnSkill(skillType);
 		}

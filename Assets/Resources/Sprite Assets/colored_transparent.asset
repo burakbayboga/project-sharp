@@ -189,6 +189,12 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: charge_icon
     m_HashCode: 854929006
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 19
+    m_Scale: 1
+    m_Name: jump_icon
+    m_HashCode: -1661737738
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -490,6 +496,22 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: -257959019630588694, guid: 9f00a6657a2ba044f92d97081b113e02,
+      type: 3}
+  - m_Index: 19
+    m_Metrics:
+      m_Width: 12
+      m_Height: 14
+      m_HorizontalBearingX: 0.04
+      m_HorizontalBearingY: 10.47
+      m_HorizontalAdvance: 12
+    m_GlyphRect:
+      m_X: 104
+      m_Y: 137
+      m_Width: 12
+      m_Height: 14
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -8585612709797195923, guid: 9f00a6657a2ba044f92d97081b113e02,
       type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []

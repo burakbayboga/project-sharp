@@ -26,6 +26,7 @@ public class Skill
 	public static Heartshot Heartshot;
 	public static LightningReflexes LightningReflexes;
 	public static Charge Charge;
+	public static Jump Jump;
 
     //this is called for every enemy action. param:reaction refers to player action
     public static void HandleClash(Enemy enemy, Skill playerReaction)
@@ -111,6 +112,8 @@ public class Skill
 				return LightningReflexes;
 			case SkillType.Charge:
 				return Charge;
+			case SkillType.Jump:
+				return Jump;
 			default:
 				return null;
 		}
@@ -135,6 +138,7 @@ public class Skill
 		Heartshot = new Heartshot();
 		LightningReflexes = new LightningReflexes();
 		Charge = new Charge();
+		Jump = new Jump();
     }
 }
 
@@ -244,5 +248,6 @@ public enum SkillType
     None = -1,
 	Sidestep = -2,
 	Wrestle = -3,
-	Charge = -4
+	Charge = -4,
+	Jump = -5
 }

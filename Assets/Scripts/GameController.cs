@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour
 	public bool isIngameInputActive;
     
 	public SkillButton SidestepSkillButton;
+	public SkillButton JumpSkillButton;
 
 	// TODO: skill unlock system
 	public bool isSkewerUnlocked;
@@ -37,6 +38,7 @@ public class GameController : MonoBehaviour
 	public bool isHeartshotUnlocked;
 	public bool isLightningReflexesUnlocked;
 	public bool isChargeUnlocked;
+	public bool isJumpUnlocked;
 
 	bool showUnansweredEnemiesPanel;
 
@@ -62,6 +64,7 @@ public class GameController : MonoBehaviour
     public bool IsGameOver;
 
 	public bool isSidestepActive = false;
+	public bool isJumpActive = false;
 
 	protected int currentLevel = -1;
 
@@ -188,11 +191,22 @@ public class GameController : MonoBehaviour
 		}
 		else if (CurrentTurnState == TurnState.PlayerAnswer)
 		{
-			Player.instance.OnPlayerSidestep();
-			isSidestepActive = false;
-			SidestepSkillButton.gameObject.SetActive(false);
-			EnemyManager.instance.CheckEnemyActionsValidity();		
-			UpdateUnansweredEnemyText();
+			if (isSidestepActive)
+			{
+				Player.instance.OnPlayerSidestep();
+				isSidestepActive = false;
+				SidestepSkillButton.gameObject.SetActive(false);
+				EnemyManager.instance.CheckEnemyActionsValidity();		
+				UpdateUnansweredEnemyText();
+			}
+			else if (isJumpActive)
+			{
+				Player.instance.OnPlayerJump();
+				isJumpActive = false;
+				JumpSkillButton.gameObject.SetActive(false);
+				EnemyManager.instance.CheckEnemyActionsValidity();
+				UpdateUnansweredEnemyText();
+			}
 		}
 	}
 
@@ -312,6 +326,11 @@ public class GameController : MonoBehaviour
 	{
 		SidestepSkillButton.gameObject.SetActive(true);
 		SkillCanvas.HandleButtonIconsForSkill(Skill.Sidestep, SkillType.None, SidestepSkillButton);
+		if (isJumpUnlocked)
+		{
+			JumpSkillButton.gameObject.SetActive(true);
+			SkillCanvas.HandleButtonIconsForSkill(Skill.Jump, SkillType.None, JumpSkillButton);
+		}
 		CurrentTurnState = TurnState.PlayerAnswer;
 		UpdateTurnText();
 
@@ -508,6 +527,7 @@ public class GameController : MonoBehaviour
 		}
 		SkillsParent.SetActive(false);
 		SidestepSkillButton.gameObject.SetActive(false);
+		JumpSkillButton.gameObject.SetActive(false);
 		Player.instance.currentHex.RevertAdjacentHighlights();
 		unansweredEnemyText.gameObject.SetActive(false);
 		TurnProgressButton.interactable = false;
@@ -541,6 +561,7 @@ public class GameController : MonoBehaviour
         if (CurrentTurnState == TurnState.PlayerAnswer)
         {
 			SidestepSkillButton.gameObject.SetActive(false);
+			JumpSkillButton.gameObject.SetActive(false);
 			
 			Player.instance.currentHex.RevertAdjacentHighlights();
 
@@ -684,8 +705,30 @@ public class GameController : MonoBehaviour
 			{
 				SidestepSkillButton.gameObject.SetActive(false);
 			}
+
+			if (!Player.instance.jumpUsed)
+			{
+				if (isJumpUnlocked)
+				{
+					JumpSkillButton.gameObject.SetActive(true);
+					SkillCanvas.HandleButtonIconsForSkill(Skill.Jump, SkillType.None, JumpSkillButton);
+				}
+			}
+			else
+			{
+				JumpSkillButton.gameObject.SetActive(false);
+			}
 			Player.instance.currentHex.RevertAdjacentHighlights();
 			isSidestepActive = false;
+			if (isJumpActive)
+			{
+				List<Hex> highlighted = Player.instance.currentHex.GetAdjacentsWithRange(2);
+				for (int i = 0; i < highlighted.Count; i++)
+				{
+					highlighted[i].RevertHighlight();
+				}
+				isJumpActive = false;
+			}
 		}
     }
 
@@ -813,6 +856,9 @@ public class GameController : MonoBehaviour
 				break;
 			case SkillType.Charge:
 				isChargeUnlocked = true;
+				break;
+			case SkillType.Jump:
+				isJumpUnlocked = true;
 				break;
 			default:
 				break;

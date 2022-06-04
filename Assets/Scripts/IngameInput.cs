@@ -39,7 +39,7 @@ public class IngameInput : MonoBehaviour
 				}
 				else if (GameController.instance.CurrentTurnState == TurnState.PlayerAnswer)
 				{
-					if (GameController.instance.isSidestepActive)
+					if (GameController.instance.isSidestepActive || GameController.instance.isJumpActive)
 					{
 						layermask = hexLayermask;
 					}
