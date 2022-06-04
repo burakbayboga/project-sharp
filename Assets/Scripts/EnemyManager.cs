@@ -72,6 +72,10 @@ public class EnemyManager : MonoBehaviour
 				willSendNewWave = true;
 				WaveManager.instance.SendNewWave();
 				currentWave++;
+				if (currentWave == GameController.instance.waveLimitForLevel)
+				{
+					turnCount = -1;
+				}
 			}
         }
 

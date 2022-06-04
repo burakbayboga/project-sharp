@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
     public Button TurnProgressButton;
 	public Text unansweredEnemyText;
 	public Text turnCountText;
+	public GameObject turnCountTextHeader;
 	int turnCount;
 	public int turnLimitForNewWave;
 	public int waveLimitForLevel;
@@ -111,7 +112,16 @@ public class GameController : MonoBehaviour
 
 	public virtual void UpdateTurnCountText()
 	{
-		turnCountText.text = turnCount.ToString();
+		if (turnCount < 0)
+		{
+			turnCountText.text = "Last Wave";
+			turnCountTextHeader.SetActive(false);
+		}
+		else
+		{
+			turnCountText.text = turnCount.ToString();
+			turnCountTextHeader.SetActive(true);
+		}
 	}
 
 	public void UpdateTurnText()
@@ -332,7 +342,8 @@ public class GameController : MonoBehaviour
 		{
 			UpdateTurnCountText();
 			int rechargeMultiplier = willSendNewWave ? (turnCount) : 1;
-			Player.instance.RechargeResources(rechargeStyleModifier, rechargeMultiplier);
+			rechargeMultiplier = Mathf.Max(rechargeMultiplier, 1);
+			Player.instance.RechargeResources(rechargeStyleModifier, rechargeMultiplier, loadLevelAtTurnEnd);
 			EnemyManager.instance.ResetEnemies();
 			TurnProgressButton.interactable = true;
 			if (pendingLootTurn)

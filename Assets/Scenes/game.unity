@@ -578,6 +578,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7246398485413492341}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &969609385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4217933536927530565, guid: f25ae309c7e8a97428091c48a05d2aed,
+    type: 3}
+  m_PrefabInstance: {fileID: 4204724681710474413}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1020101577 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4204724682578335588, guid: f25ae309c7e8a97428091c48a05d2aed,
@@ -1091,6 +1097,7 @@ MonoBehaviour:
   TurnProgressButton: {fileID: 1961063634}
   unansweredEnemyText: {fileID: 2091764979}
   turnCountText: {fileID: 1146828946}
+  turnCountTextHeader: {fileID: 969609385}
   turnLimitForNewWave: 6
   waveLimitForLevel: 2
   killsRequiredForNewItem: 4
