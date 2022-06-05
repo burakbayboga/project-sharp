@@ -106,7 +106,8 @@ PrefabInstance:
     - target: {fileID: 1422551601010790565, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
       propertyPath: m_text
-      value: Grappler enemy. Prevents using purple skills until answered.
+      value: Grappler enemy. Prevents using <color=purple>purple</color> skills until
+        answered.
       objectReference: {fileID: 0}
     - target: {fileID: 1422551601010790565, guid: e63658f1a2aad2f4a9f1cc4644553b8e,
         type: 3}
