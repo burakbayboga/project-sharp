@@ -29,12 +29,12 @@ public class SkillCanvas : MonoBehaviour
 		gameObject.SetActive(false);
 	}
 
-	public void HandleSkills(bool isEnemyShootingArrow, bool isEnemySkewering, bool isEnemyDefensive, bool isEnemyVulnerable, bool isAdjacentToEnemy, bool isEnemyIdle, bool hasLos, bool wrestleUsed, bool canSkewer, bool chargeUsed, bool gap, SkillType enemyActionType, bool isEnemyAnswered)
+	public void HandleSkills(bool isEnemyShootingArrow, bool isEnemySkewering, bool isEnemyDefensive, bool isEnemyVulnerable, bool isAdjacentToEnemy, bool isEnemyIdle, bool hasLos, bool wrestleUsed, bool canSkewer, bool chargeUsed, bool gap, SkillType enemyActionType, bool isEnemyAnswered, bool isEnemyGrappling)
 	{
 		List<SkillButton> availableSkills = new List<SkillButton>();
 		SkillButton availableKillingBlow = null;
 
-		if (!isEnemyAnswered && ((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering))
+		if (!isEnemyAnswered && !isEnemyGrappling && ((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering))
 		{
 			BlockSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(BlockSkillButton);
@@ -44,7 +44,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			BlockSkillButton.gameObject.SetActive(false);
 		}
-		if (!isEnemyAnswered && ((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering))
+		if (!isEnemyAnswered && !isEnemyGrappling && ((!isEnemyShootingArrow && !isEnemyDefensive && isAdjacentToEnemy && !isEnemyIdle) || isEnemySkewering))
 		{
 			CounterSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(CounterSkillButton);
@@ -54,7 +54,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			CounterSkillButton.gameObject.SetActive(false);
 		}
-		if (!isEnemyAnswered && !isEnemyVulnerable && isAdjacentToEnemy)
+		if (!isEnemyAnswered && !isEnemyGrappling && !isEnemyVulnerable && isAdjacentToEnemy)
 		{
 			SwiftAttackSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(SwiftAttackSkillButton);
@@ -164,7 +164,7 @@ public class SkillCanvas : MonoBehaviour
 		{
 			HeartshotSkillButton.gameObject.SetActive(false);
 		}
-		if (GameController.instance.isWrestleUnlocked && isAdjacentToEnemy && !wrestleUsed)
+		if (GameController.instance.isWrestleUnlocked && isAdjacentToEnemy && !wrestleUsed && !isEnemyGrappling)
 		{
 			WrestleSkillButton.gameObject.SetActive(true);
 			availableSkills.Add(WrestleSkillButton);
@@ -225,8 +225,17 @@ public class SkillCanvas : MonoBehaviour
 
 	public static void HandleButtonIconsForSkill(Skill skill, SkillType enemyActionType, SkillButton skillButton, bool setKillingBlowIndicator = false)
 	{
+		List<Enemy> adjacentEnemies = Player.instance.currentHex.GetAdjacentEnemies();
+		bool beingGrappled = false;
+		for (int i = 0; i < adjacentEnemies.Count; i++)
+		{
+			if (adjacentEnemies[i].isGrappling)
+			{
+				beingGrappled = true;
+			}
+		}
 		Resource cost = skill.GetTotalCost(enemyActionType);
 		int damage = skill.GetDamageAgainstEnemyAction(Skill.GetSkillForType(enemyActionType));
-		skillButton.HandleCostAndDamage(cost, damage, setKillingBlowIndicator);
+		skillButton.HandleCostAndDamage(cost, damage, setKillingBlowIndicator, beingGrappled);
 	}
 }

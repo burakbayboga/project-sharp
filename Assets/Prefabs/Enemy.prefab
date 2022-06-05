@@ -292,6 +292,8 @@ MonoBehaviour:
   - {fileID: 8407236835019777618, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: -1741617980843149576, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: -3844054136759453950, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
+  - {fileID: -5659586525346223184, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
+  answeredThisTurn: 0
   TotalDurability: 5
   currentHex: {fileID: 0}
   CurrentWeaknessExposed: 0

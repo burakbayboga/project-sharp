@@ -246,14 +246,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void OnSkillClicked(Resource skillCost, Skill skill, int damage)
+    public void OnSkillClicked(SkillButton skillButton)
     {
 		if (GameController.instance.isTutorialPanelActive || !GameController.instance.isIngameInputActive)
 		{
 			return;
 		}
 
-        if (skillCost <= CurrentResource)
+		Skill skill = Skill.GetSkillForType(skillButton.skillType);
+		int damage = skillButton.Damage;
+		Resource skillCost = skillButton.Cost;
+
+        if (skillButton.canUse)
         {
 			if (skill == Skill.Sidestep)
 			{

@@ -195,6 +195,12 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: jump_icon
     m_HashCode: -1661737738
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 20
+    m_Scale: 1
+    m_Name: grapple_icon
+    m_HashCode: -579973495
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -512,6 +518,22 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: -8585612709797195923, guid: 9f00a6657a2ba044f92d97081b113e02,
+      type: 3}
+  - m_Index: 20
+    m_Metrics:
+      m_Width: 14
+      m_Height: 14
+      m_HorizontalBearingX: 0.04
+      m_HorizontalBearingY: 10.76
+      m_HorizontalAdvance: 14
+    m_GlyphRect:
+      m_X: 477
+      m_Y: 392
+      m_Width: 14
+      m_Height: 14
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -5659586525346223184, guid: 9f00a6657a2ba044f92d97081b113e02,
       type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []

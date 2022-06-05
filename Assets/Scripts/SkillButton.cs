@@ -37,7 +37,7 @@ public class SkillButton : MonoBehaviour
 		rectT.anchoredPosition = pos;
 	}
 
-    public void HandleCostAndDamage(Resource cost, int damage, bool setKillingBlowIndicator = false)
+    public void HandleCostAndDamage(Resource cost, int damage, bool setKillingBlowIndicator, bool beingGrappled)
     {
         Cost = cost;
         HandleCostIcons();
@@ -46,6 +46,11 @@ public class SkillButton : MonoBehaviour
         HandleDamageIcons();
 
 		canUse = Cost <= Player.instance.CurrentResource;
+		if (beingGrappled && (skillType == SkillType.Sidestep || skillType == SkillType.Wrestle || skillType == SkillType.Charge || skillType == SkillType.Jump))
+		{
+			canUse = false;
+		}
+
 		if (!canUse)
 		{
 			animator.Play("skill button not enough");
@@ -117,7 +122,7 @@ public class SkillButton : MonoBehaviour
 
 	public void OnSkillClicked()
 	{
-		Player.instance.OnSkillClicked(Cost, Skill.GetSkillForType(skillType), Damage);
+		Player.instance.OnSkillClicked(this);
 	}
 
 	public void OnMouseButtonDown()

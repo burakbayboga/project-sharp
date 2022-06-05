@@ -109,6 +109,20 @@ public class Hex : MonoBehaviour
 		return enemyCount;
 	}
 
+	public List<Enemy> GetAdjacentEnemies()
+	{
+		List<Enemy> enemies = new List<Enemy>();
+		for (int i = 0; i < adjacents.Length; i++)
+		{
+			if (adjacents[i].enemy != null)
+			{
+				enemies.Add(adjacents[i].enemy);
+			}
+		}
+
+		return enemies;
+	}
+
 	public void HandleInput()
 	{
 		if (isHighlighted)

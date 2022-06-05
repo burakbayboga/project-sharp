@@ -22,6 +22,8 @@ public class HeavyAttack : Skill
 		SkillType enemyActionType = enemyAction != null ? enemyAction.Type : SkillType.None;
 		switch (enemyActionType)
 		{
+			case SkillType.Grapple:
+				return 1;
 			case SkillType.HeavyAttack:
 			case SkillType.SwiftAttack:
 			case SkillType.Block:
@@ -84,6 +86,14 @@ public class HeavyAttack : Skill
 				};
 				break;
 			case SkillType.None:
+				modifier = new Resource
+				{
+					Focus = 0,
+					Strength = -1,
+					Stability = -1
+				};
+				break;
+			case SkillType.Grapple:
 				modifier = new Resource
 				{
 					Focus = 0,

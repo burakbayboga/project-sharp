@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     public Skill CurrentAction;
 	public Skill CurrentPlayerReaction;
 	public bool answeredThisTurn;
+	public bool isGrappling;
 
     public int TotalDurability;
 	public Hex currentHex;
@@ -339,6 +340,11 @@ public class Enemy : MonoBehaviour
 			stateText.text = "<color=red>Attacking</color>";
 			actionText.text = "Skewer (<sprite=\"colored_transparent\" index=10>)";
 		}
+		else if (CurrentAction == Skill.Grapple)
+		{
+			stateText.text = "<color=red>Attacking</color>";
+			actionText.text = "Grapple (<sprite=\"colored_transparent\" index=20>)";
+		}
 	}
 
     public void PickAction()
@@ -422,6 +428,7 @@ public class Enemy : MonoBehaviour
 		CurrentPlayerReaction = null;
 		answeredThisTurn = false;
 		SetTooltipText(true);
+		isGrappling = false;
 	}
 
     public void ResetIcons()
@@ -444,6 +451,7 @@ public class Enemy : MonoBehaviour
 	public void SetPlayerReaction(Skill reaction, int damage)
 	{
 		CurrentPlayerReaction = reaction;
+		isGrappling = false;
 		SkillType reactionType = reaction == null ? SkillType.None : reaction.Type;
 		SetReactionImage(reactionType);
 		StopPreviousWeaknessCue();

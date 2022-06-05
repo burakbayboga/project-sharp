@@ -591,10 +591,11 @@ public class GameController : MonoBehaviour
 			bool chargeUsed = Player.instance.chargeUsed;
 			bool gap = Player.instance.currentHex.HasGapBetweenHex(CurrentEnemy.currentHex);
 			bool isEnemyAnswered = CurrentEnemy.answeredThisTurn;
+			bool isEnemyGrappling = CurrentEnemy.CurrentAction == Skill.Grapple;
 
 			SkillType enemyActionType = isEnemyIdle ? SkillType.None : CurrentEnemy.CurrentAction.Type;
 
-			SkillCanvas.instance.HandleSkills(isEnemyShootingArrow, isEnemySkewering, isEnemyDefensive, isEnemyVulnerable, isAdjacentToEnemy, isEnemyIdle, hasLos, wrestleUsed, canSkewer, chargeUsed, gap, enemyActionType, isEnemyAnswered);
+			SkillCanvas.instance.HandleSkills(isEnemyShootingArrow, isEnemySkewering, isEnemyDefensive, isEnemyVulnerable, isAdjacentToEnemy, isEnemyIdle, hasLos, wrestleUsed, canSkewer, chargeUsed, gap, enemyActionType, isEnemyAnswered, isEnemyGrappling);
         }
     }
 
@@ -752,7 +753,7 @@ public class GameController : MonoBehaviour
 		if (skill == Skill.Skewer)
 		{
 			Ray ray = new Ray(Player.instance.currentHex.transform.position, CurrentEnemy.currentHex.transform.position - Player.instance.currentHex.transform.position);
-			RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, 2f, 1 << 8);
+			RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, 2.1f, 1 << 8);
 			for (int i = 0; i < hits.Length; i++)
 			{
 				if (hits[i].collider.CompareTag("Enemy"))
