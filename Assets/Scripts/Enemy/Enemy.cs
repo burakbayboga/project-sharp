@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     public Image[] ExposedWeaknessImages;
 
     public GameObject VulnerableIcon;
+	public GameObject bleedIcon;
 
     public Color ExposedWeaknessColor;
     public Color NotExposedWeaknessColor;
@@ -39,6 +40,8 @@ public class Enemy : MonoBehaviour
 
     int CurrentWeaknessCue;
     public bool IsVulnerable { get; private set; }
+
+	public int bleedRemaining = 0;
 
 	EnemyType enemyType;
 
@@ -349,6 +352,11 @@ public class Enemy : MonoBehaviour
 
     public void PickAction()
     {
+		if (bleedRemaining > 0)
+		{
+			return;
+		}
+
 		SkillType action = enemyType.GetActionType();
 		CurrentAction = Skill.GetSkillForType(action);
 		SetTooltipText();
@@ -423,6 +431,7 @@ public class Enemy : MonoBehaviour
 
 	public void ResetEnemy()
 	{
+		bleedRemaining = Mathf.Max(bleedRemaining - 1, 0);
 		ResetIcons();
 		CurrentAction = null;
 		CurrentPlayerReaction = null;
@@ -446,6 +455,11 @@ public class Enemy : MonoBehaviour
 		actionBg.SetActive(false);
 
         StopPreviousWeaknessCue();
+
+		if (bleedRemaining == 0)
+		{
+			bleedIcon.SetActive(false);
+		}
     }
 
 	public void SetPlayerReaction(Skill reaction, int damage)
@@ -459,6 +473,22 @@ public class Enemy : MonoBehaviour
 		if (damage > 0)
 		{
 			WeaknessCueCoroutine = StartCoroutine(WeaknessCue());
+		}
+
+		CheckBleed(reaction);
+	}
+
+	void CheckBleed(Skill playerReaction)
+	{
+		if (bleedRemaining > 0)
+		{
+			return;
+		}
+		if (Player.instance.hasSerratedWeapons && (playerReaction == Skill.SwiftAttack || playerReaction == Skill.HeavyAttack))
+		{
+			// 1 turn for current turn and 1 turn for the next turn
+			bleedRemaining = 2;
+			bleedIcon.SetActive(true);
 		}
 	}
 

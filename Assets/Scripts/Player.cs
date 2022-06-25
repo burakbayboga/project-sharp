@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
 	public GameObject armorInjuryIndicator;
 	public Text armorText;
 
+	public bool hasSerratedWeapons;
+
     public GameObject[] InjuryIcons;
 
     public Resource ResourceRecharge;
@@ -293,6 +295,14 @@ public class Player : MonoBehaviour
 				GameController.instance.RegisterPlayerAction(skill, damage);
 				HandleResourceIcons();
 			}
+
+			if (hasSerratedWeapons)
+			{
+				if (skill == Skill.SwiftAttack || skill == Skill.HeavyAttack)
+				{
+
+				}
+			}
         }
 		else
 		{
@@ -438,6 +448,10 @@ public class Player : MonoBehaviour
 			{
 				turtleStabilityButton.SetActive(true);
 			}
+		}
+		else if (newItem.itemType == ItemType.serratedWeapons)
+		{
+			hasSerratedWeapons = true;
 		}
 	}
 

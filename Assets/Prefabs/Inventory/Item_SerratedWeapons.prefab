@@ -158,7 +158,7 @@ PrefabInstance:
       propertyPath: m_text
       value: Heavy Attack (<sprite=0>) and Swift Attack (<sprite="uipack_rpg_sheet"
         index=1>) skills make the enemy Bleed (<sprite="colored_transparent" index=21>),
-        making them <color=green>Idle</color> for 1 turn.
+        making them <color=green>Idle</color> for 1 turn. Does not stack.
       objectReference: {fileID: 0}
     - target: {fileID: 9217063098243417666, guid: 7e5f0c2940a378c40afda1ec39897178,
         type: 3}

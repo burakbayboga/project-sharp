@@ -29,7 +29,6 @@ public class Skill
 	public static Jump Jump;
 	public static Grapple Grapple;
 
-    //this is called for every enemy action. param:reaction refers to player action
     public static void HandleClash(Enemy enemy, Skill playerReaction)
 	{
 		if (playerReaction == null)
@@ -53,7 +52,6 @@ public class Skill
 		}
 	}
 
-    // player calls this for every skill. param:action refers to enemy action
     public virtual Resource GetTotalCost(SkillType enemyAction) { return new Resource(); }
 
 	public virtual int GetDamageAgainstEnemyAction(Skill enemyAction) { return 0; }

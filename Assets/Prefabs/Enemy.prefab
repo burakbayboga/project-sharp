@@ -209,6 +209,82 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &563850871945191899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 917771792039792026}
+  - component: {fileID: 1094863909655583848}
+  - component: {fileID: 2601569084885607240}
+  m_Layer: 5
+  m_Name: bleed icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &917771792039792026
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563850871945191899}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1877870504712017161}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.4, y: 0.4}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!222 &1094863909655583848
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563850871945191899}
+  m_CullTransparentMesh: 0
+--- !u!114 &2601569084885607240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563850871945191899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -4933435063816259981, guid: 9f00a6657a2ba044f92d97081b113e02,
+    type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1216331406151000030
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,6 +351,7 @@ MonoBehaviour:
   - {fileID: 8248576323528561890}
   - {fileID: 969636240254392286}
   VulnerableIcon: {fileID: 8882683859090040488}
+  bleedIcon: {fileID: 563850871945191899}
   ExposedWeaknessColor: {r: 0.87058824, g: 0.15294118, b: 0.6509804, a: 1}
   NotExposedWeaknessColor: {r: 0.44313726, g: 0.44313726, b: 0.44313726, a: 1}
   skillSprites:
@@ -294,9 +371,11 @@ MonoBehaviour:
   - {fileID: -3844054136759453950, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   - {fileID: -5659586525346223184, guid: 9f00a6657a2ba044f92d97081b113e02, type: 3}
   answeredThisTurn: 0
+  isGrappling: 0
   TotalDurability: 5
   currentHex: {fileID: 0}
   CurrentWeaknessExposed: 0
+  bleedRemaining: 0
 --- !u!212 &3617285728854271623
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -552,6 +631,7 @@ RectTransform:
   m_Children:
   - {fileID: 7128824310592440061}
   - {fileID: 3665110160520295984}
+  - {fileID: 917771792039792026}
   - {fileID: 846689216311977762}
   - {fileID: 7083982407816440903}
   m_Father: {fileID: 1216331406151000018}
@@ -1671,7 +1751,7 @@ RectTransform:
   - {fileID: 5442889000978735139}
   - {fileID: 7802493333076904149}
   m_Father: {fileID: 1877870504712017161}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1734,7 +1814,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1877870504712017161}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
