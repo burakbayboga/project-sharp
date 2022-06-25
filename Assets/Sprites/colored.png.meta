@@ -83,6 +83,9 @@ TextureImporter:
   - first:
       213: 7175689106845610366
     second: item_floatingCloak_icon
+  - first:
+      213: -4812381688937245060
+    second: item_serratedWeapons_icon
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -717,7 +720,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -725,6 +728,27 @@ TextureImporter:
       bones: []
       spriteID: e713c28693b259360800000000000000
       internalID: 7175689106845610366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: item_serratedWeapons_icon
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c761d4bd95cf63db0800000000000000
+      internalID: -4812381688937245060
       vertices: []
       indices: 
       edges: []

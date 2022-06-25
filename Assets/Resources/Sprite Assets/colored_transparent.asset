@@ -201,6 +201,12 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: grapple_icon
     m_HashCode: -579973495
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 21
+    m_Scale: 1
+    m_Name: bleed_icon
+    m_HashCode: -1072533858
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -534,6 +540,22 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: -5659586525346223184, guid: 9f00a6657a2ba044f92d97081b113e02,
+      type: 3}
+  - m_Index: 21
+    m_Metrics:
+      m_Width: 14
+      m_Height: 12
+      m_HorizontalBearingX: -0.1
+      m_HorizontalBearingY: 9.04
+      m_HorizontalAdvance: 14
+    m_GlyphRect:
+      m_X: 426
+      m_Y: 155
+      m_Width: 14
+      m_Height: 12
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -4933435063816259981, guid: 9f00a6657a2ba044f92d97081b113e02,
       type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
