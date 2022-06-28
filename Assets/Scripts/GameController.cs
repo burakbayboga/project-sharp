@@ -740,6 +740,7 @@ public class GameController : MonoBehaviour
 				Skill.HandleClash(enemies[i], reaction);
 				enemies[i].SetPlayerReaction(reaction, damage);
 				enemies[i].answeredThisTurn = true;
+				enemies[i].currentHex.SetAffectedBySkill(false);
 			}
 			StartCoroutine(HandleClashAnimations(enemies, reaction));
 		}

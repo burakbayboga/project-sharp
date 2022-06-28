@@ -295,14 +295,6 @@ public class Player : MonoBehaviour
 				GameController.instance.RegisterPlayerAction(skill, damage);
 				HandleResourceIcons();
 			}
-
-			if (hasSerratedWeapons)
-			{
-				if (skill == Skill.SwiftAttack || skill == Skill.HeavyAttack)
-				{
-
-				}
-			}
         }
 		else
 		{
