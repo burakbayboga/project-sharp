@@ -9,6 +9,11 @@ public class InteractiveTutorial : GameController
 	public Text playerMoveText;
 	public Text enemiesText;
 	public Text answerText;
+    public Text passTurnText;
+    public Animator playerMoveAnimator;
+    public Animator enemiesAnimator;
+    public Animator answerAnimator;
+    public Animator passTurnAnimator;
 
 	public GameObject movePanel;
 	public GameObject enemiesPanel;
@@ -26,6 +31,7 @@ public class InteractiveTutorial : GameController
 	public GameObject readyToPlayPanel;
 	public GameObject losPanel;
 	public GameObject chargePanel;
+    public GameObject clickEnemyTooltip;
 
 	bool seenEnemies;
 	bool seenAnswer3;
@@ -67,6 +73,9 @@ public class InteractiveTutorial : GameController
 		enemiesPanel.SetActive(false);
 		enemiesText.color = Color.white;
 		answerText.color = Color.green;
+        enemiesAnimator.Play("text idle");
+        answerAnimator.Play("text big small");
+
 
 		answerPanel_1.SetActive(true);
 	}
@@ -82,6 +91,10 @@ public class InteractiveTutorial : GameController
 		answerPanel_2.SetActive(false);
 		isTutorialPanelActive = false;
 		EnterEnemyActionTurn();
+        if (clickEnemyTooltip != null)
+        {
+            clickEnemyTooltip.SetActive(true);
+        }
 	}
 
 	public void OnNextClicked_AnswerPanel_3()
@@ -95,6 +108,10 @@ public class InteractiveTutorial : GameController
 		answerPanel_4.SetActive(false);
 		isTutorialPanelActive = false;
 		base.RegisterPlayerAction(registerPlayerAction_Skill, registerPlayerAction_Damage);
+        answerText.color = Color.white;
+        passTurnText.color = Color.green;
+        answerAnimator.Play("text idle");
+        passTurnAnimator.Play("text big small");
 	}
 
 	public void OnNextClicked_AnswerPanel_5()
@@ -165,6 +182,11 @@ public class InteractiveTutorial : GameController
 
 	public override void RegisterPlayerAction(Skill reaction, int damage)
 	{
+        answerText.color = Color.white;
+        passTurnText.color = Color.green;
+        answerAnimator.Play("text idle");
+        passTurnAnimator.Play("text big small");
+
 		registerPlayerAction_Skill = reaction;
 		registerPlayerAction_Damage = damage;
 		if (seenAnswer4 && !seenAnswer5)
@@ -207,12 +229,18 @@ public class InteractiveTutorial : GameController
 		UpdateTurnText();
         StartCoroutine(ProcessCombat());
 
-		answerText.color = Color.white;
+		passTurnText.color = Color.white;
+        passTurnAnimator.Play("text idle");
 		SidestepSkillButton.gameObject.SetActive(false);
 	}
 
 	public override void OnEnemyClicked(Enemy enemy)
 	{
+        if (clickEnemyTooltip != null && clickEnemyTooltip.activeInHierarchy)
+        {
+            clickEnemyTooltip.SetActive(false);
+        }
+
 		if (CurrentTurnState == TurnState.PlayerAnswer)
 		{
 			SidestepSkillButton.gameObject.SetActive(false);
@@ -276,6 +304,7 @@ public class InteractiveTutorial : GameController
 	{
 		base.EnterPlayerMoveTurn();
 		playerMoveText.color = Color.green;
+        playerMoveAnimator.Play("text big small");
 	}
 
 	public override void OnPlayerMove()
@@ -329,6 +358,16 @@ public class InteractiveTutorial : GameController
 				isSidestepActive = false;
 			}
 		}
+        else
+        {
+            if (CurrentTurnState == TurnState.PlayerAnswer && !seenAnswer4)
+            {
+                if (clickEnemyTooltip != null)
+                {
+                    clickEnemyTooltip.SetActive(true);
+                }
+            }
+        }
 	}
 
 	protected override IEnumerator LoadNextLevel(bool isFirstLevel = false)
@@ -340,18 +379,27 @@ public class InteractiveTutorial : GameController
 			losPanel.SetActive(true);
 			isTutorialPanelActive = true;
 		}
+        if (currentLevel == 0)
+        {
+            GameObject enemyObject = GameObject.FindGameObjectWithTag("Enemy");
+            clickEnemyTooltip = Instantiate(clickEnemyTooltip, enemyObject.transform);
+            clickEnemyTooltip.SetActive(false);
+        }
+
 	}
 
 	protected override void MakeEnemiesMove()
 	{
 		playerMoveText.color = Color.white;
 		enemiesText.color = Color.green;
+        playerMoveAnimator.Play("text idle");
 
 		if (!seenEnemies)
 		{
 			seenEnemies = true;
 			enemiesPanel.SetActive(true);
 			isTutorialPanelActive = true;
+            enemiesAnimator.Play("text big small");
 		}
 		else
 		{
@@ -367,6 +415,8 @@ public class InteractiveTutorial : GameController
 		unansweredEnemyText.gameObject.SetActive(true);
 		enemiesText.color = Color.white;
 		answerText.color = Color.green;
+        enemiesAnimator.Play("text idle");
+        answerAnimator.Play("text big small");
 
 		if (pendingEnemyHeal && !seenEnemyHeal)
 		{
